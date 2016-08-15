@@ -1,0 +1,670 @@
+<p>Pubby (pubby8<em>@</em>gmail<em>.</em>com) Aug 15 2016</p>
+
+<h1>Flat Containers the C++ Way</h1>
+
+<h2>Introduction</h2>
+
+<p><a href="
+http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0038r0.html">Flat Containers (P0038R0)</a>
+by Sean Middleditch gave a good overview of what flat containers are
+and how might they be designed. This paper aims to answer the questions
+posed in Sean's paper, focusing-in on a specific design for the standard.</p>
+
+<h2>Code</h2>
+
+<p>A coded implementation can be found at
+<a href="https://github.com/pubby/flat">https://github.com/pubby/flat</a>.</p>
+
+<h2>Cheatsheet</h2>
+
+<h3>New headers</h3>
+
+<pre><code>&lt;flat_map&gt;
+&lt;flat_set&gt;
+</code></pre>
+
+<h3>New types</h3>
+
+<pre><code>std::flat_map
+std::flat_multimap
+std::flat_set
+std::flat_multiset
+
+std::vector_map
+std::vector_multimap
+std::vector_set
+std::vector_multiset
+</code></pre>
+
+<h3>New free functions</h3>
+
+<ul>
+<li><code>binary_find</code>
+<ul>
+<li>Returns iterator to element if found, otherwise returns <code>last</code>.</li>
+<li>Part of <code>&lt;algorithm&gt;</code>.</li>
+</ul></li>
+</ul>
+
+<h3>New member functions</h3>
+
+<ul>
+<li><code>has</code>
+<ul>
+<li><code>map.has(key)</code> returns a pointer to key's mapped value if it exists,
+otherwise returns null.</li>
+</ul></li>
+<li><code>insert</code> (delayed sort)
+<ul>
+<li><code>map.insert(first, last, std::delayed_sort)</code> performs insertion with a
+delayed sort optimization.</li>
+</ul></li>
+<li>Constructors (delayed sort overload)
+<ul>
+<li>Constructs flat container using a delayed sort optimization.</li>
+</ul></li>
+<li>Constructors (container construct overload)
+<ul>
+<li>Constructs flat container by forwarding arguments to the
+underlying <code>container</code> member.</li>
+</ul></li>
+</ul>
+
+<h3>New public data members</h3>
+
+<ul>
+<li><code>container</code>
+<ul>
+<li>The flat container's underlying container.</li>
+</ul></li>
+<li><code>iterator::underlying</code>
+<ul>
+<li>The iterator's underlying container iterator.</li>
+</ul></li>
+</ul>
+
+<h2>Flat containers in 3 examples</h2>
+
+<h3>1. Flat containers are container adaptors</h3>
+
+<p>Any vector-like sequence container can be used by flat containers:</p>
+
+<pre><code>std::flat_set&lt;std::vector&lt;int&gt;&gt; vecset;
+std::flat_map&lt;std::vector&lt;std::pair&lt;int, double&gt;&gt;&gt; vecmap;
+std::flat_set&lt;std::deque&lt;char&gt;&gt; deqset;
+
+// These next containers use the stack to allocate - Neat!
+
+std::flat_set&lt;boost::container::static_vector&lt;double, 64&gt;&gt; staticset;
+std::flat_set&lt;boost::container::small_vector&lt;std::string, 32&gt;&gt; smallset;
+
+// Custom containers work great too.
+
+std::flat_set&lt;GameCompany::GameVector&lt;GameInt&gt;&gt; gameSet;
+</code></pre>
+
+<p>For convenience, the typedefs <code>vector_set</code> and <code>vector_map</code> are provided as
+aliases for <code>std::vector</code> flat containers.</p>
+
+<pre><code>std::vector_set&lt;int&gt; vecset;
+std::vector_map&lt;int, double&gt; vecmap;
+</code></pre>
+
+<p>Use these typedefs <em>all the time</em>.</p>
+
+<h3>2. Flat containers use the same interface as <code>map</code> and <code>set</code></h3>
+
+<p>There's nothing to learn because you already know how to use flat containers.</p>
+
+<pre><code>std::vector_map&lt;std::string, int&gt; map;
+
+map.insert(std::make_pair("Hello World", 42));
+map.insert(std::make_pair("insert is great", 10));
+
+map.erase("insert is great");
+
+map.emplace("emplace is better", 11);
+
+for(auto const&amp; pair : map)
+    std::cout &lt;&lt; pair.first &lt;&lt; ": " &lt;&lt; pair.second &lt;&lt; std::endl;
+
+map.clear();
+</code></pre>
+
+<h3>3. Flat containers expose their underlying container with a public data member</h3>
+
+<p>Use <code>container</code> to gain access to the underlying container.
+This works because flat containers are just light wrappers around their
+contained containers.</p>
+
+<pre><code>std::vector_set&lt;int&gt; set;
+
+// vector_set does not have a reserve member, but that's not a problem with 'container'.
+
+set.container.reserve(1000);
+
+for(int i = 0; i != 1000; ++i)
+    set.insert(i + i/2);
+
+// operator[] on 'container' is convenient to have.
+
+for(int i = 0; i != set.container.size(); ++i)
+    set.container[i] *= 2;
+</code></pre>
+
+<p>There are rules regarding <code>container</code>, but we'll get into those later.</p>
+
+<h2>Design considerations</h2>
+
+<ul>
+<li>Do what programmers expect.
+<ul>
+<li>Use the same interface as standard map/set if possible.</li>
+<li>Define operations in terms of existing standard functions.</li>
+</ul></li>
+<li>Be worth using over plain vectors.
+<ul>
+<li>There should be little reason to use plain sorted vectors as maps
+when <code>flat_map</code> exists.</li>
+</ul></li>
+<li>Be easy to migrate to.
+<ul>
+<li>Lots of code out there uses Boost/Loki/EASTL flat containers already.</li>
+<li>An improved design gives people reason to migrate.</li>
+</ul></li>
+<li>Support embedded and memory-constrained programmers.
+<ul>
+<li>Stack-allocated vector implementations are key.</li>
+</ul></li>
+</ul>
+
+<h2>Performance considerations</h2>
+
+<p>There are three cases where flat containers beat out everything else,
+bar none:</p>
+
+<ul>
+<li>In-order iteration.</li>
+<li>Whole-container copying.</li>
+<li>Memory usage.</li>
+</ul>
+
+<p>Note that "searching" is not include on the list. In general, the O(1)
+average-case performance of hash tables will always beat flat containers
+when it comes to searching, insertion, and removal. Flat containers do
+have their advantages over hash tables when it comes to worst-case performance,
+but rarely are they optimal.</p>
+
+<p>The graph below shows the performance of associate containers
+at sizes less than 256. Note that hash tables perform the best and linear search
+(displayed as 'unsorted') performs the worst. The two flat containers
+are displayed in black and cyan.</p>
+
+<p><img src="http://i.imgur.com/teqRKav.png" alt="" title="" /></p>
+
+<p>(Side note: Linear search is really, really terrible and should stop being
+recommended to newbies as a faster alternative to associative containers.
+It's not a worthwhile optimization to make; it's just stupid.)</p>
+
+<h2>Internal algorithms</h2>
+
+<h3>Array Layouts for Comparison-Based Searching</h3>
+
+<blockquote>
+  <p><em>"After extensive testing and tuning on a wide variety of modern hardware,
+we arrive at the conclusion that, for small values of <strong>n</strong>, sorted order,
+combined with a good implementation of binary search is best. For larger
+values of <strong>n</strong>, we arrive at the surprising conclusion that the Eytzinger
+[breadth-first] layout is usually the fastest."</em></p>
+</blockquote>
+
+<p>That quotation is from the abstract of an absolutely fantastic paper by
+Pat Morin and Paul-Virak Khuong called <em>Array Layouts for Comparison-Based
+Searching</em>, which details the different representations of flat sorted arrays
+and their influence upon performance. The paper is based on a series
+of binary search benchmarks written by Pat and ran by others on various
+types of hardware. Graphs made from these benchmarks are availible on
+Pat Morin's website.</p>
+
+<p>Here is one such graph which shows the performance of 32-bit data on an
+Intel i7-4790K:</p>
+
+<p><img src="http://i.imgur.com/WEFSZp0.png" alt="" title="" /></p>
+
+<p>As you can see, branch-free binary search performs best for sizes that
+fit in the cache, but Eytzinger (breadth-first) is the clear winner past
+that.</p>
+
+<h4>A brief explanation of these results</h4>
+
+<p>It's all due to bandwidth, prefetching, and speculative loads. It is <strong><em>not</em></strong>
+due to <em>"having fewer cache misses"</em>.</p>
+
+<p>Two key properties to take note of:</p>
+
+<ol>
+<li>The Eytzinger layout causes child and grandchild (and great-grandchild, etc) 
+indices to share the same cacheline.</li>
+<li>On modern CPUs, requesting up to 4 cachelines of memory can have the same
+latency as requesting just one. Multiple requests can be outgoing at once.</li>
+</ol>
+
+<p>The Eytzinger search algorithm is fast because it loads memory it
+<em>might</em> need several iterations in advance. Property #1 allows this prefetching
+to be efficient; all possible grandchildren of a given node exist in just one
+or two cachelines. Property #2 provides the speedup; a small number
+of prefetches (four) can be outgoing at once without increases in latency.</p>
+
+<h4>A detailed explanation of these results</h4>
+
+<p><a href="http://arxiv.org/pdf/1509.05053.pdf">Read the paper!</a></p>
+
+<h3>Rejecting Eytzinger</h3>
+
+<p>Unfortunately, the Eytzinger layout is not useful as a general-purpose
+container. Despite being fast at searches, Eytzinger's other map-like
+operations slow and complicated.</p>
+
+<p>Full implementations of the Eytzinger layout do not exist, but performance
+numbers can be estimated from a benchmark done by Joaquín M López Muñoz.
+This benchmark compares the in-order traversal time of Eytzinger layouts
+(referred to as level-order) to sorted vectors. The Eytzinger layout
+took five times as long when doing this traversal.</p>
+
+<p><img src="http://1.bp.blogspot.com/-BQQtR3b2C_o/VY6pps-95YI/AAAAAAAABQg/DNSPTJi_jos/s1600/traverse_msvc.png" alt="" title="" /></p>
+
+<p>Assumptions can be made about the speed of insertion, removal, and
+in-order construction based on these results. Since Eytzinger layouts
+are perfectly balanced binary trees, such operations must do additional
+work to re-balance the tree. This requires <em>at least</em>  O(N) complexity
+for traversing the tree, and that implies a constant factor which is
+<em>at least</em> five times that of sorted vectors.</p>
+
+<p>Sorted vectors are strongly preferred from a standard library perspective.
+They offer good - but not optimal - performance accross all of their
+operations, and can be implemented using pre-existing library functions.
+Sorted vectors are the best choice for this proposal.</p>
+
+<h4>Links</h4>
+
+<ul>
+<li><a href="http://arxiv.org/pdf/1509.05053.pdf">http://arxiv.org/pdf/1509.05053.pdf)</a></li>
+<li><a href="http://cglab.ca/~morin/misc/arraylayout-v2/">http://cglab.ca/~morin/misc/arraylayout-v2/</a></li>
+<li><a href="https://pvk.ca/Blog/2015/11/29/retrospective-on-binary-search-and-on-compression-slash-compilation/">https://pvk.ca/Blog/2015/11/29/retrospective-on-binary-search-and-on-compression-slash-compilation/</a></li>
+<li><a href="https://github.com/patmorin/arraylayout">https://github.com/patmorin/arraylayout</a></li>
+<li><a href="http://bannalia.blogspot.fr/2015/06/traversing-linearized-tree.html">http://bannalia.blogspot.fr/2015/06/traversing-linearized-tree.html</a></li>
+</ul>
+
+<h3>One Vector or Two?</h3>
+
+<p>There are two ways of storing sorted key/value pairs:</p>
+
+<ul>
+<li>Interleaved into one vector.</li>
+<li>Separated into two vectors.</li>
+</ul>
+
+<p>The graphs below show the performance of searching maps with these two
+representations.</p>
+
+<h4>8 byte keys / 8 byte mapped values:</h4>
+
+<p><img src="http://i.imgur.com/REQaOnE.png" alt="" title="" /></p>
+
+<h4>8 byte keys / 16 byte mapped values:</h4>
+
+<p><img src="http://i.imgur.com/KbA8Qnw.png" alt="" title="" /></p>
+
+<h4>8 byte keys / 256 byte mapped values:</h4>
+
+<p><img src="http://i.imgur.com/Z5BGPyy.png" alt="" title="" /></p>
+
+<p>(The y-axis scale of these graphs is linear and starts at time=0)</p>
+
+<p>When the size of the key is equal to the size of the mapped value,
+both representations will always have the same performance. However, as the
+size of the mapped value grows, performance shifts to favoring separate
+vectors instead of single interleaved ones.</p>
+
+<p>In reality, large sized mapped values are a rare sight. It is often
+more desirable for the map to hold pointers that point to large objects
+than it is for the map to hold large objects directly. This enables the
+container to have fast insertion and removal without problems
+of reference invalidation.</p>
+
+<h4>Interface</h4>
+
+<p>The interleaved reprentation uses <code>std::pair</code> value types and is thus
+is strongly preferred from a design perspective. Interleaved vectors of
+pairs mesh well with the existing standard library and containers.
+In addition, the container adaptor design of flat containers strongly
+favors single containers.</p>
+
+<p>Thus, the proposed flat container design uses single, interleaved vectors
+of pairs.</p>
+
+<h2>Sortedness</h2>
+
+<p>Take a look at the code below.
+Will it compile? What will it print when it runs?</p>
+
+<pre><code>boost::container::flat_map&lt;int, int&gt; map;
+
+map.insert(std::make_pair(0, 0));
+map.insert(std::make_pair(1, 0));
+
+map.begin()-&gt;first = 2;
+
+std::cout &lt;&lt; map.count(0) &lt;&lt; ',' &lt;&lt; map.count(1) &lt;&lt; ',' &lt;&lt; map.count(2);
+</code></pre>
+
+<p>This turns out to be undefined behavior. The most likely result is:</p>
+
+<pre><code>0,0,0
+</code></pre>
+
+<p>Boost's <code>flat_map</code> implementation uses a single sorted vector of
+pairs. Unlike <code>std::map</code>, the keys of <code>flat_map</code>'s pairs are not <code>const</code>;
+they can be modified. Modifying the keys causes the vector to become unsorted,
+and an unsorted vector causes <code>flat_map</code> to break.</p>
+
+<p>This problem is not unique to Boost. Loki, EASTL, and every other
+popular implementation have this problem too.</p>
+
+<h4>The search for a solution</h4>
+
+<p>There are possibilities to design flat container classes which are
+impossible to make <em>unsorted</em>. All such designs are based around keeping
+key values immutable.</p>
+
+<ul>
+<li>Idea: Reference Proxies.
+<ul>
+<li>Useful, but full of gotchas. Reference proxies break the property of,
+"Do what people expect." </li>
+<li>Not everyone considers them "zero overhead".</li>
+<li>Nobody wants another <code>vector&lt;bool&gt;</code>.</li>
+</ul></li>
+<li>Idea: Abandon <code>std::pair</code> iterators.
+<ul>
+<li>Breaks compatibility with standard algorithms and containers.</li>
+<li>Interface becomes awkward and verbose in certain places.</li>
+</ul></li>
+<li>Idea: Const iterators by default.
+<ul>
+<li>See below.</li>
+</ul></li>
+</ul>
+
+<h4>Const iterators: Safety by default</h4>
+
+<p>All iterators of flat containers can be made const iterators by default.
+This means that references to const pairs are returned when dereferencing
+flat container iterators.</p>
+
+<pre><code>fc::vector_map&lt;int, int&gt; map;
+*map.first() = std::make_pair(1, 2); // doesn't compile
+map.first()-&gt;first = 3; // doesn't compile
+map.first()-&gt;second = 4; // doesn't compile
+</code></pre>
+
+<p>There are two ways of modifying mapped values.</p>
+
+<p>First, one can use the <code>has</code> function. <code>has</code> works just
+like <code>at</code> and <code>find</code>, but returns a pointer value instead of an iterator.</p>
+
+<pre><code>if(int* mapped_value = map.has(4))
+    *mapped_value = "has is handy";
+</code></pre>
+
+<p>Whenever possible, use <code>has</code>.</p>
+
+<p>Second, one can use an iterator public data member called <code>underlying</code>.
+<code>underlying</code> is the iterator equivalent of <code>container</code> and grants access
+to iterators belonging to the adapted container. These 'underlying' container
+iterators have their usual const semantics and can be used to modify
+both keys and values.</p>
+
+<pre><code>map.first().underlying-&gt;second = "underlying is useful";
+</code></pre>
+
+<p>Like <code>container</code> and <code>const_cast</code>, use of <code>underlying</code> is an explicit
+declaration to others that you know what you're doing and you can verify
+that it is safe. This <em>explicitness</em> is what makes <code>underlying</code> the safer
+alternative to Boost-style iterators.</p>
+
+<h4>Are unsortedness states beneficial?</h4>
+
+<p>Yes. Going all-out to prevent unsorted states leads to verbose, hard to use
+container designs that are closed off from user optimizations. </p>
+
+<p>It more practical to be "safe by default" than "safe all the time".</p>
+
+<h4>Guidelines for coders</h4>
+
+<p>There are only three things that can lead to unsorted states:</p>
+
+<ol>
+<li><code>container</code></li>
+<li><code>underlying</code></li>
+<li>Throwing moves.</li>
+</ol>
+
+<p>Avoid all three and flat containers are guaranteed to remain sorted.</p>
+
+<p>Always remember that <code>std::sort</code> followed by <code>std::unique</code> can be used to
+turn any unsorted state into a sorted state.</p>
+
+<h4>Sorted Preconditions</h4>
+
+<p>Permitting unsorted states in flat containers requires the standard 
+to address and define this behavior.</p>
+
+<ul>
+<li>Affected member functions gain preconditions based on the preconditions
+of <code>lower_bound</code>, <code>upper_bound</code>, and <code>equal_range</code>.
+<ul>
+<li>Requires: The elements <code>e</code> of <code>[begin, end)</code> shall be
+        partitioned with respect to the expression 
+        <code>key_comp(e, value)</code>.</li>
+</ul></li>
+<li>Unsorted/unpartitioned flat containers are well-defined for all
+operations that do not have such preconditions.</li>
+</ul>
+
+<h4>Uniqueness</h4>
+
+<p>The rules regarding duplicate keys are less restrictive than the rules
+regarding sortedness.</p>
+
+<p>The intention of <code>flat_map</code> and <code>flat_set</code> is to
+hold unique keys, but this is not a hard requirement of the standard.
+The behavior of member functions on duplicate-key containers is well defined
+but implementation specific. For example, using <code>find</code> on a container
+with duplicate keys will return an iterator to any one of the matching
+values. This matches the preexisting behavior of <code>std::multimap</code>.</p>
+
+<h2>Container Adaptors</h2>
+
+<p>The design of <code>priority_queue</code> has influenced the design of flat containers
+and the similarities between the two are apparent.</p>
+
+<p><code>std::priority_queue</code></p>
+
+<ul>
+<li>A light wrapper around a container. Default: <code>deque</code>.</li>
+<li>Operations are defined in terms of the standard functions
+    <code>make_heap</code>, <code>push_heap</code>,
+    and <code>pop_heap</code>.</li></li>
+</ul>
+
+<p><code>std::flat_map</code></p>
+
+<ul>
+<li>A light wrapper around a container. Default: <code>vector</code>.</li>
+<li>Operations are defined in terms of the standard functions
+<code>lower_bound</code>, <code>upper_bound</code>, and <code>equal_range</code>.</li>
+</ul>
+
+<p>The ability to use <code>static_vector</code> and <code>small_vector</code> with flat containers
+is a major selling point of this proposal. The container adaptor interface
+does not add complexity or performance penalties to the library's
+implementation.</p>
+
+<h3>User-defined reference proxies</h3>
+
+<p>Users may want to use their own reference proxy containers with flat
+containers.  For example, consider a container which attempts to implement the
+"two separate vectors" idea discussed in the <i>Internal algorithms</i>
+section:</p>
+
+<pre><code>template&lt;typename K, typename T&gt;
+struct two_vectors
+{
+    class iterator { /* ... Reference proxy implementation ... */ };
+    /* ... Sequence container member functions ...  */
+    std::vector&lt;K&gt;; keys;
+    std::vector&lt;T&gt;; mapped;
+};
+
+std::flat_map&lt;int, double, two_vectors&lt;int, double&gt;&gt; map;
+</code></pre>
+
+<p><code>two_vectors</code> does not store <code>pair</code> value types
+but it can be faked to do so with reference proxies. Note that
+reference proxies can apply <code>const</code> to their references
+to prevent users from modifying keys.</p>
+
+<p>If possible, reference proxy containers should be
+permitted by the standard for use in flat containers.</p>
+
+<h3>Packed</h3>
+
+<p>Users may want to use custom pair types. For example, consider this
+<code>packed_pair</code>:</p>
+
+<pre><code>template&lt;typename A, typename B&gt;
+struct packed_pair
+{
+    using first_type = A;
+    using second_type = B;
+    A first;
+    B second;
+} __attribute__((packed));
+</code></pre>
+
+<p>This type can be used as follows:</p>
+
+<pre><code>std::flat_map&lt;char, int, std::vector&lt;packed_pair&lt;char, int&gt;&gt;&gt; map;
+</code></pre>
+
+<p>If possible, custom value types should be permitted by
+the standard for use in flat containers.</p>
+
+<h2>Public <code>container</code> data member</h2>
+
+<p>The standard library's current container adaptors are not well-loved,
+and this is largely due to them having less functionality than the 
+containers that they adapt. The fact is, there are very few cases where
+<code>stack</code> and <code>queue</code> are the ideal container choice. Far more often it makes
+sense to use <code>vector</code> and <code>deque</code> directly and gain access to all the extra
+functionality they provide. The current container adaptors are practically
+useless.</p>
+
+<p>With a desire to make flat containers <em>useful</em>, the natural solution
+is to make their adapted container member publicly visible. This comes
+at no loss to safety; unsortedness would exist in the design regardless of
+whether or not <code>container</code> was public. There are no synchronization issues
+to worry about as <code>container</code> can be the one and only data member of the
+flat container classes. And by making <code>container</code> a public data member,
+several advantages are to be had.</p>
+
+<h4>Case 1: Delayed sorting</h4>
+
+<p>Associative containers often follow this access pattern:</p>
+
+<ul>
+<li>Store a bunch of values.</li>
+<li>Wait.</li>
+<li>Retreive a bunch of values.</li>
+</ul>
+
+<p>An efficient way of storing multiple values into a flat container
+is to insert the values at the end and sort the container afterwards.
+For cases involving a single range, the flat container's insert function can
+be implemented to have this behavior:</p>
+
+<pre><code>std::flat_multiset&lt;int&gt; set;
+set.insert(some_range.begin(), some_range.end(), std::delay_sort);
+
+// Note: The constructor has overloads too.
+// The code above could be rewritten like this:
+
+std::flat_multiset&lt;int&gt; set2(some_range.begin(), some_range.end(), std::delay_sort);
+</code></pre>
+
+<p>Unfortunately, not all real-world situations have such clean-cut insertion
+ranges, and is it not always desirable for the container to sort itself after
+every insertion. For cases such as these, the public 
+<code>container</code> data member offers a solution:</p>
+
+<pre><code>std::flat_multiset&lt;int&gt; set;
+while(cpu_temperature() &lt; 100)
+    set.container.push_back(cpu_temperature());
+std::sort(set.begin(), set.end());
+</code></pre>
+
+<p>This technique is easily adapted to whatever access patterns users have.</p>
+
+<h4>Case 2: Access to member functions</h4>
+
+<p>Functions such as <code>reserve</code> and <code>max_size</code> are not part of flat
+container interfaces. This is not a problem with a public <code>container</code>
+data member.</p>
+
+<pre><code>map.container.reserve(1000);
+</code></pre>
+
+<p>Flat containers are container adaptors and so any type of vector-like
+container can be used. Access to <code>container</code> allows users of
+custom vector implementations to use whatever member functions they need.</p>
+
+<pre><code>std::flat_map&lt;int, int, my_vector&lt;std::pair&lt;int, int&gt;&gt;&gt; map;
+map.container.set_node_size(10);
+map.container.debug_diagnostics = true;
+my_library::hook_container(&amp;map.container);
+</code></pre>
+
+<p>Occasionally it may be desirable to iterate a container using
+indexes rather than iterators. While it is possible to do this using the
+<code>operator[]</code> of iterators, using <code>container</code> for this is far easier to grasp.</p>
+
+<p>for(int i = 0; i &lt; map.size(); ++i)
+    std::cout &lt;&lt; i &lt;&lt; ':' &lt;&lt; map.container[i].second &lt;&lt; std::endl;</p>
+
+<h4>Case 3: Copying and moving</h4>
+
+<p>The <code>container</code> member can be used to copy and move directly.</p>
+
+<pre><code>std::flat_set&lt;int&gt; set;
+std::vector&lt;int&gt; vec = std::move(set.container);
+set.clear();
+
+set.container = std::move(vec);
+vec.clear();
+</code></pre>
+
+<p>This is far cleaner than adding overloads to <code>operator=</code>.</p>
+
+<h4>Are there any downsides to <code>container</code>?</h4>
+
+<p>Nope!</p>
+
+<p>Unsorted states exist in the design for iterators, not <code>container</code>. Removing
+<code>container</code> would not remove unsorted states. The <code>container</code> member is the
+one and only member of flat container classes. There are no variable
+out-of-sync issues to worry about.</p>
+
+<h2>Proposed Text</h2>
+
+<p>TODO!</p>
