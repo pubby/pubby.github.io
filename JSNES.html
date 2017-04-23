@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)https://pineight.com/jsnes/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSNES: A JavaScript NES emulator</title>
+<style type="text/css">
+<!--
+html { color: #FFF; background: #666; font-family: sans-serif }
+body { color: #000; background: #FFF; max-width: 520px; margin: 1em auto; padding: 1em 1.5em; border: 2px solid black; border-radius: 3em }
+h1,h2,#emulator { text-align: center }
+h1 { margin-top: 0 }
+#controls { margin: auto; border-collapse: collapse; border: 3px solid #888 }
+#controls th { background: #eee; padding: 0.1em 0.3em }
+#controls td { border: 1px solid #ccc; padding: 0.1em 0.3em }
+--></style>
+<style type="text/css" media="screen">#dynamicaudio-flashelement-1 {visibility:hidden}</style></head>
+
+<body>
+<h1>JSNES</h1>
+<p>
+<a href="https://pineight.com/">Home</a> &gt; <a href="https://pineight.com/nes/">NES</a>
+</p>
+<div id="emulator"><div><canvas class="nes-screen" width="256" height="240"></canvas><div class="nes-roms"><select><option>Select a ROM...</option><optgroup label="Pin Eight"><option value="croom.nes">Concentration Room (2010)</option><option value="thwaite.nes">Thwaite (2011)</option><option value="rhde.nes">RHDE: Furniture Fight (2014)</option><option value="robotfindskitten.nes">robotfindskitten (2014)</option></optgroup><optgroup label="NovaSquirrel"><option value="dabg.nes">Double Action Blaster Guys (2014)</option><option value="blaster.nes">Sliding Blaster (2014)</option></optgroup><optgroup label="Tech demos"><option value="nrom-template.nes">NROM template project</option><option value="rgb121.nes">rgb121</option><option value="roulette.nes">Russian Roulette</option></optgroup></select></div><div class="nes-controls"><input type="button" value="pause" class="nes-pause" disabled="disabled"><input type="button" value="restart" class="nes-restart" disabled="disabled"><input type="button" value="enable sound" class="nes-enablesound"><input type="button" value="zoom in" class="nes-zoom"></div><p class="nes-status">Ready to load a ROM.</p></div></div>
+
+<h2>Controls</h2>
+<table id="controls">
+<tbody><tr><th>Button</th><th>Player 1</th><th>Player 2</th></tr>
+<tr><td>Left</td><td>Left</td><td>Num-4</td></tr>
+<tr><td>Right</td><td>Right</td><td>Num-6</td></tr>
+<tr><td>Up</td><td>Up</td><td>Num-8</td></tr>
+<tr><td>Down</td><td>Down</td><td>Num-2</td></tr>
+<tr><td>A</td><td>X</td><td>Num-7</td></tr>
+<tr><td>B</td><td>Z/Y</td><td>Num-9</td></tr>
+<tr><td>Start</td><td>Enter</td><td>Num-1</td></tr>
+<tr><td>Select</td><td>Ctrl</td><td>Num-3</td></tr>
+</tbody></table>
+<p>
+Emulator is <a href="https://fir.sh/projects/jsnes/">JSNES by Ben Firshman</a>. The <a href="https://pineight.com/jsnes/jsnes_2014-07-12.zip">JSNES source code</a> is available under the GNU General Public License. "Enable sound" may not work in all browsers, especially with Flash blockers.
+</p>
+
+<script src="./JSNES_files/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="./JSNES_files/dynamicaudio-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="./JSNES_files/jsnes.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+var nes;
+$(function() {
+nes = new JSNES({
+'ui': $('#emulator').JSNESUI({
+"Pin Eight": [
+['Concentration Room (2010)', 'lunarlimit.nes'],
+['Thwaite (2011)', 'thwaite.nes'],
+['RHDE: Furniture Fight (2014)', 'rhde.nes'],
+['robotfindskitten (2014)', 'robotfindskitten.nes'],
+],
+"NovaSquirrel": [
+['Double Action Blaster Guys (2014)', 'dabg.nes'],
+['Sliding Blaster (2014)', 'blaster.nes'],
+],
+"Tech demos": [
+['NROM template project', 'nrom-template.nes'],
+['rgb121', 'rgb121.nes'],
+['Russian Roulette', 'roulette.nes'],
+],
+/*
+"Group2": [
+['LJ65', 'tetris-is-not-a-sport.nes'],
+['Forehead Block Guy (2011)', 'fhbg.nes'],  // crashes emulator
+['Who's Cuter', 'cuter.nes'],  // crashes emulator
+['Zap Ruder (2012)', 'ruder.nes'],  // zapkernel cannot detect height
+],
+*/
+})
+});
+});
+</script>
+<!--[if IE]>
+<script type="text/vbscript" src="source/jsnes-ie-hacks.vbscript"></script>
+<![endif]-->
+
+
+
+<div id="dynamicaudio-flashwrapper-1" style="position: fixed; height: 8px; width: 8px; left: 0px; bottom: 0px; overflow: hidden;"><object type="application/x-shockwave-flash" data="./JSNES_files/dynamicaudio.swf.download" width="8" height="8" id="dynamicaudio-flashelement-1" style="visibility: visible;"><param name="allowScriptAccess" value="always"></object></div></body></html>
