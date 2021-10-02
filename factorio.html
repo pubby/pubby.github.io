@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en-us">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
         <h1>Factorio's Belt Bug</h1>
     </head>
@@ -22,7 +23,7 @@
             To update, we'll repeatedly iterate over every item on the belt, looking for items that have an empty tile in front of them. As we find such items, we'll move them forwards on the belt and continue our iteration.
         </p>
         Before: <img src="factorio/belt2.png">&nbsp;&nbsp;&nbsp;
-        After:<img src="factorio/belt3.png">
+        After: <img src="factorio/belt3.png">
         <p>
             If the tile in front of an item isn't empty, we can't move the item there <i>yet</i> but it may be possible to move the item at a different iteration. For example, item "A" below can't move until item "B" has moved, and this may take several iterations.
         </p>
@@ -35,7 +36,7 @@
             Lastly, it's important that when an item moves, it won't move again until the algorithm completes. Otherwise, items will teleport all over the place at inconsistent speeds. We'll have to tag each item that moves and exclude it from future iterations.
         <p>
         Before: <img src="factorio/belt2.png">&nbsp;&nbsp;&nbsp;
-        After:<img src="factorio/belt5.png">
+        After: <img src="factorio/belt5.png">
         <p>
             Here's the pseudocode:
         </p>
@@ -72,12 +73,12 @@ while MADE_PROGRESS is true
             So how do we do this? Well, if an item is at the end of a belt, it's safe to say that item can't move. Below, we'll mark such items with a red "X" to show they can't move.
         </p>
         Before: <img src="factorio/belt7.png">&nbsp;&nbsp;&nbsp;
-        After:<img src="factorio/belt8.png">
+        After: <img src="factorio/belt8.png">
         <p>
             Likewise, if an item is blocked by another immobile item, it can't move either. Once we mark a red "X", the item before it can be marked as well.
         </p>
         Before: <img src="factorio/belt8.png">&nbsp;&nbsp;&nbsp;
-        After:<img src="factorio/belt9.png">
+        After: <img src="factorio/belt9.png">
         <p>
             This new algorithm also runs until it reaches a fixed point. Then, all items without a red "X" can be moved forwards.
         </p>
@@ -97,7 +98,7 @@ while MADE_PROGRESS is true
             We can fix the second algorithm by defining a priority for each merging belt. A lower priority belt tile will be deemed immobile if a higher priority belt has an item on it. Below, belt "A" is the higher priority one, and belt "B" is the lower priority one. "A" is occupied, so "B" must be immobile.
         </p>
         Before: <img src="factorio/belt11.png">&nbsp;&nbsp;&nbsp;
-        After:<img src="factorio/belt12.png">
+        After: <img src="factorio/belt12.png">
         <p>
             For a game like Factorio, these priorities could be switched every frame to evenly zipper the contents of both belts into one.
         </p>
@@ -148,6 +149,53 @@ for each item, I
         <p>
         Originally, I learned of this technique from a paper on compiler research: <i>"Combining Analyses, Combining Optimizations,"</i> by Cliff Click. Ammusingly, the paper was also using the technique to deal with loops, albeit of the programming variety. Of course, Cliff Click isn't the first person to do this sort of thing. Mathematicians have been enjoying it from quite a ways back.
         </p>
+
+        <h3>FAQ</h3>
+        <ul>
+            <li>
+                <h4>Have you played factorio?</h4>
+                <p>
+                Yes, I've beat the game twice, and even attempted to make my own clone game. This article was a result of that work.
+                </p>
+            </li>
+            <li>
+                <h4>This is inefficient code! Factorio is far more optimized.</h4>
+                <p>
+                Yes, I'm aware, and did a deep-dive of Factorio before writing this article. But adding optimizations in to my explanation would totally muddy the clarity and turn this short article into a long one.
+                </p>
+            </li>
+            <li>
+                <h4>So you can't optimize it?</h4>
+                <p>
+                You can. The biggest optimization is to combine long straight segments of belts into a single nodes, a la <a href="https://www.factorio.com/blog/post/fff-176">this Factorio blog post</a>. This reduces the size of the belt graph, but hardly changes the algorithms. You might think of it like writing a grid-based pathfinding algoirthm, then adapting it to be mesh-based.
+                </p>
+            </li>
+            <li>
+                <h4>Why not do something simpler? If belts go into themselves, make them loop.</h4>
+                <p>
+                Sure, but that only works for the most trivial cases. The belt graph can be quite complicated, with loops comprising several segments. For cases like that you'd have to do cycle detection, which is totally not better than the 2nd algorithm.
+                </p>
+            </li>
+            <li>
+                <h4>But Factorio has two-lane belts!</h4>
+                <p>
+                As stated earlier in the article, my explanations were made using single-lane belts that can hold only one item per tile. This kept things simple. If you can implement this, you can implement two-lane belts that hold many items with little difficulty. 
+                </p>
+            </li>
+            <li>
+                <h4>In Factorio you can fix the problem using Splitters.</h4>
+                <p>
+                A splitter on the line make sushi-belts run much better - and usually work - but they aren't a panacea. You can still jam them up, they're just far less likely to.
+                </p>
+            </li>
+            <li>
+                <h4>This behavior is intentional / caused by some other behavior.</h4>
+                <p>
+                Perhaps. I'm not a Factorio dev, and don't have access to the Factorio code, so this article is just speculation on my part. But it's still a nice way to show off a cool technique.
+                </p>
+            </li>
+
+        </ul>
 
         <p><a href="index.html">[Back to my homepage]</a></p>
     </body>
