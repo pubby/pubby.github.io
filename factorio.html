@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <h1>Factorio's Belt Bug</h1>
+    </head>
+    <body>
+        <p>
+        <a href="https://www.factorio.com/">Factorio</a> is a factory-building game involving lots (and I mean, LOTS) of conveyor belts. The code that implements these belts is marvel of optimization, but unfortunately they can't handle every construct.
+        </p>
+        <h3>The Problematic Sushi Belt</h3>
+        <p>
+        The issue occurs when belts are arranged in a loop. At first, items placed on the belt appear to work normally, circulating around like the luggage return at an airport. But as soon as the belt reaches full capacity, it stops.
+        </p>
+        <img src="factorio/belt2.gif">
+        <h3>So what's going on?</h3>
+        <p>
+        I don't have access to Factorio's source code, but I reckon I can give a good explanation of why this happens. Imagine a simplified version of Factorio in which belts are single-lane and can hold only one item per tile:
+        </p>
+        <img src="factorio/belt1.png">
+        <p>
+            To update, we'll repeatedly iterate over every item on the belt, looking for items that have an empty tile in front of them. As we find such items, we'll move them forwards on the belt and continue our iteration.
+        </p>
+        Before: <img src="factorio/belt2.png">&nbsp;&nbsp;&nbsp;
+        After:<img src="factorio/belt3.png">
+        <p>
+            If the tile in front of an item isn't empty, we can't move the item there <i>yet</i> but it may be possible to move the item at a different iteration. For example, item "A" below can't move until item "B" has moved, and this may take several iterations.
+        </p>
+        <img src="factorio/belt4.png">
+        <p>
+            There are different orders one can iterate - some more efficient than others - but for the sake of correctness, all that matters is eventually reaching a fixed point. The algorithm stops when no items can be moved anymore.
+        </p>
+
+        <p>
+            Lastly, it's important that when an item moves, it won't move again until the algorithm completes. Otherwise, items will teleport all over the place at inconsistent speeds. We'll have to tag each item that moves and exclude it from future iterations.
+        <p>
+        Before: <img src="factorio/belt2.png">&nbsp;&nbsp;&nbsp;
+        After:<img src="factorio/belt5.png">
+        <p>
+            Here's the pseudocode:
+        </p>
+
+            <code><pre>
+do
+    set MADE_PROGRESS to false
+    for each item, I
+        if I has not already moved
+            let B be the belt under I
+            let B' be the belt B outputs to
+            if B' has no item
+                move I from B to B'
+                mark I as moved
+                set MADE_PROGRESS to true
+while MADE_PROGRESS is true
+            </pre></code>
+        <p>
+            And here's the algorithm running to completion, visualized:
+        </p>
+        <img src="factorio/belt1.gif">
+        <h3>The Factorio corner case</h3>
+        <p>
+            For an item to move under this algorithm, it must have a free space to move onto. But when the items are packed tightly into a circle, there is no free space and so the whole belt jams up.
+        </p>
+        <img src="factorio/belt6.png">
+        <p>Yikes!</p>
+        <h3>Fixing things with optimism</h3>
+        <p>
+            The algorithm above tries to prove which items can move, pessimistically assuming that any item it can't prove, won't move.
+            But what if we do the opposite? Consider an algorithm that optimistically assumes all items move, then proves which items can't.
+        </p>
+        <p>
+            So how do we do this? Well, if an item is at the end of a belt, it's safe to say that item can't move. Below, we'll mark such items with a red "X" to show they can't move.
+        </p>
+        Before: <img src="factorio/belt7.png">&nbsp;&nbsp;&nbsp;
+        After:<img src="factorio/belt8.png">
+        <p>
+            Likewise, if an item is blocked by another immobile item, it can't move either. Once we mark a red "X", the item before it can be marked as well.
+        </p>
+        Before: <img src="factorio/belt8.png">&nbsp;&nbsp;&nbsp;
+        After:<img src="factorio/belt9.png">
+        <p>
+            This new algorithm also runs until it reaches a fixed point. Then, all items without a red "X" can be moved forwards.
+        </p>
+        <p>
+            If you try this algorithm out on a circular belt, you'll notice it completes without marking a single "X"! But this is correct: all items in the belt will move around it, as none were proven to be immobile.
+        </p>
+        <img src="factorio/belt6.png">
+        <h3>Merges</h3>
+        <p>
+            Before giving the pseudocode, there's something that needs to be addressed. What happens when two or three belt merge together, as in the case below? 
+        </p>
+        <img src="factorio/belt10.png">
+        <p>
+            As defined, the second algorithm will move both items onto the merged belt at once because it can't prove either to be immobile. A bug! The correct behavior, as handled by the first algorithm, is to only move one or the other; not both.
+        </p>
+        <p>
+            We can fix the second algorithm by defining a priority for each merging belt. A lower priority belt tile will be deemed immobile if a higher priority belt has an item on it. Below, belt "A" is the higher priority one, and belt "B" is the lower priority one. "A" is occupied, so "B" must be immobile.
+        </p>
+        Before: <img src="factorio/belt11.png">&nbsp;&nbsp;&nbsp;
+        After:<img src="factorio/belt12.png">
+        <p>
+            For a game like Factorio, these priorities could be switched every frame to evenly zipper the contents of both belts into one.
+        </p>
+        <h3>The final pseudocode</h3>
+        <p>The code below follows three steps.</p>
+        <ol>
+            <li>Handle merges</li>
+            <li>Mark immobile belts (the red "X")</li>
+            <li>Move all items on belts not marked immobile</li>
+        </ol>
+        
+            <code><pre>
+for each belt intersection, S
+    set BLOCKED to false
+    for each input belt to S, B
+        if BLOCKED is true
+            mark B as immobile
+        if B has an item
+            set BLOCKED to true
+
+do
+    set MADE_PROGRESS to false
+    for each item, I
+        let B be the belt under I
+        let B' be the belt B outputs to
+        if B' doesn't exist or if B' is immobile
+            mark B as immobile
+            set MADE_PROGRESS to true
+while MADE_PROGRESS is true
+
+for each item, I
+    let B be the belt under I
+    let B' be the belt B outputs to
+    if B is not immobile
+        move I from B to B'
+            </pre></code>
+
+        <h3>Pros and Cons</h3>
+        <p>
+            From a correctness perspective, the second algorithm is superior, but one must admit that it takes more code and is less obvious than the first design. It also complicates the implementation of other components like inserters, factories, and chests, though this may be a non-issue for greenfield projects. I suspect Factorio is far too developed to ever change their belt algorithm, but I'm hopeful newer games will take the second approach at my own suggestion.
+        </p>
+        <p>It's important to note that the second algorithm only produces a usable result when the algorithm finishes. However, the first algorithm can be run incrementally. Every iteration moves the game state from one valid position to the next, which may be useful at times.</p>
+
+        <h3>An interesting connection to compiler research</h3>
+        <p>
+            I wrote this article about Factorio, but the technique is more general than that. Flipping around the problem and reversing what you're proving is a really useful skill!
+        </p>
+        <p>
+        Originally, I learned of this technique from a paper on compiler research: <i>"Combining Analyses, Combining Optimizations,"</i> by Cliff Click. Ammusingly, the paper was also using the technique to deal with loops, albeit of the programming variety. Of course, Cliff Click isn't the first person to do this sort of thing. Mathematicians have been enjoying it from quite a ways back.
+        </p>
+
+        <p><a href="index.html">[Back to my homepage]</a></p>
+    </body>
+</html>
