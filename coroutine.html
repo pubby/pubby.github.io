@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <h1>Multi-step iterators using coroutines</h1>
+    </head>
+    <body>
+        <h3>(Article from 2014)</h3>
+        <p>
+            I wanted to turn this multi-step iteration function into an iterator,
+            so that I could simply use <code>operator++</code> to advance it:
+        </p>
+        <code><pre>
+template&lt;typename Func&gt;
+void iterate_edges(rect r, Func func = Func())
+{
+    coord current = r.c;
+    for(;current.x &lt; r.rx(); ++current.x)
+        func(current);
+    for(;current.y &lt; r.ry(); ++current.y)
+        func(current);
+    for(;current.x &gt; r.c.x; --current.x)
+        func(current);
+    for(;current.y &gt; r.c.y + 1; --current.y)
+        func(current);
+}</pre></code>
+        <p>
+        It turns out that it can be done very simply using <code>boost::asio::coroutine</code>:
+        </p>
+
+        <code><pre>
+rect_edge_iterator& rect_edge_iterator::operator++()
+{
+    reenter(m_coro)
+    {
+        while(m_current.x &lt; m_rect.rx())
+        {
+            ++m_current.x;
+            yield return *this;
+        }
+        while(m_current.y &lt; m_rect.ry())
+        {
+            ++m_current.y;
+            yield return *this;
+        }
+        while(m_current.x &gt; m_rect.c.x)
+        {
+            --m_current.x;
+            yield return *this;
+        }
+        while(m_current.y &gt; m_rect.c.y + 1)
+        {
+            --m_current.y;
+            yield return *this;
+        }
+        --m_current.x; // change to an 'end' position
+    }
+    return *this;
+}</pre></code>
+        <p>
+        I thought that was kind of neat. It’s not very often I find a practical use of stackless coroutines in C++.
+        </p>
+        <p>
+Note: This only works cleanly for forward iterators.
+        </p>
+
+        <p><a href="index.html">[Back to my homepage]</a></p>
+    </body>
+</html>
