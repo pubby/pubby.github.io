@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <h1>Piece of paper quiets Intel Alder Lake stock coolers</h1>
+    </head>
+    <body>
+        <p>
+        In 2022, Intel redesigned their stock CPU coolers to make them beefier, more performant, but primarily better looking. Still, it was a necessary upgrade, as their previous line was not adequate at cooling 12th gen CPUs.
+        </p>
+        <img src="papermod/stock.jpg"><img src="papermod/stock2.jpg">
+        <p>
+        Looking at the images, I noticed a difference between their i5 cooler (on the left) and their i9 cooler (right): the i9 cooler had a blue plastic cowl around the fan, while the i5 had some weird open-air plastic fin design.
+        </p>
+        <h2>What happens if I add a cowl to the i5 cooler?</h2>
+        <p>
+        I created a cowl out of a piece of paper, taping the ends together to form a cylinder. It took finesse, but I managed to get the paper fitting snugly inside the cooler without the fan hitting it. No glue needed!
+        </p>
+        <img src="papermod/paper.jpg">
+        <p>
+        In fact, I did more than just that. I actually tested a few cowls of different heights, from under an inch, to over three inches in height. Below are the results of testing using <a href="https://openbenchmarking.org/test/pts/blender-1.9.1">Blender as my benchmark</a>.
+        </p>
+
+        <table>
+            <tr><th>Cowl Height</th><th>Max CPU temp</th><th>Relative Noise</th></tr>
+            <tr>
+                <td>No cowl</td>
+                <td>80 C</td>
+                <td>+8 Db</td>
+            </tr>
+
+            <tr>
+                <td>1 inch</td>
+                <td>85 C</td>
+                <td>+0 Db</td>
+            </tr>
+
+            <tr>
+                <td>1.4 inches</td>
+                <td>82 C</td>
+                <td>+1 Db</td>
+            </tr>
+
+            <tr>
+                <td>1.7 inches</td>
+                <td>80 C</td>
+                <td>+2 Db</td>
+            </tr>
+
+            <tr>
+                <td>2 inches</td>
+                <td>80 C</td>
+                <td>+4 Db</td>
+            </tr>
+
+            <tr>
+                <td>3+ inches</td>
+                <td>80 C</td>
+                <td>+8 Db</td>
+            </tr>
+        </table>
+        <sub>(CPU: i5 12400, Motherboard: B660M DS3H DDR4, Case fans: 2x 120mm)</sub>
+
+        <h2>Conclusion</h2>
+        <p>I was amazed at how quiet short cowls made the cooler. To give you an idea of how each sound, here is the stock noise, sounding like a dental drill:</p>
+        <audio controls src="papermod/stock.ogg">Your browser does not support audio.</audio>
+        <br>
+        <p>And here is the 1 inch cowl noise, sounding like a windy day:</p>
+        <audio controls src="papermod/1.ogg">Your browser does not support audio.</audio>
+        <p>The difference could be heard at both full-load and idle.</p>
+        <p>Unfortunately, the shortest cowl came with noticeably worse performance; presumably it was recirculating too much hot air. Still, there is a happy medium: <b>1.7 inch cowls cool as well as Intel's design, while being quieter</b>, though your results may vary depending on your case.</p>
+        <h2></h2>
+
+        <h2>Is this recommended?</h2>
+        <p>If you want a great cooler, just buy one. Intel's offerings will never stack up to aftermarket models (even the cheap $20 ones). But if you're like me and are building a budget PC, you may hear an improvement using this paper mod. The process is quick, free, and low-risk, albeit higher risk than not doing so (and I'm sure Intel wouldn't approve). For that reason, I'll leave it up to you to decide.
+        </p>
+
+        <p><a href="index.html">[Back to my homepage]</a></p>
+    </body>
+</html>

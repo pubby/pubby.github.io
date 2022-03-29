@@ -14,3 +14,10 @@ code, pre {
 pre {
     padding: 1em;
 }
+
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+td, th { padding: 4px; }
