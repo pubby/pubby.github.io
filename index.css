@@ -3,8 +3,29 @@ body {
     margin-right: 2em;
 }
 
+#software { 
+    border-left: 1em solid rgba(0,128,255,0.2); 
+    background-color:      rgba(0,128,255,0.05); 
+}
+
+#hardware { 
+    border-left: 1em solid rgba(100,255,0,0.2); 
+    background-color:      rgba(100,255,0,0.05); 
+}
+
+#tabletop { 
+    border-left: 1em solid rgba(255,0,128,0.2);
+    background-color:      rgba(255,0,128,0.05);
+}
+
+#crafts   { 
+    border-left: 1em solid rgba(255,230,100,0.2);
+    background-color:      rgba(255,230,100,0.05);
+}
+
+.indent > .indent { background-color: white; }
+
 .indent {
-    background-color: rgba(0,80,100,0.05);
     padding-left: 1em;
     padding-top: 0.25em;
     padding-bottom: 0.25em;
@@ -23,3 +44,4 @@ li {
     padding: 0.25em;
     list-style-type: none;
 }
+
