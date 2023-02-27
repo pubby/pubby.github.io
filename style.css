@@ -21,3 +21,5 @@ table, th, td {
 }
 
 td, th { padding: 4px; }
+
+img { max-width: 100%; }
