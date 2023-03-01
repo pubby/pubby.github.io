@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="nesfab.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nova+Flat&display=swap" rel="stylesheet">
+        <title>NESFab</title>
+    </head>
+    <body>
+        <div class="flex">
+            <img src="nesfab/logo_big.png">
+
+            <div class="box">
+                <a href="#download">Download</a> | 
+                <a href="#games">Games</a> | 
+                <a href="nesfab/doc.html">Documentation</a> | 
+                <a href="https://github.com/pubby/nesfab">Source</a> | 
+                <a href="https://discord.gg/RUrYmC5ZeE">Discord</a>
+            </div>
+        </div>
+
+        <div class="box intro wide">
+            <p>
+                NESFab is a new programming language for creating 
+                <a href="https://en.wikipedia.org/wiki/Nintendo_Entertainment_System">NES</a> games. 
+                Designed with 8-bit limitations in mind, the language is more ergonomic to use than C, while also producing faster assembly code.
+                It's easy to get started with, and has a useful set of libraries for making your first &mdash; or hundredth &mdash; NES game.
+            </p>
+        </div>
+
+        <div class="box wide">
+            <pre>
+// This small program plays a sound effect.
+
+// Variables:
+vars /sound
+    UU pitch = 1000
+
+// Sends 'pitch' variable to the APU, emitting sound:
+fn play_sound()
+    {$4015}(%100)
+    {$4008}($FF)
+    {$400A}(pitch.a)
+    {$400B}(pitch.b & %111)
+
+mode main()
+    {$2000}(%10000000)
+    while true
+        pitch *= 1.01
+        play_sound()
+        nmi</pre>
+        </div>
+
+        <h1>Innovations &amp; Features</h1>
+
+        <h2>Performance</h2>
+        <div class="box wide">
+            <p>NESFab generates better 6502 machine code than any high-level compiler tested, including GCC and LLVM.
+            It's possible that NESFab is the best performing 6502 compiler in existence.</p>
+            <a href="nesfab/combined.png" target="_blank">
+                <img src="nesfab/combined.png" class="full">
+            </a>
+            <sup>(Click the image to open in a new tab.)</sup>
+            <p>
+                Traditionally, NES games were written by hand in assembly language, 
+                as anything else at the time was too sluggish to run on the 1980's era CPU.
+                NESFab isn't sluggish though!
+            </p>
+        </div>
+
+        <h2>Automatic Bank Switching</h2>
+        <div class="box wide">
+            <p>
+                The NES uses a 16-bit address space, 
+                but most games need more data than 16-bits can represent.
+                To overcome this limitation, 
+                programs can be broken up into segments called "banks",
+                and hardware on the cartridge can switch between these banks
+                at runtime.
+            </p>
+            <p>
+                Handling banks is normally a tedious affair for programmers, 
+                but NESFab handles it for you. 
+                The compiler smartly allocates code and data into banks,
+                with the gritty details abstracted away.
+            </p>
+            <img src="nesfab/cartridge.jpg" class="full">
+        </div>
+
+        <h2>Easy Asset Loading</h2>
+        <div class="box wide">
+            <p>
+                Writing a half-dozen conversion scripts isn't fun. Luckily, NESFab automates asset loading and conversion for you.
+                Just plop your assets into your project directory, import a library, and you're rolling!
+            </p>
+            <img src="nesfab/yychr.png" class="full">
+        </div>
+
+        <h1 id="download">Download</h1>
+
+        <div class="box wide">
+            <p>The best way to get NESFab is by compiling it from the source, which will always be up-to-date. 
+            For those who don't like compiling, binary releases will be provided from time to time.</p>
+            <ul>
+                <li><h3><a href="https://github.com/pubby/nesfab">Source Code</a></h3></li>
+                <li><h3><a href="https://github.com/pubby/nesfab/releases">Binary Releases</a></h3></li>
+            </ul>
+            <p>Please understand that NESFab is currently in beta, and likely has bugs and missing features.</p>
+        </div>
+
+        <h1 id="games">Completed Games</h1>
+
+        <div class="box wide">
+            <div class="flex">
+                <a class="game" href="hang_glider.html">
+                    <img src="nesfab/hang_glider.png">
+                    <br>Hang Glider - by Pubby
+                </a>
+            </div>
+        </div>
+
+        <p><a href="index.html">[Back to my homepage]</a></p>
+    </body>
+</html>
