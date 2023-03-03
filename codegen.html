@@ -868,7 +868,7 @@ L1:
         but a few small gains can still be had using 
         <a href="https://en.wikipedia.org/wiki/Peephole_optimization">peep-hole optimization</a>.
         Mostly, this is done for the loads inserted at the very end (between basic-block transitions),
-        as those weren't generated using the combination method, and so lack typical optimization.
+        as those weren't generated using the combination method, and so lack the optimization the surrounding code has.
         </p>
 
         <p>In addition to peephole, it's recommended to clean up the branch code a bit.
@@ -884,11 +884,11 @@ L1:
 
         <ul>
             <li>Creating the order is O(N<sup>2</sup>), but has a negligable runtime cost.
-            In practice, typical code is very easy to order.</li>
+            In practice, typical IRs are very easy to order.</li>
             <li>I don't know what the complexity of going out of SSA is, but I'm assuming its O(N<sup>2</sup>). 
                     Regardless, the runtime cost is negligable.</li>
             <li>Code-generating basic blocks is O(N), with a high constant multiplier.
-                This has a impactful runtime cost, with the bottleneck being the hash table.
+                This has an impactful runtime cost, with the bottleneck being the hash table.
                 I use a very fast hash-table of my own design (amusingly, it's faster than the so-called <a href="https://probablydance.com/2017/02/26/i-wrote-the-fastest-hashtable/">"fastest hash table"</a>), which alleviates this.
             </li>
             <li>The PBQP problem is solved in O(N) relative to the number of edges, and O(N<sup>3</sup>) relative to the number of choices.
