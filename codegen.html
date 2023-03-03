@@ -868,7 +868,7 @@ L1:
         but a few small gains can still be had using 
         <a href="https://en.wikipedia.org/wiki/Peephole_optimization">peep-hole optimization</a>.
         Mostly, this is done for the loads inserted at the very end (between basic-block transitions),
-        as those weren't generated using the combination method, and so lack the optimization the surrounding code has.
+        as those weren't generated using the combination method, and so lack the optimization the rest of the code has.
         </p>
 
         <p>In addition to peephole, it's recommended to clean up the branch code a bit.
@@ -880,7 +880,9 @@ L1:
         Both of these are hard to do, so my compiler only reorders loads, 
         moving them based on liveness information and pattern matching.</p>
 
-        <h2>Complexity and Performance</h2>
+        <h2>Performance</h2>
+
+        <p>Computational Complexities:</p>
 
         <ul>
             <li>Creating the order is O(N<sup>2</sup>), but has a negligable runtime cost.
@@ -896,26 +898,27 @@ L1:
                 I reckon the PBQP solver could be implemented using SIMD if necessary, but I haven't found the need.</li>
         </ul>
 
-        <p>Generating combinations easily fills the cache, and once generated, 
-        there's a ton of cache misses involved in reading the combinations back.
-        Thus, it's a good idea to evaluate and discard the combinations in a manner that doesn't require </p>
+        <p>The overall performance of the algorithm is "good enough"; it takes a few MS to run,
+        which is longer than all the previous steps of the compiler,
+        but fast enough to not be worth complaining about. 
+        Most of the time is spent in the hash-table code and PBQP solver, 
+        with additional losses due to the algorithm's penchance for pipeline stalls and cache misses.</p>
 
-        TODO!!!
-
-        <p>Rather than tracking memory precisely, 
-        I allocate combinations in a hefty memory pool and free them after each step.
-        I did experiment with a few garbage-collection ideas, but none proved fruitful.</p>
-
+        <p>Regarding the cache, the algorithm spends a lot of memory storing each combination,
+        but in the end only a few combinations actually matter. 
+        Thus, it's ideal to throw out as many combinations as possible without fetching their memory,
+        using simple heurstics like comparing costs to due so. 
+        </p>
+        
         <p>Coming up with a decent implementation of continuations in C++ was challenging.
         The issue was, either compilation speed would blow up, or run-time speed would blow up, or both.
         Eventually, I settled on using templates to generate linked-lists of functions, which are then evaluated.
-        This was the fastest at both compile-time and run-time, but it's difficult for me to assess why.
+        This was the fastest at both compile-time and run-time, but I'm unable to discern why.
         </p>
-
-        <h3>Control Flow - Part 3: PBQP</h3>
 
         <h2>Other Approaches</h2>
 
+        <p></p>
         <p>As I mentioned in the beginning, I know very little about </p>
 
         <p>This article is really about code-generation, but I'll provide a </p>
