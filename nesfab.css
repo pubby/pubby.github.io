@@ -10,6 +10,7 @@ body {
 
 code, pre {
     background-color: rgba(20, 20, 80, 0.05);
+    overflow: auto;
 }
 
 pre {
@@ -73,3 +74,7 @@ h1, h2, h3 {
 a:link { color: orange; }
 a:visited { color: chocolate; }
 a:hover { color: yellow; }
+
+img {
+    max-width: 90vw;
+}
