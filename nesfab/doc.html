@@ -503,107 +503,114 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#byte_blocks_typed_data">12.1. Typed Data</a></li>
 <li><a href="#byte_blocks_untyped_data">12.2. Untyped Data</a></li>
 <li><a href="#_assembly_instructions">12.3. Assembly Instructions</a></li>
+<li><a href="#_special_statements">12.4. Special Statements</a></li>
 </ul>
 </li>
-<li><a href="#_break">13. break</a>
+<li><a href="#_keywords">13. Keywords</a>
 <ul class="sectlevel2">
-<li><a href="#_continue">13.1. <code>continue</code></a></li>
-<li><a href="#kw_switch">13.2. <code>switch</code></a>
+<li><a href="#_if">13.1. <code>if</code></a></li>
+<li><a href="#_else">13.2. <code>else</code></a></li>
+<li><a href="#kw_while">13.3. <code>while</code></a></li>
+<li><a href="#kw_for">13.4. <code>for</code></a></li>
+<li><a href="#kw_do">13.5. <code>do</code></a></li>
+<li><a href="#kw_break">13.6. <code>break</code></a></li>
+<li><a href="#_continue">13.7. <code>continue</code></a></li>
+<li><a href="#kw_switch">13.8. <code>switch</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_switch_asm">13.2.1. <code>switch</code> statement (byte block)</a></li>
+<li><a href="#kw_switch_asm">13.8.1. <code>switch</code> statement (byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_case">13.3. <code>case</code></a></li>
-<li><a href="#kw_default">13.4. <code>default</code></a></li>
-<li><a href="#kw_goto">13.5. <code>goto</code></a>
+<li><a href="#kw_case">13.9. <code>case</code></a></li>
+<li><a href="#kw_default">13.10. <code>default</code></a></li>
+<li><a href="#kw_goto">13.11. <code>goto</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_goto_statement">13.5.1. <code>goto</code> statement</a></li>
-<li><a href="#kw_goto_mode_statement">13.5.2. <code>goto mode</code> statement</a></li>
-<li><a href="#kw_goto_asm">13.5.3. <code>goto</code> (assembly byte block)</a></li>
-<li><a href="#kw_goto_mode_asm">13.5.4. <code>goto mode</code> (assembly byte block)</a></li>
+<li><a href="#kw_goto_statement">13.11.1. <code>goto</code> statement</a></li>
+<li><a href="#kw_goto_mode_statement">13.11.2. <code>goto mode</code> statement</a></li>
+<li><a href="#kw_goto_asm">13.11.3. <code>goto</code> (assembly byte block)</a></li>
+<li><a href="#kw_goto_mode_asm">13.11.4. <code>goto mode</code> (assembly byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_label">13.6. <code>label</code></a>
+<li><a href="#kw_label">13.12. <code>label</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_label_asm">13.6.1. <code>label</code> statement (byte block)</a></li>
+<li><a href="#kw_label_asm">13.12.1. <code>label</code> statement (byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_return">13.7. <code>return</code></a>
+<li><a href="#kw_return">13.13. <code>return</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_return_statement">13.7.1. <code>return</code> statement</a></li>
-<li><a href="#kw_return_expression">13.7.2. <code>return</code> expression</a></li>
+<li><a href="#kw_return_statement">13.13.1. <code>return</code> statement</a></li>
+<li><a href="#kw_return_expression">13.13.2. <code>return</code> expression</a></li>
 </ul>
 </li>
-<li><a href="#kw_fence">13.8. <code>fence</code></a></li>
-<li><a href="#kw_true">13.9. <code>true</code></a></li>
-<li><a href="#kw_false">13.10. <code>false</code></a></li>
-<li><a href="#kw_ready">13.11. <code>ready</code></a></li>
-<li><a href="#kw_system">13.12. <code>system</code></a>
+<li><a href="#kw_fence">13.14. <code>fence</code></a></li>
+<li><a href="#kw_true">13.15. <code>true</code></a></li>
+<li><a href="#kw_false">13.16. <code>false</code></a></li>
+<li><a href="#kw_ready">13.17. <code>ready</code></a></li>
+<li><a href="#kw_system">13.18. <code>system</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_system_ntsc">13.12.1. <code>SYSTEM_NTSC</code></a></li>
-<li><a href="#kw_system_pal">13.12.2. <code>SYSTEM_PAL</code></a></li>
-<li><a href="#kw_system_dendy">13.12.3. <code>SYSTEM_DENDY</code></a></li>
-<li><a href="#kw_system_unknown">13.12.4. <code>SYSTEM_UNKNOWN</code></a></li>
+<li><a href="#kw_system_ntsc">13.18.1. <code>SYSTEM_NTSC</code></a></li>
+<li><a href="#kw_system_pal">13.18.2. <code>SYSTEM_PAL</code></a></li>
+<li><a href="#kw_system_dendy">13.18.3. <code>SYSTEM_DENDY</code></a></li>
+<li><a href="#kw_system_unknown">13.18.4. <code>SYSTEM_UNKNOWN</code></a></li>
 </ul>
 </li>
-<li><a href="#kw_ppu_regs">13.13. PPU Registers</a>
+<li><a href="#kw_ppu_regs">13.19. PPU Registers</a>
 <ul class="sectlevel3">
-<li><a href="#kw_ppuctrl">13.13.1. <code>PPUCTRL</code></a></li>
-<li><a href="#kw_ppumask">13.13.2. <code>PPUMASK</code></a></li>
-<li><a href="#kw_ppustatus">13.13.3. <code>PPUSTATUS</code></a></li>
-<li><a href="#kw_oamaddr">13.13.4. <code>OAMADDR</code></a></li>
-<li><a href="#kw_oamdata">13.13.5. <code>OAMDATA</code></a></li>
-<li><a href="#kw_ppuscroll">13.13.6. <code>PPUSCROLL</code></a></li>
-<li><a href="#kw_ppuaddr">13.13.7. <code>PPUADDR</code></a></li>
-<li><a href="#kw_ppudata">13.13.8. <code>PPUDATA</code></a></li>
-<li><a href="#kw_oamdma">13.13.9. <code>OAMDMA</code></a></li>
+<li><a href="#kw_ppuctrl">13.19.1. <code>PPUCTRL</code></a></li>
+<li><a href="#kw_ppumask">13.19.2. <code>PPUMASK</code></a></li>
+<li><a href="#kw_ppustatus">13.19.3. <code>PPUSTATUS</code></a></li>
+<li><a href="#kw_oamaddr">13.19.4. <code>OAMADDR</code></a></li>
+<li><a href="#kw_oamdata">13.19.5. <code>OAMDATA</code></a></li>
+<li><a href="#kw_ppuscroll">13.19.6. <code>PPUSCROLL</code></a></li>
+<li><a href="#kw_ppuaddr">13.19.7. <code>PPUADDR</code></a></li>
+<li><a href="#kw_ppudata">13.19.8. <code>PPUDATA</code></a></li>
+<li><a href="#kw_oamdma">13.19.9. <code>OAMDMA</code></a></li>
 </ul>
 </li>
-<li><a href="#kw_fn">13.14. <code>fn</code></a>
+<li><a href="#kw_fn">13.20. <code>fn</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_fn_asm">13.14.1. <code>fn</code> statement (assembly byte block)</a></li>
+<li><a href="#kw_fn_asm">13.20.1. <code>fn</code> statement (assembly byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_ct">13.15. <code>ct</code></a>
+<li><a href="#kw_ct">13.21. <code>ct</code></a>
 <ul class="sectlevel3">
-<li><a href="#_ct_fn">13.15.1. <code>ct fn</code></a></li>
-<li><a href="#_ct_value">13.15.2. <code>ct</code> value</a></li>
+<li><a href="#_ct_fn">13.21.1. <code>ct fn</code></a></li>
+<li><a href="#_ct_value">13.21.2. <code>ct</code> value</a></li>
 </ul>
 </li>
-<li><a href="#kw_mode">13.16. <code>mode</code></a></li>
-<li><a href="#kw_nmi">13.17. <code>nmi</code></a>
+<li><a href="#kw_mode">13.22. <code>mode</code></a></li>
+<li><a href="#kw_nmi">13.23. <code>nmi</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_nmi_statement">13.17.1. <code>nmi</code> statement</a></li>
-<li><a href="#kw_nmi_asm">13.17.2. <code>nmi</code> statement (byte block)</a></li>
-<li><a href="#kw_nmi_function">13.17.3. <code>nmi</code> function</a></li>
+<li><a href="#kw_nmi_statement">13.23.1. <code>nmi</code> statement</a></li>
+<li><a href="#kw_nmi_asm">13.23.2. <code>nmi</code> statement (byte block)</a></li>
+<li><a href="#kw_nmi_function">13.23.3. <code>nmi</code> function</a></li>
 </ul>
 </li>
-<li><a href="#kw_asm">13.18. <code>asm</code></a></li>
-<li><a href="#kw_struct">13.19. <code>struct</code></a></li>
-<li><a href="#kw_vars">13.20. <code>vars</code></a></li>
-<li><a href="#kw_data">13.21. <code>data</code></a></li>
-<li><a href="#kw_omni">13.22. <code>omni</code></a></li>
-<li><a href="#kw_charmap">13.23. <code>charmap</code></a></li>
-<li><a href="#_chrrom">13.24. <code>chrrom</code></a></li>
-<li><a href="#kw_file">13.25. <code>file</code></a>
+<li><a href="#kw_asm">13.24. <code>asm</code></a></li>
+<li><a href="#kw_struct">13.25. <code>struct</code></a></li>
+<li><a href="#kw_vars">13.26. <code>vars</code></a></li>
+<li><a href="#kw_data">13.27. <code>data</code></a></li>
+<li><a href="#kw_omni">13.28. <code>omni</code></a></li>
+<li><a href="#kw_charmap">13.29. <code>charmap</code></a></li>
+<li><a href="#_chrrom">13.30. <code>chrrom</code></a></li>
+<li><a href="#kw_file">13.31. <code>file</code></a>
 <ul class="sectlevel3">
-<li><a href="#file_bin">13.25.1. Binary file formats</a></li>
-<li><a href="#file_txt">13.25.2. <code>.txt</code> format</a></li>
-<li><a href="#file_png">13.25.3. <code>.png</code> format</a></li>
-<li><a href="#file_raw">13.25.4. <code>raw</code> target</a></li>
-<li><a href="#file_fmt">13.25.5. <code>fmt</code> target</a></li>
-<li><a href="#file_pbz">13.25.6. <code>pbz</code> target</a></li>
-<li><a href="#file_rlz">13.25.7. <code>rlz</code> target</a></li>
+<li><a href="#file_bin">13.31.1. Binary file formats</a></li>
+<li><a href="#file_txt">13.31.2. <code>.txt</code> format</a></li>
+<li><a href="#file_png">13.31.3. <code>.png</code> format</a></li>
+<li><a href="#file_raw">13.31.4. <code>raw</code> target</a></li>
+<li><a href="#file_fmt">13.31.5. <code>fmt</code> target</a></li>
+<li><a href="#file_pbz">13.31.6. <code>pbz</code> target</a></li>
+<li><a href="#file_rlz">13.31.7. <code>rlz</code> target</a></li>
 </ul>
 </li>
-<li><a href="#kw_audio">13.26. <code>audio</code></a>
+<li><a href="#kw_audio">13.32. <code>audio</code></a>
 <ul class="sectlevel3">
-<li><a href="#audio_puf1_music">13.26.1. <code>puf1_music</code> target</a></li>
-<li><a href="#audio_puf1_sfx">13.26.2. <code>puf1_sfx</code> target</a></li>
+<li><a href="#audio_puf1_music">13.32.1. <code>puf1_music</code> target</a></li>
+<li><a href="#audio_puf1_sfx">13.32.2. <code>puf1_sfx</code> target</a></li>
 </ul>
 </li>
-<li><a href="#kw_stows">13.27. <code>stows</code></a></li>
-<li><a href="#kw_employs">13.28. <code>employs</code></a></li>
+<li><a href="#kw_stows">13.33. <code>stows</code></a></li>
+<li><a href="#kw_employs">13.34. <code>employs</code></a></li>
 </ul>
 </li>
 <li><a href="#modifiers">14. Modifiers</a>
@@ -1980,17 +1987,28 @@ op (addr)    // Indirect
 op addr, x   // Direct, X
 op addr, y   // Direct, Y
 op (addr, y) // Indirect, X
-op (addr), y // Indirect, Y
-
-- `op` is one of the op codes listed below in all uppercase, or all lowercase letters.
-- `num` is a value of type &lt;&lt;type_integer, `U`&gt;&gt;.
-- `addr` is a value of type &lt;&lt;type_address, `AA`&gt;&gt;.
-
-Valid Op Codes:</pre>
+op (addr), y // Indirect, Y</pre>
 </div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>op</code> is one of the op codes listed below in all uppercase, or all lowercase letters.</p>
+</li>
+<li>
+<p><code>num</code> is a value of type <a href="#type_integer"><code>U</code></a>.</p>
+</li>
+<li>
+<p><code>addr</code> is a value of type <a href="#type_address"><code>AA</code></a>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>adc
+<p>Valid Op Codes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>adc
 and
 asl
 bcc
@@ -2059,178 +2077,236 @@ isc
 rla
 rra
 slo
-sre</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>Example:</pre>
+sre</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>data /some_group
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>data /some_group
     [] some_data
         lda #30
         sta $2003
         ldy #0
         lda ($2000), y
-        sta ($00, x)</p>
+        sta ($00, x)</pre>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>=== Special Statements
-
-The following statements have special meaning inside of byte blocks:
-
-- &lt;&lt;kw_label_asm, `label`&gt;&gt;
-- &lt;&lt;kw_nmi_asm, `nmi`&gt;&gt;
-
-In addition, the following statements have special meaning inside of &lt;&lt;kw_asm, `asm fn`&gt;&gt; byte blocks:
-
-- &lt;&lt;kw_fn_asm, `fn`&gt;&gt;
-- &lt;&lt;kw_goto_asm, `goto`&gt;&gt;
-- &lt;&lt;kw_goto_mode_asm, `goto mode`&gt;&gt;
-- &lt;&lt;kw_switch_asm, `switch`&gt;&gt;
-
-== Keywords
-
-=== `if`
-
-The `if` &lt;&lt;statement, statement&gt;&gt; allows for conditional execution of &lt;&lt;blocks, code blocks&gt;&gt;.
-It behaves like `if` in most programming languages.
-
-Syntax:</pre>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_special_statements">12.4. Special Statements</h3>
+<div class="paragraph">
+<p>The following statements have special meaning inside of byte blocks:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#kw_label_asm"><code>label</code></a></p>
+</li>
+<li>
+<p><a href="#kw_nmi_asm"><code>nmi</code></a></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>if expression
-    code block</p>
+<p>In addition, the following statements have special meaning inside of <a href="#kw_asm"><code>asm fn</code></a> byte blocks:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>The conditional expression of `if` will be converted to `Bool`.
-If this evaluates to `true`, the body of the `if` statement will be executed.
-
-=== `else`
-
-The `else` &lt;&lt;statement, statement&gt;&gt; allows for control flow to branch between two &lt;&lt;blocks, code blocks&gt;&gt;.
-It behaves like `else` in most programming languages.
-
-This statement must be paired with a corresponding `if.`
-
-Syntax:</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>if expression
-    code block
-else
-    code block</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>If the corresponding `if` evaluates to `false`, the body of the `else` statement will be executed.
-
-For visual appeal, other statements may follow the `else` keyword on the same line, including `if`, `for`, and `while`.
-This looks like:</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>if expression
-    code block
-else if expresssion
-    code block
-else
-    code block</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>=== `while` [[kw_while]]
-
-The `while` &lt;&lt;statement, statement&gt;&gt; allows for looping control flow.
-It behaves like `while` in most programming languages.
-
-Syntax:</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>while condition
-    code block</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>`condition` is an expression converted to `Bool`. While this expression evaluates to `true`, the loop body will execute.
-After the code in `code block` executes, control flow jumps back to the `condition` test.
-
-=== `for` [[kw_for]]
-
-The `for` &lt;&lt;statement, statement&gt;&gt; allows for looping control flow, with more features than &lt;&lt;kw_while&gt;&gt;.
-It behaves like `for` in most programming languages.
-
-Syntax:</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>for initialization ; condition ; iteration
-    code block</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>- `initialization` executes before the loop and can be an expression or a variable initialization.
-- `condition` is an expression converted to `Bool`. While this expression evaluates to `true`, the loop body will execute.
-- `iteration` is an expression to be run at the end of every iteration (following the code block).
-
-Any of these expressions may be empty. An empty `condition` is equivalent to `true`.
-
-After the code in `code block` executes, `iteration` executes, and then control flow jumps back to the `condition` test.
-
-Like `while`, the keywords &lt;&lt;kw_break&gt;&gt; and &lt;&lt;kw_continue&gt;&gt; may be used inside of a `for`.
-
-For visual appeal, the expressions of `for` may be put on separate lines starting with the `;` character, like so:</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>for initialization
-; condition
-; iteration
-    code block</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>=== `do` [[kw_do]]
-
-The `do` keyword can be prefixed to either &lt;&lt;kw_while&gt;&gt; or &lt;&lt;kw_for&gt;&gt; to alter their behavior.
-A loop with `do` skips the `condition` check of its first iteration.
-
-Syntax:</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>do while condition
-    code block</p>
-</div>
-<div class="paragraph">
-<p>do for initialization ; condition ; iteration
-    code block</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>[NOTE]
-Loops written with `do` often have better runtime performance than loops written without.
-
-=== `break` [[kw_break]]
-
-`break` ends the execution of the containing &lt;&lt;kw_while&gt;&gt;, &lt;&lt;kw_for&gt;&gt;, or &lt;&lt;kw_switch&gt;&gt; statement.
-It behaves like `break` in most programming languages.
-
-Syntax:</pre>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#kw_fn_asm"><code>fn</code></a></p>
+</li>
+<li>
+<p><a href="#kw_goto_asm"><code>goto</code></a></p>
+</li>
+<li>
+<p><a href="#kw_goto_mode_asm"><code>goto mode</code></a></p>
+</li>
+<li>
+<p><a href="#kw_switch_asm"><code>switch</code></a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_break">13. break</h2>
+<h2 id="_keywords">13. Keywords</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_if">13.1. <code>if</code></h3>
+<div class="paragraph">
+<p>The <code>if</code> <a href="#statement">statement</a> allows for conditional execution of <a href="#blocks">code blocks</a>.
+It behaves like <code>if</code> in most programming languages.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>if expression
+    code block</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The conditional expression of <code>if</code> will be converted to <code>Bool</code>.
+If this evaluates to <code>true</code>, the body of the <code>if</code> statement will be executed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_else">13.2. <code>else</code></h3>
+<div class="paragraph">
+<p>The <code>else</code> <a href="#statement">statement</a> allows for control flow to branch between two <a href="#blocks">code blocks</a>.
+It behaves like <code>else</code> in most programming languages.</p>
+</div>
+<div class="paragraph">
+<p>This statement must be paired with a corresponding <code>if.</code></p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>if expression
+    code block
+else
+    code block</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the corresponding <code>if</code> evaluates to <code>false</code>, the body of the <code>else</code> statement will be executed.</p>
+</div>
+<div class="paragraph">
+<p>For visual appeal, other statements may follow the <code>else</code> keyword on the same line, including <code>if</code>, <code>for</code>, and <code>while</code>.
+This looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>if expression
+    code block
+else if expresssion
+    code block
+else
+    code block</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kw_while">13.3. <code>while</code></h3>
+<div class="paragraph">
+<p>The <code>while</code> <a href="#statement">statement</a> allows for looping control flow.
+It behaves like <code>while</code> in most programming languages.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>while condition
+    code block</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>condition</code> is an expression converted to <code>Bool</code>. While this expression evaluates to <code>true</code>, the loop body will execute.
+After the code in <code>code block</code> executes, control flow jumps back to the <code>condition</code> test.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kw_for">13.4. <code>for</code></h3>
+<div class="paragraph">
+<p>The <code>for</code> <a href="#statement">statement</a> allows for looping control flow, with more features than <a href="#kw_while"><code>while</code></a>.
+It behaves like <code>for</code> in most programming languages.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>for initialization ; condition ; iteration
+    code block</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>initialization</code> executes before the loop and can be an expression or a variable initialization.</p>
+</li>
+<li>
+<p><code>condition</code> is an expression converted to <code>Bool</code>. While this expression evaluates to <code>true</code>, the loop body will execute.</p>
+</li>
+<li>
+<p><code>iteration</code> is an expression to be run at the end of every iteration (following the code block).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Any of these expressions may be empty. An empty <code>condition</code> is equivalent to <code>true</code>.</p>
+</div>
+<div class="paragraph">
+<p>After the code in <code>code block</code> executes, <code>iteration</code> executes, and then control flow jumps back to the <code>condition</code> test.</p>
+</div>
+<div class="paragraph">
+<p>Like <code>while</code>, the keywords <a href="#kw_break"><code>break</code></a> and <a href="#kw_continue">[kw_continue]</a> may be used inside of a <code>for</code>.</p>
+</div>
+<div class="paragraph">
+<p>For visual appeal, the expressions of <code>for</code> may be put on separate lines starting with the <code>;</code> character, like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>for initialization
+; condition
+; iteration
+    code block</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kw_do">13.5. <code>do</code></h3>
+<div class="paragraph">
+<p>The <code>do</code> keyword can be prefixed to either <a href="#kw_while"><code>while</code></a> or <a href="#kw_for"><code>for</code></a> to alter their behavior.
+A loop with <code>do</code> skips the <code>condition</code> check of its first iteration.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>do while condition
+    code block
+
+do for initialization ; condition ; iteration
+    code block</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Loops written with <code>do</code> often have better runtime performance than loops written without.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kw_break">13.6. <code>break</code></h3>
+<div class="paragraph">
+<p><code>break</code> ends the execution of the containing <a href="#kw_while"><code>while</code></a>, <a href="#kw_for"><code>for</code></a>, or <a href="#kw_switch"><code>switch</code></a> statement.
+It behaves like <code>break</code> in most programming languages.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>break</pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Example:</p>
 </div>
@@ -2244,10 +2320,11 @@ Syntax:</pre>
 <div class="paragraph">
 <p>If you want to exit out of multiple nested statements, use <a href="#kw_goto"><code>goto</code></a>.</p>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_continue">13.1. <code>continue</code></h3>
+<h3 id="_continue">13.7. <code>continue</code></h3>
 <div class="paragraph">
-<p><code>continue</code> is used inside <a href="#kw_while">[kw_while]</a> or <a href="#kw_for">[kw_for]</a> statements,
+<p><code>continue</code> is used inside <a href="#kw_while"><code>while</code></a> or <a href="#kw_for"><code>for</code></a> statements,
 and causes control flow to jump to the end of the loop&#8217;s code block.
 It behaves like <code>condition</code> in most programming languages.</p>
 </div>
@@ -2272,7 +2349,7 @@ It behaves like <code>condition</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_switch">13.2. <code>switch</code></h3>
+<h3 id="kw_switch">13.8. <code>switch</code></h3>
 <div class="paragraph">
 <p>The <code>switch</code> statement branches control flow based on an byte value.
 <code>switch</code> is similar to <a href="#kw_if">[kw_if]</a>, but instead of having a choice between two code blocks,
@@ -2318,7 +2395,7 @@ Both of these label where control flow will jump.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_switch_asm">13.2.1. <code>switch</code> statement (byte block)</h4>
+<h4 id="kw_switch_asm">13.8.1. <code>switch</code> statement (byte block)</h4>
 <div class="paragraph">
 <p>In byte blocks, the <code>switch</code> statement causes the mapper to bankswitch to a specified <a href="#banks">bank</a>.</p>
 </div>
@@ -2353,7 +2430,7 @@ switch ax     // Switch to the bank in those registers</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_case">13.3. <code>case</code></h3>
+<h3 id="kw_case">13.9. <code>case</code></h3>
 <div class="paragraph">
 <p><code>case</code> is used inside of <a href="#kw_switch"><code>switch</code></a> statements as a label.
 Control flow will jump to the <code>case</code> from the <code>switch</code> if the switch&#8217;s expression matches the <code>case</code> value.</p>
@@ -2382,14 +2459,14 @@ code block</pre>
 </div>
 <div class="paragraph">
 <p>As stated, <code>case</code> is a label.
-It can appear inside other statements such as <a href="#kw_for">[kw_for]</a> or <a href="#kw_if">[kw_if]</a>.</p>
+It can appear inside other statements such as <a href="#kw_for"><code>for</code></a> or <a href="#kw_if">[kw_if]</a>.</p>
 </div>
 <div class="paragraph">
 <p>See more examples in <a href="#kw_switch"><code>switch</code></a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_default">13.4. <code>default</code></h3>
+<h3 id="kw_default">13.10. <code>default</code></h3>
 <div class="paragraph">
 <p><code>default</code> is used inside of <a href="#kw_switch"><code>switch</code></a> statements as a label.
 Control flow will jump to the <code>default</code> from the <code>switch</code> if the switch&#8217;s expression matches no enclosed <a href="#hw_case">[hw_case]</a> statemen.</p>
@@ -2415,19 +2492,19 @@ code block</pre>
 </div>
 <div class="paragraph">
 <p>As stated, <code>default</code> is a label.
-It can appear inside other statements such as <a href="#kw_for">[kw_for]</a> or <a href="#kw_if">[kw_if]</a>.</p>
+It can appear inside other statements such as <a href="#kw_for"><code>for</code></a> or <a href="#kw_if">[kw_if]</a>.</p>
 </div>
 <div class="paragraph">
 <p>See more examples in <a href="#kw_switch"><code>switch</code></a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_goto">13.5. <code>goto</code></h3>
+<h3 id="kw_goto">13.11. <code>goto</code></h3>
 <div class="paragraph">
 <p>The keyword <code>goto</code> has use in two different types of statements: <code>goto</code> and <code>goto mode</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_goto_statement">13.5.1. <code>goto</code> statement</h4>
+<h4 id="kw_goto_statement">13.11.1. <code>goto</code> statement</h4>
 <div class="paragraph">
 <p>The <code>goto</code> statement causes control flow to jump to a corresponding <a href="#kw_label"><code>label</code></a> in the same function.
 It behaves like <code>goto</code> in most programming languages.</p>
@@ -2458,7 +2535,7 @@ It behaves like <code>goto</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_goto_mode_statement">13.5.2. <code>goto mode</code> statement</h4>
+<h4 id="kw_goto_mode_statement">13.11.2. <code>goto mode</code> statement</h4>
 <div class="paragraph">
 <p>The <code>goto mode</code> statement causes control flow to jump to a <a href="#kw_mode"><code>mode</code></a>,
 discarding the current call stack and starting anew.
@@ -2511,7 +2588,7 @@ mode bar(U some_argument)
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_goto_asm">13.5.3. <code>goto</code> (assembly byte block)</h4>
+<h4 id="kw_goto_asm">13.11.3. <code>goto</code> (assembly byte block)</h4>
 <div class="paragraph">
 <p>In assembly functions, the <code>goto</code> statement causes control to switch execution to another function,
 clobbering all registers in the process.
@@ -2553,7 +2630,7 @@ asm fn bar()
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_goto_mode_asm">13.5.4. <code>goto mode</code> (assembly byte block)</h4>
+<h4 id="kw_goto_mode_asm">13.11.4. <code>goto mode</code> (assembly byte block)</h4>
 <div class="paragraph">
 <p>In assembly functions, the <code>goto mode</code> statement causes control to switch execution to a mode,
 clobbering all registers, discarding the current call stack, and starting anew.
@@ -2602,7 +2679,7 @@ asm fn bar()
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_label">13.6. <code>label</code></h3>
+<h3 id="kw_label">13.12. <code>label</code></h3>
 <div class="paragraph">
 <p>The <code>label</code> statement introduces a point which a <a href="#kw_goto_statement"><code>goto</code> statement</a> can jump to .
 It has no effect otherwise.
@@ -2638,7 +2715,7 @@ code_block</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_label_asm">13.6.1. <code>label</code> statement (byte block)</h4>
+<h4 id="kw_label_asm">13.12.1. <code>label</code> statement (byte block)</h4>
 <div class="paragraph">
 <p>Labels give names to specific addresses inside of byte blocks.
 They behave similarly to <a href="#kw_ct"><code>ct</code></a> definitions, defining values of type <a href="#type_address"><code>AA</code> and <code>AAA</code></a>.</p>
@@ -2686,9 +2763,9 @@ byte_block</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_return">13.7. <code>return</code></h3>
+<h3 id="kw_return">13.13. <code>return</code></h3>
 <div class="sect3">
-<h4 id="kw_return_statement">13.7.1. <code>return</code> statement</h4>
+<h4 id="kw_return_statement">13.13.1. <code>return</code> statement</h4>
 <div class="paragraph">
 <p>The <code>return</code> statement ends the execution of the current function,
 using its argument as the function&#8217;s return value.
@@ -2712,7 +2789,7 @@ It behaves like <code>return</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_return_expression">13.7.2. <code>return</code> expression</h4>
+<h4 id="kw_return_expression">13.13.2. <code>return</code> expression</h4>
 <div class="paragraph">
 <p>A <code>return</code> expression <strong>does not cause functions to return</strong>.
 Instead, it provides a handle to the current function&#8217;s return value.
@@ -2734,7 +2811,7 @@ by storing into the address.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_fence">13.8. <code>fence</code></h3>
+<h3 id="kw_fence">13.14. <code>fence</code></h3>
 <div class="paragraph">
 <p>The <code>fence</code> statement is used for both writing concurrent code, and for interacting with hardware.
 It imposes constraints on how global variables are loaded and stored,
@@ -2827,7 +2904,7 @@ To do that, the modifier <a href="#hw_employs">[hw_employs]</a> is required.
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_true">13.9. <code>true</code></h3>
+<h3 id="kw_true">13.15. <code>true</code></h3>
 <div class="paragraph">
 <p><code>true</code> is an expression of type <code>Bool</code>, and has a compile-time constant value.
 When converted to an integer type, it will have the value <code>1</code>.</p>
@@ -2842,7 +2919,7 @@ When converted to an integer type, it will have the value <code>1</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_false">13.10. <code>false</code></h3>
+<h3 id="kw_false">13.16. <code>false</code></h3>
 <div class="paragraph">
 <p><code>false</code> is an expression of type <code>Bool</code>, and has a compile-time constant value.
 When converted to an integer type, it will have the value <code>0</code>.</p>
@@ -2857,7 +2934,7 @@ When converted to an integer type, it will have the value <code>0</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_ready">13.11. <code>ready</code></h3>
+<h3 id="kw_ready">13.17. <code>ready</code></h3>
 <div class="paragraph">
 <p><code>ready</code> is an expression of type <code>Bool</code> which returns <code>true</code> if both an <a href="#nmi">NMI</a> is active and the program was <a href="#kw_nmi">waiting on one</a>,
 or <code>false</code> otherwise.
@@ -2906,7 +2983,7 @@ There is more than one way to achieve concurrent safety. See <a href="#kw_fence"
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_system">13.12. <code>system</code></h3>
+<h3 id="kw_system">13.18. <code>system</code></h3>
 <div class="paragraph">
 <p><code>system</code> is an expression of type <code>U</code> which returns the <a href="#opt_system">current NES system</a>.</p>
 </div>
@@ -2973,7 +3050,7 @@ but the pointed-to value must never be modified by the program.</p>
 and its address cannot be taken.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_system_ntsc">13.12.1. <code>SYSTEM_NTSC</code></h4>
+<h4 id="kw_system_ntsc">13.18.1. <code>SYSTEM_NTSC</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_NTSC</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>0</code>.</p>
 </div>
@@ -2987,7 +3064,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_pal">13.12.2. <code>SYSTEM_PAL</code></h4>
+<h4 id="kw_system_pal">13.18.2. <code>SYSTEM_PAL</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_PAL</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>1</code>.</p>
 </div>
@@ -3001,7 +3078,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_dendy">13.12.3. <code>SYSTEM_DENDY</code></h4>
+<h4 id="kw_system_dendy">13.18.3. <code>SYSTEM_DENDY</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_DENDY</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>2</code>.</p>
 </div>
@@ -3015,7 +3092,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_unknown">13.12.4. <code>SYSTEM_UNKNOWN</code></h4>
+<h4 id="kw_system_unknown">13.18.4. <code>SYSTEM_UNKNOWN</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_UNKNOWN</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>3</code>.</p>
 </div>
@@ -3030,7 +3107,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_ppu_regs">13.13. PPU Registers</h3>
+<h3 id="kw_ppu_regs">13.19. PPU Registers</h3>
 <div class="paragraph">
 <p>The following <a href="https://www.nesdev.org/wiki/PPU_registers">PPU registers</a> have keywords.
 All of these are expressions of type <code>AA</code> with compile-time constant values.</p>
@@ -3086,7 +3163,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="kw_ppuctrl">13.13.1. <code>PPUCTRL</code></h4>
+<h4 id="kw_ppuctrl">13.19.1. <code>PPUCTRL</code></h4>
 <div class="paragraph">
 <p><code>PPUCTRL</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2000</code>.</p>
 </div>
@@ -3103,7 +3180,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppumask">13.13.2. <code>PPUMASK</code></h4>
+<h4 id="kw_ppumask">13.19.2. <code>PPUMASK</code></h4>
 <div class="paragraph">
 <p><code>PPUMASK</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2001</code>.</p>
 </div>
@@ -3120,7 +3197,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppustatus">13.13.3. <code>PPUSTATUS</code></h4>
+<h4 id="kw_ppustatus">13.19.3. <code>PPUSTATUS</code></h4>
 <div class="paragraph">
 <p><code>PPUSTATUS</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2002</code>.</p>
 </div>
@@ -3137,7 +3214,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamaddr">13.13.4. <code>OAMADDR</code></h4>
+<h4 id="kw_oamaddr">13.19.4. <code>OAMADDR</code></h4>
 <div class="paragraph">
 <p><code>OAMADDR</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2003</code>.</p>
 </div>
@@ -3154,7 +3231,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamdata">13.13.5. <code>OAMDATA</code></h4>
+<h4 id="kw_oamdata">13.19.5. <code>OAMDATA</code></h4>
 <div class="paragraph">
 <p><code>OAMDATA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2004</code>.</p>
 </div>
@@ -3171,7 +3248,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppuscroll">13.13.6. <code>PPUSCROLL</code></h4>
+<h4 id="kw_ppuscroll">13.19.6. <code>PPUSCROLL</code></h4>
 <div class="paragraph">
 <p><code>PPUSCROLL</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2005</code>.</p>
 </div>
@@ -3188,7 +3265,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppuaddr">13.13.7. <code>PPUADDR</code></h4>
+<h4 id="kw_ppuaddr">13.19.7. <code>PPUADDR</code></h4>
 <div class="paragraph">
 <p><code>PPUADDR</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2006</code>.</p>
 </div>
@@ -3205,7 +3282,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppudata">13.13.8. <code>PPUDATA</code></h4>
+<h4 id="kw_ppudata">13.19.8. <code>PPUDATA</code></h4>
 <div class="paragraph">
 <p><code>PPUDATA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2007</code>.</p>
 </div>
@@ -3222,7 +3299,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamdma">13.13.9. <code>OAMDMA</code></h4>
+<h4 id="kw_oamdma">13.19.9. <code>OAMDMA</code></h4>
 <div class="paragraph">
 <p><code>OAMDMA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$4014</code>.</p>
 </div>
@@ -3240,7 +3317,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_fn">13.14. <code>fn</code></h3>
+<h3 id="kw_fn">13.20. <code>fn</code></h3>
 <div class="paragraph">
 <p>The <code>fn</code> keyword declares a
 <a href="https://en.wikipedia.org/wiki/Function_(computer_programming)">function</a>
@@ -3313,7 +3390,7 @@ Unlike other programming languages, functions in NESFab cannot be nested or recu
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_fn_asm">13.14.1. <code>fn</code> statement (assembly byte block)</h4>
+<h4 id="kw_fn_asm">13.20.1. <code>fn</code> statement (assembly byte block)</h4>
 <div class="paragraph">
 <p>In assembly functions, the <code>fn</code> statement calls a NESFab function,
 clobbering all registers in the process.</p>
@@ -3371,13 +3448,13 @@ asm fn bar()
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_ct">13.15. <code>ct</code></h3>
+<h3 id="kw_ct">13.21. <code>ct</code></h3>
 <div class="paragraph">
 <p><code>ct</code> is short for <em>compile-time</em>.
 The keyword can be prefixed onto value and function declarations to <strong>insist</strong> that their computations occur at compile-time.</p>
 </div>
 <div class="sect3">
-<h4 id="_ct_fn">13.15.1. <code>ct fn</code></h4>
+<h4 id="_ct_fn">13.21.1. <code>ct fn</code></h4>
 <div class="paragraph">
 <p>Syntax:</p>
 </div>
@@ -3391,7 +3468,7 @@ The keyword can be prefixed onto value and function declarations to <strong>insi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ct_value">13.15.2. <code>ct</code> value</h4>
+<h4 id="_ct_value">13.21.2. <code>ct</code> value</h4>
 <div class="paragraph">
 <p>Syntax:</p>
 </div>
@@ -3409,7 +3486,7 @@ The keyword can be prefixed onto value and function declarations to <strong>insi
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_mode">13.16. <code>mode</code></h3>
+<h3 id="kw_mode">13.22. <code>mode</code></h3>
 <div class="paragraph">
 <p>The <code>mode</code> keyword declares a mode function at global scope.
 Modes are similar to <a href="#kw_fn">regular functions</a>, but they do not return.
@@ -3505,12 +3582,12 @@ This happens transparently from the programmer; no <a href="https://en.wikipedia
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_nmi">13.17. <code>nmi</code></h3>
+<h3 id="kw_nmi">13.23. <code>nmi</code></h3>
 <div class="paragraph">
 <p>The keyword <code>nmi</code> can be used as a statement, or as a declaration.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_statement">13.17.1. <code>nmi</code> statement</h4>
+<h4 id="kw_nmi_statement">13.23.1. <code>nmi</code> statement</h4>
 <div class="paragraph">
 <p>The <code>nmi</code> statement blocks execution until an <a href="#kw_nmi_function"><code>nmi</code> function</a> occurs.
 Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</code></a> will evaluate to <a href="#kw_true"><code>true</code></a>.</p>
@@ -3525,7 +3602,7 @@ Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</c
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_asm">13.17.2. <code>nmi</code> statement (byte block)</h4>
+<h4 id="kw_nmi_asm">13.23.2. <code>nmi</code> statement (byte block)</h4>
 <div class="paragraph">
 <p>In byte blocks, the <code>nmi</code> statement blocks execution until an <a href="#kw_nmi_function"><code>nmi</code> function</a> occurs,
 clobbering all registers in the process.
@@ -3541,7 +3618,7 @@ Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</c
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_function">13.17.3. <code>nmi</code> function</h4>
+<h4 id="kw_nmi_function">13.23.3. <code>nmi</code> function</h4>
 <div class="paragraph">
 <p>The <code>nmi</code> keyword declares an <a href="https://www.nesdev.org/wiki/NMI">NMI</a> interrupt function at global scope.
 NMI interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return, and cannot be called.
@@ -3608,7 +3685,7 @@ as otherwise the game would speed up or slow down based on how much computation 
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_asm">13.18. <code>asm</code></h3>
+<h3 id="kw_asm">13.24. <code>asm</code></h3>
 <div class="paragraph">
 <p>The <code>asm</code> keyword declares an function at global scope using <a href="#byte_blocks">byte block</a> inline assembly syntax.</p>
 </div>
@@ -3707,7 +3784,7 @@ Although the address cannot be taken of these labels, it is possible to call the
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_struct">13.19. <code>struct</code></h3>
+<h3 id="kw_struct">13.25. <code>struct</code></h3>
 <div class="paragraph">
 <p>The <code>struct</code> keyword is used to define new types (<a href="https://en.wikipedia.org/wiki/Record_(computer_science)">records</a>) at global scope.
 It behaves similarly to the <code>struct</code> keyword in other languages.</p>
@@ -3751,7 +3828,7 @@ so long as multi-dimensional arrays are not created.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_vars">13.20. <code>vars</code></h3>
+<h3 id="kw_vars">13.26. <code>vars</code></h3>
 <div class="paragraph">
 <p>The <code>vars</code> keyword declares a block of global variables, and potentially their <a href="#groups">group</a>.</p>
 </div>
@@ -3816,7 +3893,7 @@ vars /my_group
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_data">13.21. <code>data</code></h3>
+<h3 id="kw_data">13.27. <code>data</code></h3>
 <div class="paragraph">
 <p>The <code>data</code> keyword declares a <a href="#groups">group</a> and the pointer-addressable global constants inside of it.</p>
 </div>
@@ -3881,7 +3958,7 @@ The group will be defined as the union of these declarations.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_omni">13.22. <code>omni</code></h3>
+<h3 id="kw_omni">13.28. <code>omni</code></h3>
 <div class="paragraph">
 <p>The <code>omni</code> keyword can be prefixed to <a href="#kw_data"><code>data</code></a> to alter its behavior.
 Groups declared using <code>omni</code> will have their data duplicated across every bank of the ROM.
@@ -3918,7 +3995,7 @@ Additionally, pointers to <code>omni</code> data take up only two bytes, as oppo
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_charmap">13.23. <code>charmap</code></h3>
+<h3 id="kw_charmap">13.29. <code>charmap</code></h3>
 <div class="paragraph">
 <p>The <code>charmap</code> keyword defines character maps,
 which are sets of characters with a mapping from each character to byte values.
@@ -4130,7 +4207,7 @@ ct CCC/strings another_ptr = @some_string</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_chrrom">13.24. <code>chrrom</code></h3>
+<h3 id="_chrrom">13.30. <code>chrrom</code></h3>
 <div class="paragraph">
 <p>The <code>chrrom</code> keyword is only used for <a href="#mappers">mappers</a> which use CHR ROM (as opposed to CHR RAM).
 It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</a> syntax.</p>
@@ -4159,7 +4236,7 @@ It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_file">13.25. <code>file</code></h3>
+<h3 id="kw_file">13.31. <code>file</code></h3>
 <div class="paragraph">
 <p>The <code>file</code> keyword imports and converts data from an external file.
 It is only usable inside of a <a href="#byte_blocks">byte block</a>.</p>
@@ -4327,13 +4404,13 @@ Thus, <code>compressed_data</code> would gain the following members:</p>
 The second two are prefixed with <code>bg_</code>, as the previous label is <code>bg</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="file_bin">13.25.1. Binary file formats</h4>
+<h4 id="file_bin">13.31.1. Binary file formats</h4>
 <div class="paragraph">
 <p>The filetypes <code>.bin</code>, <code>.chr</code>, and <code>.nam</code> are loaded as raw binary data, with no conversions happening.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_txt">13.25.2. <code>.txt</code> format</h4>
+<h4 id="file_txt">13.31.2. <code>.txt</code> format</h4>
 <div class="paragraph">
 <p>The filetype <code>.txt</code> is interpreted as ASCII data, with newline sequences replaced with a single newline character.</p>
 </div>
@@ -4358,7 +4435,7 @@ The second two are prefixed with <code>bg_</code>, as the previous label is <cod
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_png">13.25.3. <code>.png</code> format</h4>
+<h4 id="file_png">13.31.3. <code>.png</code> format</h4>
 <div class="paragraph">
 <p>The filetype <code>.png</code> is interpreted as a <a href="https://en.wikipedia.org/wiki/PNG">PNG image</a> representing CHR tileset data.
 The input image must have dimensions that are multiples of 8 x 8 pixels.</p>
@@ -4370,7 +4447,7 @@ black represents color 0 and white represents color 3.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_raw">13.25.4. <code>raw</code> target</h4>
+<h4 id="file_raw">13.31.4. <code>raw</code> target</h4>
 <div class="paragraph">
 <p>The <code>raw</code> target imports raw binary data, without performing any filetype conversions.
 It accepts no arguments.</p>
@@ -4392,7 +4469,7 @@ It accepts no arguments.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_fmt">13.25.5. <code>fmt</code> target</h4>
+<h4 id="file_fmt">13.31.5. <code>fmt</code> target</h4>
 <div class="paragraph">
 <p>The <code>fmt</code> target imports data after first processing it using filetype conversions.
 It accepts no arguments.</p>
@@ -4414,7 +4491,7 @@ It accepts no arguments.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_pbz">13.25.6. <code>pbz</code> target</h4>
+<h4 id="file_pbz">13.31.6. <code>pbz</code> target</h4>
 <div class="paragraph">
 <p>The <code>pbz</code> target compresses the data into the PBZ encoding after first processing it using filetype conversions.
 It accepts no arguments.</p>
@@ -4488,7 +4565,7 @@ Starting from the highest bit and working to the lowest bit, the decompressed se
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_rlz">13.25.7. <code>rlz</code> target</h4>
+<h4 id="file_rlz">13.31.7. <code>rlz</code> target</h4>
 <div class="paragraph">
 <p>The <code>rlz</code> target compresses the data into the RLZ encoding after first processing it using filetype conversions.</p>
 </div>
@@ -4566,7 +4643,7 @@ If <code>false</code>, no <code>$00</code> will be appended. By default, the val
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_audio">13.26. <code>audio</code></h3>
+<h3 id="kw_audio">13.32. <code>audio</code></h3>
 <div class="paragraph">
 <p>The <code>audio</code> keyword imports and converts audio data from an external file,
 converting the data into code definitions.
@@ -4626,7 +4703,7 @@ It is only usable at top-level scope.</p>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="audio_puf1_music">13.26.1. <code>puf1_music</code> target</h4>
+<h4 id="audio_puf1_music">13.32.1. <code>puf1_music</code> target</h4>
 <div class="paragraph">
 <p>The <code>puf1_music</code> target converts music data and generates code compatible with the PUF music engine.</p>
 </div>
@@ -4701,7 +4778,7 @@ You will also need a <code>puf1_sfx</code> audio target.
 </div>
 </div>
 <div class="sect3">
-<h4 id="audio_puf1_sfx">13.26.2. <code>puf1_sfx</code> target</h4>
+<h4 id="audio_puf1_sfx">13.32.2. <code>puf1_sfx</code> target</h4>
 <div class="paragraph">
 <p>The <code>puf1_sfx</code> target converts sound effect data and generates code compatible with the PUF music engine.</p>
 </div>
@@ -4783,13 +4860,13 @@ You will also need a <code>puf1_music</code> audio target.
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_stows">13.27. <code>stows</code></h3>
+<h3 id="kw_stows">13.33. <code>stows</code></h3>
 <div class="paragraph">
 <p>See <a href="#mod_stows"><code>stows</code></a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_employs">13.28. <code>employs</code></h3>
+<h3 id="kw_employs">13.34. <code>employs</code></h3>
 <div class="paragraph">
 <p>See <a href="#mod_employs"><code>employs</code></a>.</p>
 </div>
@@ -7250,7 +7327,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-03-06 21:07:09 -0600
+Last updated 2023-03-07 15:11:18 -0600
 </div>
 </div>
 </body>
