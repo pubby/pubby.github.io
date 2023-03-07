@@ -1495,6 +1495,19 @@ This option expects an integer argument, and can only be specified once.</p>
 <p>In general, a value slightly above the number of CPU cores available is ideal.
 Performance may degrade if the number is too high.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This option is currently not supported on MinGW builds of NESFab,
+due to that platform having a buggy implementation of threads.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><strong>Command-line usage:</strong></p>
 </div>
@@ -7237,7 +7250,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-03-06 12:18:36 -0600
+Last updated 2023-03-06 21:07:09 -0600
 </div>
 </div>
 </body>
