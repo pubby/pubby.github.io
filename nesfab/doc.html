@@ -442,7 +442,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>NESFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 0.1</span>
+<span id="revdate">Version 0.2</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -485,6 +485,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#opt_system">5.12. <code>system</code> (<code>-S</code>)</a></li>
 <li><a href="#_threads_j">5.13. <code>threads</code> (<code>-j</code>)</a></li>
 <li><a href="#_error_on_warning_w">5.14. <code>error-on-warning</code> (<code>-W</code>)</a></li>
+<li><a href="#_pause">5.15. <code>pause</code></a></li>
 </ul>
 </li>
 <li><a href="#mappers">6. Supported Mappers</a></li>
@@ -545,72 +546,78 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#kw_true">13.15. <code>true</code></a></li>
 <li><a href="#kw_false">13.16. <code>false</code></a></li>
 <li><a href="#kw_ready">13.17. <code>ready</code></a></li>
-<li><a href="#kw_system">13.18. <code>system</code></a>
+<li><a href="#kw_state">13.18. <code>state</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_system_ntsc">13.18.1. <code>SYSTEM_NTSC</code></a></li>
-<li><a href="#kw_system_pal">13.18.2. <code>SYSTEM_PAL</code></a></li>
-<li><a href="#kw_system_dendy">13.18.3. <code>SYSTEM_DENDY</code></a></li>
-<li><a href="#kw_system_unknown">13.18.4. <code>SYSTEM_UNKNOWN</code></a></li>
+<li><a href="#_state_read">13.18.1. <code>state</code> read</a></li>
+<li><a href="#_state_write">13.18.2. <code>state</code> write</a></li>
 </ul>
 </li>
-<li><a href="#kw_ppu_regs">13.19. PPU Registers</a>
+<li><a href="#kw_system">13.19. <code>system</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_ppuctrl">13.19.1. <code>PPUCTRL</code></a></li>
-<li><a href="#kw_ppumask">13.19.2. <code>PPUMASK</code></a></li>
-<li><a href="#kw_ppustatus">13.19.3. <code>PPUSTATUS</code></a></li>
-<li><a href="#kw_oamaddr">13.19.4. <code>OAMADDR</code></a></li>
-<li><a href="#kw_oamdata">13.19.5. <code>OAMDATA</code></a></li>
-<li><a href="#kw_ppuscroll">13.19.6. <code>PPUSCROLL</code></a></li>
-<li><a href="#kw_ppuaddr">13.19.7. <code>PPUADDR</code></a></li>
-<li><a href="#kw_ppudata">13.19.8. <code>PPUDATA</code></a></li>
-<li><a href="#kw_oamdma">13.19.9. <code>OAMDMA</code></a></li>
+<li><a href="#kw_system_ntsc">13.19.1. <code>SYSTEM_NTSC</code></a></li>
+<li><a href="#kw_system_pal">13.19.2. <code>SYSTEM_PAL</code></a></li>
+<li><a href="#kw_system_dendy">13.19.3. <code>SYSTEM_DENDY</code></a></li>
+<li><a href="#kw_system_unknown">13.19.4. <code>SYSTEM_UNKNOWN</code></a></li>
 </ul>
 </li>
-<li><a href="#kw_fn">13.20. <code>fn</code></a>
+<li><a href="#kw_ppu_regs">13.20. PPU Registers</a>
 <ul class="sectlevel3">
-<li><a href="#kw_fn_asm">13.20.1. <code>fn</code> statement (assembly byte block)</a></li>
+<li><a href="#kw_ppuctrl">13.20.1. <code>PPUCTRL</code></a></li>
+<li><a href="#kw_ppumask">13.20.2. <code>PPUMASK</code></a></li>
+<li><a href="#kw_ppustatus">13.20.3. <code>PPUSTATUS</code></a></li>
+<li><a href="#kw_oamaddr">13.20.4. <code>OAMADDR</code></a></li>
+<li><a href="#kw_oamdata">13.20.5. <code>OAMDATA</code></a></li>
+<li><a href="#kw_ppuscroll">13.20.6. <code>PPUSCROLL</code></a></li>
+<li><a href="#kw_ppuaddr">13.20.7. <code>PPUADDR</code></a></li>
+<li><a href="#kw_ppudata">13.20.8. <code>PPUDATA</code></a></li>
+<li><a href="#kw_oamdma">13.20.9. <code>OAMDMA</code></a></li>
 </ul>
 </li>
-<li><a href="#kw_ct">13.21. <code>ct</code></a>
+<li><a href="#kw_fn">13.21. <code>fn</code></a>
 <ul class="sectlevel3">
-<li><a href="#_ct_fn">13.21.1. <code>ct fn</code></a></li>
-<li><a href="#_ct_value">13.21.2. <code>ct</code> value</a></li>
+<li><a href="#kw_fn_asm">13.21.1. <code>fn</code> statement (assembly byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_mode">13.22. <code>mode</code></a></li>
-<li><a href="#kw_nmi">13.23. <code>nmi</code></a>
+<li><a href="#kw_ct">13.22. <code>ct</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_nmi_statement">13.23.1. <code>nmi</code> statement</a></li>
-<li><a href="#kw_nmi_asm">13.23.2. <code>nmi</code> statement (byte block)</a></li>
-<li><a href="#kw_nmi_function">13.23.3. <code>nmi</code> function</a></li>
+<li><a href="#_ct_fn">13.22.1. <code>ct fn</code></a></li>
+<li><a href="#_ct_value">13.22.2. <code>ct</code> value</a></li>
 </ul>
 </li>
-<li><a href="#kw_asm">13.24. <code>asm</code></a></li>
-<li><a href="#kw_struct">13.25. <code>struct</code></a></li>
-<li><a href="#kw_vars">13.26. <code>vars</code></a></li>
-<li><a href="#kw_data">13.27. <code>data</code></a></li>
-<li><a href="#kw_omni">13.28. <code>omni</code></a></li>
-<li><a href="#kw_charmap">13.29. <code>charmap</code></a></li>
-<li><a href="#_chrrom">13.30. <code>chrrom</code></a></li>
-<li><a href="#kw_file">13.31. <code>file</code></a>
+<li><a href="#kw_mode">13.23. <code>mode</code></a></li>
+<li><a href="#kw_nmi">13.24. <code>nmi</code></a>
 <ul class="sectlevel3">
-<li><a href="#file_bin">13.31.1. Binary file formats</a></li>
-<li><a href="#file_txt">13.31.2. <code>.txt</code> format</a></li>
-<li><a href="#file_png">13.31.3. <code>.png</code> format</a></li>
-<li><a href="#file_raw">13.31.4. <code>raw</code> target</a></li>
-<li><a href="#file_fmt">13.31.5. <code>fmt</code> target</a></li>
-<li><a href="#file_pbz">13.31.6. <code>pbz</code> target</a></li>
-<li><a href="#file_rlz">13.31.7. <code>rlz</code> target</a></li>
+<li><a href="#kw_nmi_statement">13.24.1. <code>nmi</code> statement</a></li>
+<li><a href="#kw_nmi_asm">13.24.2. <code>nmi</code> statement (byte block)</a></li>
+<li><a href="#kw_nmi_function">13.24.3. <code>nmi</code> function</a></li>
 </ul>
 </li>
-<li><a href="#kw_audio">13.32. <code>audio</code></a>
+<li><a href="#kw_asm">13.25. <code>asm</code></a></li>
+<li><a href="#kw_struct">13.26. <code>struct</code></a></li>
+<li><a href="#kw_vars">13.27. <code>vars</code></a></li>
+<li><a href="#kw_data">13.28. <code>data</code></a></li>
+<li><a href="#kw_omni">13.29. <code>omni</code></a></li>
+<li><a href="#kw_charmap">13.30. <code>charmap</code></a></li>
+<li><a href="#_chrrom">13.31. <code>chrrom</code></a></li>
+<li><a href="#kw_file">13.32. <code>file</code></a>
 <ul class="sectlevel3">
-<li><a href="#audio_puf1_music">13.32.1. <code>puf1_music</code> target</a></li>
-<li><a href="#audio_puf1_sfx">13.32.2. <code>puf1_sfx</code> target</a></li>
+<li><a href="#file_bin">13.32.1. Binary file formats</a></li>
+<li><a href="#file_txt">13.32.2. <code>.txt</code> format</a></li>
+<li><a href="#file_png">13.32.3. <code>.png</code> format</a></li>
+<li><a href="#file_raw">13.32.4. <code>raw</code> target</a></li>
+<li><a href="#file_fmt">13.32.5. <code>fmt</code> target</a></li>
+<li><a href="#file_pbz">13.32.6. <code>pbz</code> target</a></li>
+<li><a href="#file_rlz">13.32.7. <code>rlz</code> target</a></li>
 </ul>
 </li>
-<li><a href="#kw_stows">13.33. <code>stows</code></a></li>
-<li><a href="#kw_employs">13.34. <code>employs</code></a></li>
+<li><a href="#kw_audio">13.33. <code>audio</code></a>
+<ul class="sectlevel3">
+<li><a href="#audio_puf1_music">13.33.1. <code>puf1_music</code> target</a></li>
+<li><a href="#audio_puf1_sfx">13.33.2. <code>puf1_sfx</code> target</a></li>
+</ul>
+</li>
+<li><a href="#kw_stows">13.34. <code>stows</code></a></li>
+<li><a href="#kw_employs">13.35. <code>employs</code></a></li>
 </ul>
 </li>
 <li><a href="#modifiers">14. Modifiers</a>
@@ -1555,6 +1562,34 @@ This option expects no arguments and can only be specified once.</p>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_pause">5.15. <code>pause</code></h3>
+<div class="paragraph">
+<p>This option pauses the compiler before exiting until input is received on stdin.
+It is intended to be used on Microsoft Windows to keep the Command Prompt window open until you&#8217;re ready to close it.
+This option expects no arguments.</p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --pause</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pause = 1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To make NESFab always pause on Microsoft Windows, first create a shortcut to the NESFab executable.
+Then, in the shortcut&#8217;s properties, put <code>--pause</code> after the target path.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1611,7 +1646,7 @@ The mapper names in the table below are links.
 <td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Switchable H or V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Switchable 1-Page</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/BNROM"><code>bnrom</code></a></p></td>
@@ -2983,7 +3018,96 @@ There is more than one way to achieve concurrent safety. See <a href="#kw_fence"
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_system">13.18. <code>system</code></h3>
+<h3 id="kw_state">13.18. <code>state</code></h3>
+<div class="paragraph">
+<p>Some <a href="#mappers">mappers</a> have states which can be switched for various effects.
+For example, <code>ANROM</code> uses a bit to track the cartridge&#8217;s mirroring, and lets the programmer switch it on the fly.
+<code>state</code> expressions read or write these <a href="#mappers">mappers'</a> states.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The NESFab runtime duplicates the mapper&#8217;s state to a fixed location in RAM.
+Reading the state will return this copy instead of polling the hardware.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_state_read">13.18.1. <code>state</code> read</h4>
+<div class="paragraph">
+<p><code>state</code> is an expression of type <code>U</code> which returns the mapper&#8217;s last-set state.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>state()</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>U foo = state()</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The address of <code>state</code> can be taken using <a href="#unary_ops">unary operator</a> <code>&amp;</code>.
+This address refers to the copy in RAM; modifying it does not notify the hardware.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_state_write">13.18.2. <code>state</code> write</h4>
+<div class="paragraph">
+<p><code>state</code> is an expression of type <code>Void</code> which sets the mapper&#8217;s state.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>state(expr)</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>expr</code> is an expression of type <code>U</code>. The state will be assigned this value.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>state(5) // The state will have a value of 5</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Mappers often reserve a few bits of their state for their bank.
+You should always leave these bits set to <code>0</code>, as otherwise the program may crash.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kw_system">13.19. <code>system</code></h3>
 <div class="paragraph">
 <p><code>system</code> is an expression of type <code>U</code> which returns the <a href="#opt_system">current NES system</a>.</p>
 </div>
@@ -3050,7 +3174,7 @@ but the pointed-to value must never be modified by the program.</p>
 and its address cannot be taken.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_system_ntsc">13.18.1. <code>SYSTEM_NTSC</code></h4>
+<h4 id="kw_system_ntsc">13.19.1. <code>SYSTEM_NTSC</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_NTSC</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>0</code>.</p>
 </div>
@@ -3064,7 +3188,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_pal">13.18.2. <code>SYSTEM_PAL</code></h4>
+<h4 id="kw_system_pal">13.19.2. <code>SYSTEM_PAL</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_PAL</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>1</code>.</p>
 </div>
@@ -3078,7 +3202,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_dendy">13.18.3. <code>SYSTEM_DENDY</code></h4>
+<h4 id="kw_system_dendy">13.19.3. <code>SYSTEM_DENDY</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_DENDY</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>2</code>.</p>
 </div>
@@ -3092,7 +3216,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_unknown">13.18.4. <code>SYSTEM_UNKNOWN</code></h4>
+<h4 id="kw_system_unknown">13.19.4. <code>SYSTEM_UNKNOWN</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_UNKNOWN</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>3</code>.</p>
 </div>
@@ -3107,7 +3231,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_ppu_regs">13.19. PPU Registers</h3>
+<h3 id="kw_ppu_regs">13.20. PPU Registers</h3>
 <div class="paragraph">
 <p>The following <a href="https://www.nesdev.org/wiki/PPU_registers">PPU registers</a> have keywords.
 All of these are expressions of type <code>AA</code> with compile-time constant values.</p>
@@ -3163,7 +3287,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="kw_ppuctrl">13.19.1. <code>PPUCTRL</code></h4>
+<h4 id="kw_ppuctrl">13.20.1. <code>PPUCTRL</code></h4>
 <div class="paragraph">
 <p><code>PPUCTRL</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2000</code>.</p>
 </div>
@@ -3180,7 +3304,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppumask">13.19.2. <code>PPUMASK</code></h4>
+<h4 id="kw_ppumask">13.20.2. <code>PPUMASK</code></h4>
 <div class="paragraph">
 <p><code>PPUMASK</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2001</code>.</p>
 </div>
@@ -3197,7 +3321,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppustatus">13.19.3. <code>PPUSTATUS</code></h4>
+<h4 id="kw_ppustatus">13.20.3. <code>PPUSTATUS</code></h4>
 <div class="paragraph">
 <p><code>PPUSTATUS</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2002</code>.</p>
 </div>
@@ -3214,7 +3338,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamaddr">13.19.4. <code>OAMADDR</code></h4>
+<h4 id="kw_oamaddr">13.20.4. <code>OAMADDR</code></h4>
 <div class="paragraph">
 <p><code>OAMADDR</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2003</code>.</p>
 </div>
@@ -3231,7 +3355,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamdata">13.19.5. <code>OAMDATA</code></h4>
+<h4 id="kw_oamdata">13.20.5. <code>OAMDATA</code></h4>
 <div class="paragraph">
 <p><code>OAMDATA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2004</code>.</p>
 </div>
@@ -3248,7 +3372,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppuscroll">13.19.6. <code>PPUSCROLL</code></h4>
+<h4 id="kw_ppuscroll">13.20.6. <code>PPUSCROLL</code></h4>
 <div class="paragraph">
 <p><code>PPUSCROLL</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2005</code>.</p>
 </div>
@@ -3265,7 +3389,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppuaddr">13.19.7. <code>PPUADDR</code></h4>
+<h4 id="kw_ppuaddr">13.20.7. <code>PPUADDR</code></h4>
 <div class="paragraph">
 <p><code>PPUADDR</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2006</code>.</p>
 </div>
@@ -3282,7 +3406,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppudata">13.19.8. <code>PPUDATA</code></h4>
+<h4 id="kw_ppudata">13.20.8. <code>PPUDATA</code></h4>
 <div class="paragraph">
 <p><code>PPUDATA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2007</code>.</p>
 </div>
@@ -3299,7 +3423,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamdma">13.19.9. <code>OAMDMA</code></h4>
+<h4 id="kw_oamdma">13.20.9. <code>OAMDMA</code></h4>
 <div class="paragraph">
 <p><code>OAMDMA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$4014</code>.</p>
 </div>
@@ -3317,7 +3441,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_fn">13.20. <code>fn</code></h3>
+<h3 id="kw_fn">13.21. <code>fn</code></h3>
 <div class="paragraph">
 <p>The <code>fn</code> keyword declares a
 <a href="https://en.wikipedia.org/wiki/Function_(computer_programming)">function</a>
@@ -3390,7 +3514,7 @@ Unlike other programming languages, functions in NESFab cannot be nested or recu
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_fn_asm">13.20.1. <code>fn</code> statement (assembly byte block)</h4>
+<h4 id="kw_fn_asm">13.21.1. <code>fn</code> statement (assembly byte block)</h4>
 <div class="paragraph">
 <p>In assembly functions, the <code>fn</code> statement calls a NESFab function,
 clobbering all registers in the process.</p>
@@ -3448,13 +3572,13 @@ asm fn bar()
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_ct">13.21. <code>ct</code></h3>
+<h3 id="kw_ct">13.22. <code>ct</code></h3>
 <div class="paragraph">
 <p><code>ct</code> is short for <em>compile-time</em>.
 The keyword can be prefixed onto value and function declarations to <strong>insist</strong> that their computations occur at compile-time.</p>
 </div>
 <div class="sect3">
-<h4 id="_ct_fn">13.21.1. <code>ct fn</code></h4>
+<h4 id="_ct_fn">13.22.1. <code>ct fn</code></h4>
 <div class="paragraph">
 <p>Syntax:</p>
 </div>
@@ -3468,7 +3592,7 @@ The keyword can be prefixed onto value and function declarations to <strong>insi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ct_value">13.21.2. <code>ct</code> value</h4>
+<h4 id="_ct_value">13.22.2. <code>ct</code> value</h4>
 <div class="paragraph">
 <p>Syntax:</p>
 </div>
@@ -3486,7 +3610,7 @@ The keyword can be prefixed onto value and function declarations to <strong>insi
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_mode">13.22. <code>mode</code></h3>
+<h3 id="kw_mode">13.23. <code>mode</code></h3>
 <div class="paragraph">
 <p>The <code>mode</code> keyword declares a mode function at global scope.
 Modes are similar to <a href="#kw_fn">regular functions</a>, but they do not return.
@@ -3582,12 +3706,12 @@ This happens transparently from the programmer; no <a href="https://en.wikipedia
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_nmi">13.23. <code>nmi</code></h3>
+<h3 id="kw_nmi">13.24. <code>nmi</code></h3>
 <div class="paragraph">
 <p>The keyword <code>nmi</code> can be used as a statement, or as a declaration.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_statement">13.23.1. <code>nmi</code> statement</h4>
+<h4 id="kw_nmi_statement">13.24.1. <code>nmi</code> statement</h4>
 <div class="paragraph">
 <p>The <code>nmi</code> statement blocks execution until an <a href="#kw_nmi_function"><code>nmi</code> function</a> occurs.
 Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</code></a> will evaluate to <a href="#kw_true"><code>true</code></a>.</p>
@@ -3602,7 +3726,7 @@ Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</c
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_asm">13.23.2. <code>nmi</code> statement (byte block)</h4>
+<h4 id="kw_nmi_asm">13.24.2. <code>nmi</code> statement (byte block)</h4>
 <div class="paragraph">
 <p>In byte blocks, the <code>nmi</code> statement blocks execution until an <a href="#kw_nmi_function"><code>nmi</code> function</a> occurs,
 clobbering all registers in the process.
@@ -3618,7 +3742,7 @@ Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</c
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_function">13.23.3. <code>nmi</code> function</h4>
+<h4 id="kw_nmi_function">13.24.3. <code>nmi</code> function</h4>
 <div class="paragraph">
 <p>The <code>nmi</code> keyword declares an <a href="https://www.nesdev.org/wiki/NMI">NMI</a> interrupt function at global scope.
 NMI interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return, and cannot be called.
@@ -3685,7 +3809,7 @@ as otherwise the game would speed up or slow down based on how much computation 
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_asm">13.24. <code>asm</code></h3>
+<h3 id="kw_asm">13.25. <code>asm</code></h3>
 <div class="paragraph">
 <p>The <code>asm</code> keyword declares an function at global scope using <a href="#byte_blocks">byte block</a> inline assembly syntax.</p>
 </div>
@@ -3784,7 +3908,7 @@ Although the address cannot be taken of these labels, it is possible to call the
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_struct">13.25. <code>struct</code></h3>
+<h3 id="kw_struct">13.26. <code>struct</code></h3>
 <div class="paragraph">
 <p>The <code>struct</code> keyword is used to define new types (<a href="https://en.wikipedia.org/wiki/Record_(computer_science)">records</a>) at global scope.
 It behaves similarly to the <code>struct</code> keyword in other languages.</p>
@@ -3828,7 +3952,7 @@ so long as multi-dimensional arrays are not created.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_vars">13.26. <code>vars</code></h3>
+<h3 id="kw_vars">13.27. <code>vars</code></h3>
 <div class="paragraph">
 <p>The <code>vars</code> keyword declares a block of global variables, and potentially their <a href="#groups">group</a>.</p>
 </div>
@@ -3893,7 +4017,7 @@ vars /my_group
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_data">13.27. <code>data</code></h3>
+<h3 id="kw_data">13.28. <code>data</code></h3>
 <div class="paragraph">
 <p>The <code>data</code> keyword declares a <a href="#groups">group</a> and the pointer-addressable global constants inside of it.</p>
 </div>
@@ -3958,7 +4082,7 @@ The group will be defined as the union of these declarations.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_omni">13.28. <code>omni</code></h3>
+<h3 id="kw_omni">13.29. <code>omni</code></h3>
 <div class="paragraph">
 <p>The <code>omni</code> keyword can be prefixed to <a href="#kw_data"><code>data</code></a> to alter its behavior.
 Groups declared using <code>omni</code> will have their data duplicated across every bank of the ROM.
@@ -3995,7 +4119,7 @@ Additionally, pointers to <code>omni</code> data take up only two bytes, as oppo
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_charmap">13.29. <code>charmap</code></h3>
+<h3 id="kw_charmap">13.30. <code>charmap</code></h3>
 <div class="paragraph">
 <p>The <code>charmap</code> keyword defines character maps,
 which are sets of characters with a mapping from each character to byte values.
@@ -4207,7 +4331,7 @@ ct CCC/strings another_ptr = @some_string</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_chrrom">13.30. <code>chrrom</code></h3>
+<h3 id="_chrrom">13.31. <code>chrrom</code></h3>
 <div class="paragraph">
 <p>The <code>chrrom</code> keyword is only used for <a href="#mappers">mappers</a> which use CHR ROM (as opposed to CHR RAM).
 It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</a> syntax.</p>
@@ -4236,7 +4360,7 @@ It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_file">13.31. <code>file</code></h3>
+<h3 id="kw_file">13.32. <code>file</code></h3>
 <div class="paragraph">
 <p>The <code>file</code> keyword imports and converts data from an external file.
 It is only usable inside of a <a href="#byte_blocks">byte block</a>.</p>
@@ -4404,13 +4528,13 @@ Thus, <code>compressed_data</code> would gain the following members:</p>
 The second two are prefixed with <code>bg_</code>, as the previous label is <code>bg</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="file_bin">13.31.1. Binary file formats</h4>
+<h4 id="file_bin">13.32.1. Binary file formats</h4>
 <div class="paragraph">
 <p>The filetypes <code>.bin</code>, <code>.chr</code>, and <code>.nam</code> are loaded as raw binary data, with no conversions happening.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_txt">13.31.2. <code>.txt</code> format</h4>
+<h4 id="file_txt">13.32.2. <code>.txt</code> format</h4>
 <div class="paragraph">
 <p>The filetype <code>.txt</code> is interpreted as ASCII data, with newline sequences replaced with a single newline character.</p>
 </div>
@@ -4435,7 +4559,7 @@ The second two are prefixed with <code>bg_</code>, as the previous label is <cod
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_png">13.31.3. <code>.png</code> format</h4>
+<h4 id="file_png">13.32.3. <code>.png</code> format</h4>
 <div class="paragraph">
 <p>The filetype <code>.png</code> is interpreted as a <a href="https://en.wikipedia.org/wiki/PNG">PNG image</a> representing CHR tileset data.
 The input image must have dimensions that are multiples of 8 x 8 pixels.</p>
@@ -4447,7 +4571,7 @@ black represents color 0 and white represents color 3.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_raw">13.31.4. <code>raw</code> target</h4>
+<h4 id="file_raw">13.32.4. <code>raw</code> target</h4>
 <div class="paragraph">
 <p>The <code>raw</code> target imports raw binary data, without performing any filetype conversions.
 It accepts no arguments.</p>
@@ -4469,7 +4593,7 @@ It accepts no arguments.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_fmt">13.31.5. <code>fmt</code> target</h4>
+<h4 id="file_fmt">13.32.5. <code>fmt</code> target</h4>
 <div class="paragraph">
 <p>The <code>fmt</code> target imports data after first processing it using filetype conversions.
 It accepts no arguments.</p>
@@ -4491,7 +4615,7 @@ It accepts no arguments.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_pbz">13.31.6. <code>pbz</code> target</h4>
+<h4 id="file_pbz">13.32.6. <code>pbz</code> target</h4>
 <div class="paragraph">
 <p>The <code>pbz</code> target compresses the data into the PBZ encoding after first processing it using filetype conversions.
 It accepts no arguments.</p>
@@ -4565,7 +4689,7 @@ Starting from the highest bit and working to the lowest bit, the decompressed se
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_rlz">13.31.7. <code>rlz</code> target</h4>
+<h4 id="file_rlz">13.32.7. <code>rlz</code> target</h4>
 <div class="paragraph">
 <p>The <code>rlz</code> target compresses the data into the RLZ encoding after first processing it using filetype conversions.</p>
 </div>
@@ -4643,7 +4767,7 @@ If <code>false</code>, no <code>$00</code> will be appended. By default, the val
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_audio">13.32. <code>audio</code></h3>
+<h3 id="kw_audio">13.33. <code>audio</code></h3>
 <div class="paragraph">
 <p>The <code>audio</code> keyword imports and converts audio data from an external file,
 converting the data into code definitions.
@@ -4703,7 +4827,7 @@ It is only usable at top-level scope.</p>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="audio_puf1_music">13.32.1. <code>puf1_music</code> target</h4>
+<h4 id="audio_puf1_music">13.33.1. <code>puf1_music</code> target</h4>
 <div class="paragraph">
 <p>The <code>puf1_music</code> target converts music data and generates code compatible with the PUF music engine.</p>
 </div>
@@ -4778,7 +4902,7 @@ You will also need a <code>puf1_sfx</code> audio target.
 </div>
 </div>
 <div class="sect3">
-<h4 id="audio_puf1_sfx">13.32.2. <code>puf1_sfx</code> target</h4>
+<h4 id="audio_puf1_sfx">13.33.2. <code>puf1_sfx</code> target</h4>
 <div class="paragraph">
 <p>The <code>puf1_sfx</code> target converts sound effect data and generates code compatible with the PUF music engine.</p>
 </div>
@@ -4860,13 +4984,13 @@ You will also need a <code>puf1_music</code> audio target.
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_stows">13.33. <code>stows</code></h3>
+<h3 id="kw_stows">13.34. <code>stows</code></h3>
 <div class="paragraph">
 <p>See <a href="#mod_stows"><code>stows</code></a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_employs">13.34. <code>employs</code></h3>
+<h3 id="kw_employs">13.35. <code>employs</code></h3>
 <div class="paragraph">
 <p>See <a href="#mod_employs"><code>employs</code></a>.</p>
 </div>
@@ -7327,7 +7451,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-03-07 15:11:18 -0600
+Last updated 2023-03-09 13:00:31 -0600
 </div>
 </div>
 </body>
