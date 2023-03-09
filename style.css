@@ -7,12 +7,9 @@ body {
     padding-right: 1em;
 }
 
-code, pre {
-    background-color: rgba(20, 20, 80, 0.05);
-}
-
 pre {
     padding: 1em;
+    background-color: rgba(20, 20, 80, 0.05);
 }
 
 table, th, td {
