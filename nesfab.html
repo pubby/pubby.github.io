@@ -46,10 +46,10 @@ fn play_sound()
     {$4015}(%100)
     {$4008}($FF)
     {$400A}(pitch.a)
-    {$400B}(pitch.b & %111)
+    {$400B}(pitch.b &amp; %111)
 
 mode main()
-    {$2000}(%10000000)
+    {PPUCTRL}(%10000000)
     while true
         pitch *= 1.01
         play_sound()
