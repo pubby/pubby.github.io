@@ -409,7 +409,7 @@ Beneath that, the data is listed as a byte block, using string literals to defin
     for U i = 0; i &lt; 64; i += 1
         {PPUDATA}(%00011011)</code></pre>
 
-    <p>The first loop copies the data from the pointer, using the <a href="doc.hmtl#array_access_uu">{} operator</a> for array access.
+    <p>The first loop copies the data from the pointer, using the <a href="doc.html#array_access_uu">{} operator</a> for array access.
     The second loop sets all attributes to the same value, which will result in a colorful pattern.</p>
 
     <p>Putting all the code together, the result is:</p>
@@ -618,7 +618,7 @@ and thus get altered to strange values whenever data is uploaded to the PPU.
     while true
         update_pads()
         update_sprites()
-        nmis // Wait for the next NMI</code></pre>
+        nmi // Wait for the next NMI</code></pre>
 
 <p>The "nmi main_nmi" code attaches the NMI hander to the mode, 
 while the "{PPUCTRL}" line instructs the PPU to send the interrupts.
