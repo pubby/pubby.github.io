@@ -442,7 +442,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>NESFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 0.2</span>
+<span id="revdate">Version 0.3</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -478,17 +478,32 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_output_o">5.5. <code>output</code> (<code>-o</code>)</a></li>
 <li><a href="#codedir">5.6. <code>code-dir</code> (<code>-I</code>)</a></li>
 <li><a href="#_resource_dir_r">5.7. <code>resource-dir</code> (<code>-R</code>)</a></li>
-<li><a href="#mapperopt">5.8. <code>mapper</code> (<code>-M</code>)</a></li>
-<li><a href="#mirroringopt">5.9. <code>mirroring</code> (<code>-m</code>)</a></li>
-<li><a href="#prgopt">5.10. <code>prg-size</code> (<code>-p</code>)</a></li>
-<li><a href="#chropt">5.11. <code>chr-size</code> (<code>-c</code>)</a></li>
-<li><a href="#opt_system">5.12. <code>system</code> (<code>-S</code>)</a></li>
-<li><a href="#_threads_j">5.13. <code>threads</code> (<code>-j</code>)</a></li>
-<li><a href="#_error_on_warning_w">5.14. <code>error-on-warning</code> (<code>-W</code>)</a></li>
-<li><a href="#_pause">5.15. <code>pause</code></a></li>
+<li><a href="#opt_mapper">5.8. <code>mapper</code> (<code>-M</code>)</a></li>
+<li><a href="#opt_mirroring">5.9. <code>mirroring</code> (<code>-m</code>)</a></li>
+<li><a href="#opt_prg">5.10. <code>prg-size</code> (<code>-p</code>)</a></li>
+<li><a href="#opt_chr">5.11. <code>chr-size</code> (<code>-c</code>)</a></li>
+<li><a href="#opt_bus_conflicts">5.12. <code>bus-conflicts</code></a></li>
+<li><a href="#opt_system">5.13. <code>system</code> (<code>-S</code>)</a></li>
+<li><a href="#opt_unsafe_bank_switch">5.14. <code>unsafe-bank-switch</code></a></li>
+<li><a href="#opt_mlb">5.15. <code>mlb</code></a></li>
+<li><a href="#_threads_j">5.16. <code>threads</code> (<code>-j</code>)</a></li>
+<li><a href="#_error_on_warning_w">5.17. <code>error-on-warning</code> (<code>-W</code>)</a></li>
+<li><a href="#_pause">5.18. <code>pause</code></a></li>
 </ul>
 </li>
-<li><a href="#mappers">6. Supported Mappers</a></li>
+<li><a href="#mappers">6. Supported Mappers</a>
+<ul class="sectlevel2">
+<li><a href="#mapper_nrom">6.1. <code>nrom</code></a></li>
+<li><a href="#mapper_anrom">6.2. <code>anrom</code></a></li>
+<li><a href="#mapper_bnrom">6.3. <code>bnrom</code></a></li>
+<li><a href="#mapper_cnrom">6.4. <code>cnrom</code></a></li>
+<li><a href="#mapper_gnrom">6.5. <code>gnrom</code></a></li>
+<li><a href="#mapper_colordreams">6.6. <code>colordreams</code></a></li>
+<li><a href="#mapper_gtrom">6.7. <code>gtrom</code></a></li>
+<li><a href="#mapper_mmc1">6.8. <code>mmc1</code></a></li>
+<li><a href="#mapper_189">6.9. <code>189</code> (MMC3 Variant)</a></li>
+</ul>
+</li>
 <li><a href="#value_semantics">7. Value Semantics</a></li>
 <li><a href="#_indentation">8. Indentation</a></li>
 <li><a href="#banks">9. Banks</a></li>
@@ -592,32 +607,38 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#kw_nmi_function">13.24.3. <code>nmi</code> function</a></li>
 </ul>
 </li>
-<li><a href="#kw_asm">13.25. <code>asm</code></a></li>
-<li><a href="#kw_struct">13.26. <code>struct</code></a></li>
-<li><a href="#kw_vars">13.27. <code>vars</code></a></li>
-<li><a href="#kw_data">13.28. <code>data</code></a></li>
-<li><a href="#kw_omni">13.29. <code>omni</code></a></li>
-<li><a href="#kw_charmap">13.30. <code>charmap</code></a></li>
-<li><a href="#_chrrom">13.31. <code>chrrom</code></a></li>
-<li><a href="#kw_file">13.32. <code>file</code></a>
+<li><a href="#kw_irq">13.25. <code>irq</code></a>
 <ul class="sectlevel3">
-<li><a href="#file_bin">13.32.1. Binary file formats</a></li>
-<li><a href="#file_txt">13.32.2. <code>.txt</code> format</a></li>
-<li><a href="#file_png">13.32.3. <code>.png</code> format</a></li>
-<li><a href="#file_raw">13.32.4. <code>raw</code> target</a></li>
-<li><a href="#file_fmt">13.32.5. <code>fmt</code> target</a></li>
-<li><a href="#file_pbz">13.32.6. <code>pbz</code> target</a></li>
-<li><a href="#file_rlz">13.32.7. <code>rlz</code> target</a></li>
+<li><a href="#kw_irq_statement">13.25.1. <code>irq</code> statement</a></li>
+<li><a href="#kw_irq_function">13.25.2. <code>irq</code> function</a></li>
 </ul>
 </li>
-<li><a href="#kw_audio">13.33. <code>audio</code></a>
+<li><a href="#kw_asm">13.26. <code>asm</code></a></li>
+<li><a href="#kw_struct">13.27. <code>struct</code></a></li>
+<li><a href="#kw_vars">13.28. <code>vars</code></a></li>
+<li><a href="#kw_data">13.29. <code>data</code></a></li>
+<li><a href="#kw_omni">13.30. <code>omni</code></a></li>
+<li><a href="#kw_charmap">13.31. <code>charmap</code></a></li>
+<li><a href="#_chrrom">13.32. <code>chrrom</code></a></li>
+<li><a href="#kw_file">13.33. <code>file</code></a>
 <ul class="sectlevel3">
-<li><a href="#audio_puf1_music">13.33.1. <code>puf1_music</code> target</a></li>
-<li><a href="#audio_puf1_sfx">13.33.2. <code>puf1_sfx</code> target</a></li>
+<li><a href="#file_bin">13.33.1. Binary file formats</a></li>
+<li><a href="#file_txt">13.33.2. <code>.txt</code> format</a></li>
+<li><a href="#file_png">13.33.3. <code>.png</code> format</a></li>
+<li><a href="#file_raw">13.33.4. <code>raw</code> target</a></li>
+<li><a href="#file_fmt">13.33.5. <code>fmt</code> target</a></li>
+<li><a href="#file_pbz">13.33.6. <code>pbz</code> target</a></li>
+<li><a href="#file_rlz">13.33.7. <code>rlz</code> target</a></li>
 </ul>
 </li>
-<li><a href="#kw_stows">13.34. <code>stows</code></a></li>
-<li><a href="#kw_employs">13.35. <code>employs</code></a></li>
+<li><a href="#kw_audio">13.34. <code>audio</code></a>
+<ul class="sectlevel3">
+<li><a href="#audio_puf1_music">13.34.1. <code>puf1_music</code> target</a></li>
+<li><a href="#audio_puf1_sfx">13.34.2. <code>puf1_sfx</code> target</a></li>
+</ul>
+</li>
+<li><a href="#kw_stows">13.35. <code>stows</code></a></li>
+<li><a href="#kw_employs">13.36. <code>employs</code></a></li>
 </ul>
 </li>
 <li><a href="#modifiers">14. Modifiers</a>
@@ -788,7 +809,7 @@ It&#8217;s easy to get started with, and has a useful set of libraries for makin
 <div class="ulist">
 <ul>
 <li>
-<p>Performance is generally superior to C and all other compiled langauges.</p>
+<p>Performance is generally superior to C and all other compiled languages.</p>
 </li>
 <li>
 <p><a href="#mappers">Mapper</a> banks are handled automatically and scale up without fuss.</p>
@@ -922,8 +943,9 @@ fn play_sound()
     {$400A}(pitch.a)
     {$400B}(pitch.b &amp; %111)
 
+// Game loop:
 mode main()
-    {$2000}(%10000000)
+    {PPUCTRL}(%10000000)
     while true
         pitch *= 1.01
         play_sound()
@@ -1188,7 +1210,7 @@ This option can be used multiple times to specify multiple directories.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mapperopt">5.8. <code>mapper</code> (<code>-M</code>)</h3>
+<h3 id="opt_mapper">5.8. <code>mapper</code> (<code>-M</code>)</h3>
 <div class="paragraph">
 <p>Specifies the mapper used. The argument is a <a href="#mappers">mapper name</a>.
 This option can only be specified once.</p>
@@ -1214,7 +1236,7 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mirroringopt">5.9. <code>mirroring</code> (<code>-m</code>)</h3>
+<h3 id="opt_mirroring">5.9. <code>mirroring</code> (<code>-m</code>)</h3>
 <div class="paragraph">
 <p>Specifies the mirroring used for <a href="#mappers">mappers with fixed mirrorings</a>.
 This option can only be specified once.</p>
@@ -1269,53 +1291,14 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="prgopt">5.10. <code>prg-size</code> (<code>-p</code>)</h3>
+<h3 id="opt_prg">5.10. <code>prg-size</code> (<code>-p</code>)</h3>
 <div class="paragraph">
 <p>Specifies the size of PRG (the amount of memory for code) in increments of 1 KiB.
 This option can only be specified once.</p>
 </div>
 <div class="paragraph">
-<p>The default value depends on the mapper.
-These values correspond with common cartridge designs.</p>
+<p>The default value depends on the <a href="#mappers">mapper.</a></p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name (HTML link)</th>
-<th class="tableblock halign-left valign-top">Default Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/NROM"><code>nrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">32</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/AxROM"><code>anrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">256</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/BNROM"><code>bnrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">128</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/CNROM"><code>cnrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">32</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/GxROM"><code>gnrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">128</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/GTROM"><code>gtrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">512</p></td>
-</tr>
-</tbody>
-</table>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1347,53 +1330,14 @@ Only the default size is asserted to be commonly available.
 </div>
 </div>
 <div class="sect2">
-<h3 id="chropt">5.11. <code>chr-size</code> (<code>-c</code>)</h3>
+<h3 id="opt_chr">5.11. <code>chr-size</code> (<code>-c</code>)</h3>
 <div class="paragraph">
 <p>Specifies the size of CHR (the amount of memory for tilesets) in increments of 1 KiB.
 This option can only be specified once.</p>
 </div>
 <div class="paragraph">
-<p>The default value depends on the mapper.
-These values correspond with common cartridge designs.</p>
+<p>The default value depends on the <a href="#mappers">mapper.</a></p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name (HTML link)</th>
-<th class="tableblock halign-left valign-top">Default Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/NROM"><code>nrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/AxROM"><code>anrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/BNROM"><code>bnrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/CNROM"><code>cnrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">32</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/GxROM"><code>gnrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">32</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/GTROM"><code>gtrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-</tr>
-</tbody>
-</table>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1425,7 +1369,39 @@ Only the default size is asserted to be commonly available.
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_system">5.12. <code>system</code> (<code>-S</code>)</h3>
+<h3 id="opt_bus_conflicts">5.12. <code>bus-conflicts</code></h3>
+<div class="paragraph">
+<p>Specifies whether the mapper has bus conflicts.
+This option can only be specified once.</p>
+</div>
+<div class="paragraph">
+<p>The following arguments are valid:
+- To disable: <code>0</code>, <code>false,</code> or <code>off</code>.
+- To enable: <code>1</code>, <code>true,</code> or <code>on</code>.
+- For the default value: <code>default</code>.</p>
+</div>
+<div class="paragraph">
+<p>The default value depends on the <a href="#mappers">mapper.</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --bus-conflicts true</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>bus-conflicts = true</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="opt_system">5.13. <code>system</code> (<code>-S</code>)</h3>
 <div class="paragraph">
 <p>Specifies the target NES system, which will be accessible using the <a href="#kw_system"><code>system</code> keyword</a>.
 This option can only be specified once.</p>
@@ -1497,7 +1473,81 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_threads_j">5.13. <code>threads</code> (<code>-j</code>)</h3>
+<h3 id="opt_unsafe_bank_switch">5.14. <code>unsafe-bank-switch</code></h3>
+<div class="paragraph">
+<p>By default, the compiler generates <a href="#banks">bank</a> switching code which is resilient to hardware interrupts.
+For many games, this added safety is unnecessary and slows the code down.
+This option is used to disable safe bank switching behavior.</p>
+</div>
+<div class="paragraph">
+<p>This option can only be specified once.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Unsafe bank switches are best enabled when IRQ is not used and when NMI is always waited for (no lag frames possible).
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Some mappers, such as BNROM, do not benefit from <code>unsafe-bank-switch</code>, as they always switch banks quickly.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --unsafe-bank-switch</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>unsafe-bank-switch = 1</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="opt_mlb">5.15. <code>mlb</code></h3>
+<div class="paragraph">
+<p><code>mlb</code> specifies a <a href="https://www.mesen.ca/">Mesen</a> .mlb label file to output.
+This file will contain addresses used by the program, for the purpose of debugging.</p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --mlb "my_labels.mlb"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>mlb = my_labels.mlb</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_threads_j">5.16. <code>threads</code> (<code>-j</code>)</h3>
 <div class="paragraph">
 <p>Specifies how many threads the compiler can use, enabling parallel compilation.
 This option expects an integer argument, and can only be specified once.</p>
@@ -1540,7 +1590,7 @@ due to that platform having a buggy implementation of threads.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_error_on_warning_w">5.14. <code>error-on-warning</code> (<code>-W</code>)</h3>
+<h3 id="_error_on_warning_w">5.17. <code>error-on-warning</code> (<code>-W</code>)</h3>
 <div class="paragraph">
 <p>This option turns warnings into errors and halts compilation whenever a warning occurs.
 This option expects no arguments and can only be specified once.</p>
@@ -1563,7 +1613,7 @@ This option expects no arguments and can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_pause">5.15. <code>pause</code></h3>
+<h3 id="_pause">5.18. <code>pause</code></h3>
 <div class="paragraph">
 <p>This option pauses the compiler before exiting until input is received on stdin.
 It is intended to be used on Microsoft Windows to keep the Command Prompt window open until you&#8217;re ready to close it.
@@ -1604,6 +1654,37 @@ The choice of mapper determines the amount of space available for code, the <a h
 <p><strong>For beginners:</strong> It is recommended to start with <code>nrom</code> (the default),
 and only consider switching once your program grows too large for it.</p>
 </div>
+<div class="paragraph">
+<p><strong>For information on how to configure NESFab for a specific mapper, see:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#opt_mapper"><code>mapper</code> (<code>-M</code>)</a></p>
+</li>
+<li>
+<p><a href="#opt_mirroring"><code>mirroring</code> (<code>-m</code>)</a></p>
+</li>
+<li>
+<p><a href="#opt_prg"><code>prg-size</code> (<code>-p</code>)</a></p>
+</li>
+<li>
+<p><a href="#opt_chr"><code>chr-size</code> (<code>-c</code>)</a></p>
+</li>
+<li>
+<p><a href="#opt_bus_conflicts"><code>bus-conflicts</code></a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="mapper_nrom">6.1. <code>nrom</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/NROM"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>NROM is the simplest mapper.
+It is easy to use and offers good performance, but is lacking in features and memory size.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1611,91 +1692,806 @@ and only consider switching once your program grows too large for it.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-The mapper names in the table below are links.
+16 KiB and 8 KiB variants of NROM are not currently supported.
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Max PRG (Code)</th>
-<th class="tableblock halign-left valign-top">Max CHR (Tilesets)</th>
-<th class="tableblock halign-left valign-top">Nametable VRAM</th>
-<th class="tableblock halign-left valign-top">Mirroring</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/NROM"><code>nrom</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/AxROM"><code>anrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Switchable 1-Page</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/BNROM"><code>bnrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8192 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/CNROM"><code>cnrom</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2048 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/GxROM"><code>gnrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.nesdev.org/wiki/GTROM"><code>gtrom</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">16 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed 4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>For information on how to configure NESFab for a specific mapper, see:</p>
+<p><strong>Other Details:</strong></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="#mapperopt"><code>mapper</code> (<code>-M</code>)</a></p>
-</li>
-<li>
-<p><a href="#mirroringopt"><code>mirroring</code> (<code>-m</code>)</a></p>
-</li>
-<li>
-<p><a href="#prgopt"><code>prg-size</code> (<code>-p</code>)</a></p>
-</li>
-<li>
-<p><a href="#chropt"><code>chr-size</code> (<code>-c</code>)</a></p>
-</li>
-</ul>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/r</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_anrom">6.2. <code>anrom</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/AxROM"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>ANROM is similar to <a href="#mapper_bnrom">BNROM</a>, but allows mirroring to be changed on the fly.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Related mappers like AMROM can be had using configuration options.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1-Page switchable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bit 4 changes mirroring</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acceptable risk</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_bnrom">6.3. <code>bnrom</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/BNROM"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>BNROM supports a huge amount of PRG, making it an excellent choice for large games.</p>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2048 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_cnrom">6.4. <code>cnrom</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/CNROM"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>CNROM is similar to <a href="#mapper_nrom">NROM</a>, but has multiple CHR banks.</p>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2048 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_gnrom">6.5. <code>gnrom</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/GxROM"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>GNROM offers both PRG and CHR banks.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Related mappers like MHROM can be had using configuration options.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB (RAM)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low 4 bits switch CHR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acceptable risk</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_colordreams">6.6. <code>colordreams</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/Color_Dreams"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>COLORDREAMS is similar to <a href="#mapper_gnrom">GNROM</a>, but reverses the bank switching nybbles.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+PRG above 128 KiB may not be supported on physical cartridges.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB (RAM)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High 4 bits switch CHR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acceptable risk</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_gtrom">6.7. <code>gtrom</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/GTROM"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>GTROM is a modern mapper designed to be cheap while offering a wide range of features.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+See the standard library file <code>lib/mapper_gtrom.fab</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 KiB (RAM)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed 4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Never</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High 4 bits switch nametable, CHR, and LEDs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acceptable risk</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_mmc1">6.8. <code>mmc1</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/MMC1"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>MMC1 is a flexible ASIC mapper with CHR banking and mirroring controls.
+Unfortunately, MMC1 is very slow to interface.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+See the standard library file <code>lib/mapper_mmc1.fab</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Switchable H, V, or 1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Never</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sets internal $8000 register</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not recommended</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_189">6.9. <code>189</code> (MMC3 Variant)</h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/INES_189"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>Mapper 189 is a <a href="https://www.nesdev.org/wiki/MMC3">MMC3</a> variant originally designed for bootleg games.
+Is it an excellent choice for those wanting MMC3 features in NESFab,
+but has the caveat of being an uncommon mapper.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+See the standard library file <code>lib/mapper_mmc3.fab</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Switchable H or V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Never</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -2221,7 +3017,7 @@ This looks like:</p>
 <div class="content">
 <pre>if expression
     code block
-else if expresssion
+else if expression
     code block
 else
     code block</pre>
@@ -2432,7 +3228,7 @@ Both of these label where control flow will jump.</p>
 <div class="sect3">
 <h4 id="kw_switch_asm">13.8.1. <code>switch</code> statement (byte block)</h4>
 <div class="paragraph">
-<p>In byte blocks, the <code>switch</code> statement causes the mapper to bankswitch to a specified <a href="#banks">bank</a>.</p>
+<p>In byte blocks, the <code>switch</code> statement causes the mapper to bank switch to a specified <a href="#banks">bank</a>.</p>
 </div>
 <div class="paragraph">
 <p>Syntax:</p>
@@ -2504,7 +3300,7 @@ It can appear inside other statements such as <a href="#kw_for"><code>for</code>
 <h3 id="kw_default">13.10. <code>default</code></h3>
 <div class="paragraph">
 <p><code>default</code> is used inside of <a href="#kw_switch"><code>switch</code></a> statements as a label.
-Control flow will jump to the <code>default</code> from the <code>switch</code> if the switch&#8217;s expression matches no enclosed <a href="#hw_case">[hw_case]</a> statemen.</p>
+Control flow will jump to the <code>default</code> from the <code>switch</code> if the switch&#8217;s expression matches no enclosed <a href="#hw_case">[hw_case]</a> statement.</p>
 </div>
 <div class="paragraph">
 <p>Syntax:</p>
@@ -3020,9 +3816,12 @@ There is more than one way to achieve concurrent safety. See <a href="#kw_fence"
 <div class="sect2">
 <h3 id="kw_state">13.18. <code>state</code></h3>
 <div class="paragraph">
-<p>Some <a href="#mappers">mappers</a> have states which can be switched for various effects.
+<p>Some <a href="#mappers">mappers</a> have registers which combine bank switching with other functionality.
 For example, <code>ANROM</code> uses a bit to track the cartridge&#8217;s mirroring, and lets the programmer switch it on the fly.
-<code>state</code> expressions read or write these <a href="#mappers">mappers'</a> states.</p>
+<code>state</code> expressions read or write these <a href="#mappers">mapper</a> registers while correctly handling the bank.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="#mappers">mappers page</a> what <code>state</code> means for each mapper.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3031,7 +3830,7 @@ For example, <code>ANROM</code> uses a bit to track the cartridge&#8217;s mirror
 <div class="title">Note</div>
 </td>
 <td class="content">
-The NESFab runtime duplicates the mapper&#8217;s state to a fixed location in RAM.
+The NESFab runtime duplicates the mapper&#8217;s register state to a fixed location in RAM.
 Reading the state will return this copy instead of polling the hardware.
 </td>
 </tr>
@@ -3040,7 +3839,7 @@ Reading the state will return this copy instead of polling the hardware.
 <div class="sect3">
 <h4 id="_state_read">13.18.1. <code>state</code> read</h4>
 <div class="paragraph">
-<p><code>state</code> is an expression of type <code>U</code> which returns the mapper&#8217;s last-set state.</p>
+<p><code>state</code> is an expression of type <code>U</code> which returns the mapper&#8217;s last-set register state.</p>
 </div>
 <div class="paragraph">
 <p>Syntax:</p>
@@ -3066,7 +3865,7 @@ This address refers to the copy in RAM; modifying it does not notify the hardwar
 <div class="sect3">
 <h4 id="_state_write">13.18.2. <code>state</code> write</h4>
 <div class="paragraph">
-<p><code>state</code> is an expression of type <code>Void</code> which sets the mapper&#8217;s state.</p>
+<p><code>state</code> is an expression of type <code>Void</code> which sets the mapper&#8217;s register state.</p>
 </div>
 <div class="paragraph">
 <p>Syntax:</p>
@@ -3098,8 +3897,8 @@ This address refers to the copy in RAM; modifying it does not notify the hardwar
 <div class="title">Note</div>
 </td>
 <td class="content">
-Mappers often reserve a few bits of their state for their bank.
-You should always leave these bits set to <code>0</code>, as otherwise the program may crash.
+You should not alter the bits reserved for the mapper&#8217;s bank.
+Leave these bits set to <code>0</code>, or otherwise the program may crash.
 </td>
 </tr>
 </table>
@@ -3502,6 +4301,9 @@ Unlike other programming languages, functions in NESFab cannot be nested or recu
 <li>
 <p><a href="#mod_flags"><code>+info</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+static</code></a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -3673,6 +4475,9 @@ While the mode function is executing, NMIs will be handled using the supplied <c
 <li>
 <p><a href="#mod_flags"><code>+info</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+static</code></a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -3791,6 +4596,9 @@ so long as bit 7 of <a href="https://www.nesdev.org/wiki/PPU_registers#PPUCTRL">
 <li>
 <p><a href="#mod_flags"><code>+info</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+static</code></a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -3809,7 +4617,111 @@ as otherwise the game would speed up or slow down based on how much computation 
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_asm">13.25. <code>asm</code></h3>
+<h3 id="kw_irq">13.25. <code>irq</code></h3>
+<div class="paragraph">
+<p>The keyword <code>irq</code> can be used as a statement, or as a declaration.</p>
+</div>
+<div class="sect3">
+<h4 id="kw_irq_statement">13.25.1. <code>irq</code> statement</h4>
+<div class="paragraph">
+<p>The <code>irq</code> statement is used to enable or disable IRQ interrupt handling.
+When disabled, no IRQ functions will be called.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>irq expr</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>expr</code> is an expression of type <code>Bool</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>irq true // Enable IRQs</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The <code>irq</code> statement corresponds to assembly instructions <code>SEI</code> and <code>CLI</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="kw_irq_function">13.25.2. <code>irq</code> function</h4>
+<div class="paragraph">
+<p>The <code>irq</code> keyword declares an <a href="https://www.nesdev.org/wiki/IRQ">irq</a> interrupt function at global scope.
+IRQ interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return, and cannot be called.
+Instead, they are triggered by hardware such as the <a href="https://www.nesdev.org/wiki/APU_Frame_Counter">APU frame counter</a>,
+or <a href="https://www.nesdev.org/wiki/MMC3">MMC3</a> scanline counter.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>irq identifier()
+    code block</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>identifier</code> is the name of the mode function.</p>
+</li>
+<li>
+<p><code>code block</code> is the block of code which implements the mode function.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Modifiers:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#mod_employs"><code>employs</code></a>.</p>
+</li>
+<li>
+<p><a href="#mod_data"><code>data</code></a>.</p>
+</li>
+<li>
+<p><a href="#mod_vars"><code>vars</code></a>.</p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+zero_page</code>, <code>-zero_page</code></a></p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+graphviz</code></a></p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+info</code></a></p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+static</code></a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kw_asm">13.26. <code>asm</code></h3>
 <div class="paragraph">
 <p>The <code>asm</code> keyword declares an function at global scope using <a href="#byte_blocks">byte block</a> inline assembly syntax.</p>
 </div>
@@ -3908,7 +4820,7 @@ Although the address cannot be taken of these labels, it is possible to call the
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_struct">13.26. <code>struct</code></h3>
+<h3 id="kw_struct">13.27. <code>struct</code></h3>
 <div class="paragraph">
 <p>The <code>struct</code> keyword is used to define new types (<a href="https://en.wikipedia.org/wiki/Record_(computer_science)">records</a>) at global scope.
 It behaves similarly to the <code>struct</code> keyword in other languages.</p>
@@ -3952,7 +4864,7 @@ so long as multi-dimensional arrays are not created.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_vars">13.27. <code>vars</code></h3>
+<h3 id="kw_vars">13.28. <code>vars</code></h3>
 <div class="paragraph">
 <p>The <code>vars</code> keyword declares a block of global variables, and potentially their <a href="#groups">group</a>.</p>
 </div>
@@ -3986,7 +4898,7 @@ with each declaration defining additional global variables.
 The group will be defined as the union of these declarations.</p>
 </div>
 <div class="paragraph">
-<p><strong>Varibale modifiers:</strong></p>
+<p><strong>Variable modifiers:</strong></p>
 </div>
 <div class="paragraph">
 <p>The following modifiers are per-variable, not per-group.</p>
@@ -4017,7 +4929,7 @@ vars /my_group
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_data">13.28. <code>data</code></h3>
+<h3 id="kw_data">13.29. <code>data</code></h3>
 <div class="paragraph">
 <p>The <code>data</code> keyword declares a <a href="#groups">group</a> and the pointer-addressable global constants inside of it.</p>
 </div>
@@ -4082,7 +4994,7 @@ The group will be defined as the union of these declarations.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_omni">13.29. <code>omni</code></h3>
+<h3 id="kw_omni">13.30. <code>omni</code></h3>
 <div class="paragraph">
 <p>The <code>omni</code> keyword can be prefixed to <a href="#kw_data"><code>data</code></a> to alter its behavior.
 Groups declared using <code>omni</code> will have their data duplicated across every bank of the ROM.
@@ -4119,7 +5031,7 @@ Additionally, pointers to <code>omni</code> data take up only two bytes, as oppo
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_charmap">13.30. <code>charmap</code></h3>
+<h3 id="kw_charmap">13.31. <code>charmap</code></h3>
 <div class="paragraph">
 <p>The <code>charmap</code> keyword defines character maps,
 which are sets of characters with a mapping from each character to byte values.
@@ -4147,7 +5059,7 @@ The first character in the string will map to a value of zero,
 with other characters mapping to one higher than the character preceding them.</p>
 </li>
 <li>
-<p><code>'s'</code> is an optional charcter literal, defining the sentinel. When left out, no sentinel is defined.</p>
+<p><code>'s'</code> is an optional character literal, defining the sentinel. When left out, no sentinel is defined.</p>
 </li>
 </ul>
 </div>
@@ -4203,7 +5115,7 @@ with other characters mapping to one higher than the character preceding them.</
 </div>
 <div class="paragraph">
 <p>The escape sequence <code>\/</code> has a special meaning inside of <code>charmap</code> definitions.
-A charcter preceding <code>\/</code> will map to the same value as the character following it.</p>
+A character preceding <code>\/</code> will map to the same value as the character following it.</p>
 </div>
 <div class="paragraph">
 <p>Commonly, <code>\/</code> is used when multiple characters can use the same glyph,
@@ -4331,7 +5243,7 @@ ct CCC/strings another_ptr = @some_string</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_chrrom">13.31. <code>chrrom</code></h3>
+<h3 id="_chrrom">13.32. <code>chrrom</code></h3>
 <div class="paragraph">
 <p>The <code>chrrom</code> keyword is only used for <a href="#mappers">mappers</a> which use CHR ROM (as opposed to CHR RAM).
 It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</a> syntax.</p>
@@ -4360,7 +5272,7 @@ It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_file">13.32. <code>file</code></h3>
+<h3 id="kw_file">13.33. <code>file</code></h3>
 <div class="paragraph">
 <p>The <code>file</code> keyword imports and converts data from an external file.
 It is only usable inside of a <a href="#byte_blocks">byte block</a>.</p>
@@ -4528,13 +5440,13 @@ Thus, <code>compressed_data</code> would gain the following members:</p>
 The second two are prefixed with <code>bg_</code>, as the previous label is <code>bg</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="file_bin">13.32.1. Binary file formats</h4>
+<h4 id="file_bin">13.33.1. Binary file formats</h4>
 <div class="paragraph">
 <p>The filetypes <code>.bin</code>, <code>.chr</code>, and <code>.nam</code> are loaded as raw binary data, with no conversions happening.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_txt">13.32.2. <code>.txt</code> format</h4>
+<h4 id="file_txt">13.33.2. <code>.txt</code> format</h4>
 <div class="paragraph">
 <p>The filetype <code>.txt</code> is interpreted as ASCII data, with newline sequences replaced with a single newline character.</p>
 </div>
@@ -4559,7 +5471,7 @@ The second two are prefixed with <code>bg_</code>, as the previous label is <cod
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_png">13.32.3. <code>.png</code> format</h4>
+<h4 id="file_png">13.33.3. <code>.png</code> format</h4>
 <div class="paragraph">
 <p>The filetype <code>.png</code> is interpreted as a <a href="https://en.wikipedia.org/wiki/PNG">PNG image</a> representing CHR tileset data.
 The input image must have dimensions that are multiples of 8 x 8 pixels.</p>
@@ -4571,7 +5483,7 @@ black represents color 0 and white represents color 3.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_raw">13.32.4. <code>raw</code> target</h4>
+<h4 id="file_raw">13.33.4. <code>raw</code> target</h4>
 <div class="paragraph">
 <p>The <code>raw</code> target imports raw binary data, without performing any filetype conversions.
 It accepts no arguments.</p>
@@ -4593,7 +5505,7 @@ It accepts no arguments.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_fmt">13.32.5. <code>fmt</code> target</h4>
+<h4 id="file_fmt">13.33.5. <code>fmt</code> target</h4>
 <div class="paragraph">
 <p>The <code>fmt</code> target imports data after first processing it using filetype conversions.
 It accepts no arguments.</p>
@@ -4615,7 +5527,7 @@ It accepts no arguments.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_pbz">13.32.6. <code>pbz</code> target</h4>
+<h4 id="file_pbz">13.33.6. <code>pbz</code> target</h4>
 <div class="paragraph">
 <p>The <code>pbz</code> target compresses the data into the PBZ encoding after first processing it using filetype conversions.
 It accepts no arguments.</p>
@@ -4689,7 +5601,7 @@ Starting from the highest bit and working to the lowest bit, the decompressed se
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_rlz">13.32.7. <code>rlz</code> target</h4>
+<h4 id="file_rlz">13.33.7. <code>rlz</code> target</h4>
 <div class="paragraph">
 <p>The <code>rlz</code> target compresses the data into the RLZ encoding after first processing it using filetype conversions.</p>
 </div>
@@ -4767,7 +5679,7 @@ If <code>false</code>, no <code>$00</code> will be appended. By default, the val
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_audio">13.33. <code>audio</code></h3>
+<h3 id="kw_audio">13.34. <code>audio</code></h3>
 <div class="paragraph">
 <p>The <code>audio</code> keyword imports and converts audio data from an external file,
 converting the data into code definitions.
@@ -4821,13 +5733,13 @@ It is only usable at top-level scope.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Music</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#audio_puf1_music"><code>puf1_sfx</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#audio_puf1_sfx"><code>puf1_sfx</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sound Effects</p></td>
 </tr>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="audio_puf1_music">13.33.1. <code>puf1_music</code> target</h4>
+<h4 id="audio_puf1_music">13.34.1. <code>puf1_music</code> target</h4>
 <div class="paragraph">
 <p>The <code>puf1_music</code> target converts music data and generates code compatible with the PUF music engine.</p>
 </div>
@@ -4886,7 +5798,8 @@ ct U puf_track_death       = 2</pre>
 <p><strong>Use</strong></p>
 </div>
 <div class="paragraph">
-<p>The standard library file <code>puf1.fab</code> can be used to play the converted music.</p>
+<p>The standard library file <code>puf1.fab</code> can be used to play the converted music.
+A description of how to compose compatible music can be found in that file.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4902,7 +5815,7 @@ You will also need a <code>puf1_sfx</code> audio target.
 </div>
 </div>
 <div class="sect3">
-<h4 id="audio_puf1_sfx">13.33.2. <code>puf1_sfx</code> target</h4>
+<h4 id="audio_puf1_sfx">13.34.2. <code>puf1_sfx</code> target</h4>
 <div class="paragraph">
 <p>The <code>puf1_sfx</code> target converts sound effect data and generates code compatible with the PUF music engine.</p>
 </div>
@@ -4967,7 +5880,8 @@ ct U puf_sfx_death       = 2</pre>
 <p><strong>Use</strong></p>
 </div>
 <div class="paragraph">
-<p>The standard library file <code>puf1.fab</code> can be used to play the converted sound effects.</p>
+<p>The standard library file <code>puf1.fab</code> can be used to play the converted sound effects.
+A description of how to compose compatible sound effects can be found in that file.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4984,13 +5898,13 @@ You will also need a <code>puf1_music</code> audio target.
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_stows">13.34. <code>stows</code></h3>
+<h3 id="kw_stows">13.35. <code>stows</code></h3>
 <div class="paragraph">
 <p>See <a href="#mod_stows"><code>stows</code></a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_employs">13.35. <code>employs</code></h3>
+<h3 id="kw_employs">13.36. <code>employs</code></h3>
 <div class="paragraph">
 <p>See <a href="#mod_employs"><code>employs</code></a>.</p>
 </div>
@@ -5045,6 +5959,11 @@ You will also need a <code>puf1_music</code> audio target.
 </li>
 <li>
 <p><code>+dpcm</code>: Align and store the data in a ROM location suitable for DPCM.</p>
+</li>
+<li>
+<p><code>+static</code>: Allocate the function in every bank.
+This modifier is incompatible with functions that can return with a different active bank than they started in.
+For &lt;kw_asm, <code>asm</code>&gt; functions, you must validate this yourself.</p>
 </li>
 </ul>
 </div>
@@ -5912,7 +6831,7 @@ and shifting by a variable (<code>x &lt;&lt; y)</code> generates a loop in the a
 <h4 id="assign_shift_left">15.2.19. Assign by Shift Left <code>&lt;&lt;=</code></h4>
 <div class="paragraph">
 <p>Performs a left shift using both operands, then assigns the value to the lvalue left operand.
-Returns the carry: a value of type <code>Bool</code> equal to last bit shifted out (or <code>false</code> if no shifting occured).</p>
+Returns the carry: a value of type <code>Bool</code> equal to last bit shifted out (or <code>false</code> if no shifting occurred).</p>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -5977,7 +6896,7 @@ and shifting by a variable (<code>x &gt;&gt; y)</code> generates a loop in the a
 <h4 id="assign_shift_right">15.2.21. Assign by Shift Right <code>&gt;&gt;=</code></h4>
 <div class="paragraph">
 <p>Performs a right shift using both operands, then assigns the value to the lvalue left operand.
-Returns the carry: a value of type <code>Bool</code> equal to last bit shifted out (or <code>false</code> if no shifting occured).</p>
+Returns the carry: a value of type <code>Bool</code> equal to last bit shifted out (or <code>false</code> if no shifting occurred).</p>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -6539,7 +7458,7 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sizeof Type</pre>
+<pre>len Type</pre>
 </div>
 </div>
 <div class="ulist">
@@ -6568,7 +7487,7 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sizeof(expression)</pre>
+<pre>len(expression)</pre>
 </div>
 </div>
 <div class="ulist">
@@ -6583,7 +7502,7 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>ct Int expr_len = sizeof(U[10](3))</pre>
+<pre>ct Int expr_len = len(U[10](3))</pre>
 </div>
 </div>
 </div>
@@ -6614,6 +7533,14 @@ It behaves similarly to function calls in other languages.</p>
     SS some_ss = SS(some_u)    // An explicit cast to SS
     UUF some_uuf = UUF(some_u) // An explicit cast to UUF</pre>
 </div>
+</div>
+<div class="paragraph">
+<p>When casting between numeric types, the bytes closest to <code>U</code> are preserved.
+This means that casting <code>UUU</code> to <code>U</code> discards the two most significant bytes, while <code>FFF</code> to <code>F</code> discards the two least.</p>
+</div>
+<div class="paragraph">
+<p>When casting from signed types to unsigned types of the same size, the bit pattern of the value is unchanged.
+For example, <code>S(-1)</code> will cast to <code>U(255)</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="_zero_initializations">15.8.1. Zero Initializations</h4>
@@ -7344,7 +8271,7 @@ When casting to a larger TEA, the new elements at the end of the TEA are zero-in
 <div class="content">
 <pre>fn example()
     U[3] small_tea = U[3](10, 20, 30)
-    U[3] copied_tea = small_array
+    U[3] copied_tea = small_tea
     U[2] smaller_tea = U[2](small_tea)
     U[5] larger_tea  = U[5](small_tea)</pre>
 </div>
@@ -7451,7 +8378,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-03-09 13:00:31 -0600
+Last updated 2023-03-14 20:10:41 -0500
 </div>
 </div>
 </body>
