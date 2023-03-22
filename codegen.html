@@ -7,7 +7,7 @@
     </head>
     <body>
         <p>
-        To learn how optimizing compilers are made, I built one targeting the <a href="https://en.wikipedia.org/wiki/MOS_Technology_6502">6502 architecture</a>.
+        To learn how optimizing compilers are made, <a href="nesfab.html">I built one</a> targeting the <a href="https://en.wikipedia.org/wiki/MOS_Technology_6502">6502 architecture</a>.
         In a bizarre twist, my compiler generates faster code than GCC, LLVM, and every other compiler I compared it to.
         </p>
 
@@ -15,14 +15,16 @@
 
         <p>I reckon my compiler isn't doing more when it comes to high-level optimizations,
         so the gains must be from the <a href="https://en.wikipedia.org/wiki/Code_generation_(compiler)">code generation</a> side.
-        This makes sense, as most compilers are multi-target with backends
-        designed for modern out-of-order RISC-like systems, not the ancient 6502.
+        This makes sense, as most compilers are multi-target, with backends
+        designed for modern RISC-like systems, not the ancient 6502.
         It doesn't matter how good GCC or LLVM's high-level optimizations are
         if they falter at the last leg of the race.
         </p>
 
         <p>Still, my compiler also beats those designed for retro and embedded systems, like VBCC, SDCC, and KickC.
         For this reason, it seemed like a good idea to write about my technique.</p>
+
+
 
         <h2>Cheating Disclaimer</h2>
 
@@ -75,7 +77,7 @@
         </p>
 
         <p>
-        The ordered basic block are then individually processed from the beginning of their order to the end,
+        The ordered basic blocks are then processed from beginning to end,
         generating multiple assembly code combinations per operation.
         The list of combinations will grow at an exponential rate, 
         but most can be pruned using ideas from <a href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamic programming</a> 
@@ -83,7 +85,7 @@
         </p>
 
         <p>
-        To improve the generated code, the resulting output states of each basic block are fed into their successor blocks as inputs.
+        To improve the generated code, output states of each basic block are fed into their successor blocks as inputs.
         This process repeats until a fixed point is reached.
         A cooling schedule a-la <a href="https://en.wikipedia.org/wiki/Simulated_annealing">simulated annealing</a> 
         is applied to find results faster.
@@ -136,8 +138,7 @@ return foo - (foo &amp; 3)</pre>
 
         <img src="codegen/scheduled.png">
 
-        <p>The generated assembly code will follow this order.
-        First the instructions for <code>(call fn)</code> will execute, then <code>(5)</code>, and so on.</p>
+        <p>The generated assembly code will follow this order.</p>
 
         <h4>How does one find this order?</h4>
 
@@ -157,82 +158,6 @@ return foo - (foo &amp; 3)</pre>
 
         <img src="codegen/dag2.png">
         <br><sup>Here's an actual DAG from my compiler.</sup>
-
-        <hr>
-
-        <h3>Out-of-SSA</h3>
-
-        <p>Next, the IR will be converted out of <a href="https://en.wikipedia.org/wiki/Static_single-assignment_form">SSA form</a>
-        (to a form with variable re-assignment).
-        This is done in a standard textbook fashion, but I'll still provide a short explanation.
-        <b>Feel free to skip this section if you're not writing a compiler.</b>
-        </p>
-
-        <p>To convert out of SSA form, take each phi node in the IR and replace them with copies, 
-        then take their inputs and insert copies for those too.
-        Using live variable analysis, many of these copies can be coalesced,
-        reducing the amount of variables needed.</p>
-
-        <p>For example, let's say you started with this input program:</p>
-
-        <pre>
-if some_condition
-    X = foo()
-else
-    X = bar()
-print X</pre>
-
-        <p>Converting this program to SSA form mimics addding variable names so that every assignment has a unique name.
-        A phi node will have to be inserted at the point where control flow merges together.</p>
-
-        <pre>
-// This is in SSA form:
-if some_condition
-    X = foo()
-else
-    Y = bar()
-P = phi(X, Y)
-print P</pre>
-
-        <p>Once this SSA form has been optimized, it then has to be converted back.
-        This is where adding copies comes into play.
-        Each phi input will be copied to a new common variable before the control flow merges together.
-        Then, the phi itself will be replaced with a copy of the new input copies. Take a look:</p>
-
-        <pre>
-// Copies inserted:
-if some_condition
-    X = foo()
-    C = X      // Copy
-else
-    Y = bar()
-    C = Y      // Copy
-P = C          // Copy
-print P</pre>
-
-        <p>Lastly, live variable analysis is run, and each assignment is checked to see if they can use the same variables.
-        The steps for this example might resemble:</p>
-
-        <ol>
-            <li>Prove variables P and C can use the same variable.</li>
-            <li>Prove variables C and X can use the same variable.</li>
-            <li>Prove variables X and Y can use the same variable.</li>
-        </ol>
-
-        <p>With this information, the final code can be rewritten:</p>
-
-        <pre>
-// This is out-of-SSA form:
-if some_condition
-    X = foo()
-    X = X
-else
-    X = bar()
-    X = X
-X = X
-print X</pre>
-
-        <p>The "X = X" lines can either be removed, or ignored. They have no effect.</p>
 
         <hr>
 
@@ -320,7 +245,7 @@ for each byte to upload:
 
     emit_store()</pre>
 
-        <p>This idea can be extended to working with three registers
+        <p>This idea can <i>almost</i> be extended to use three registers
         by using three "prev" variables instead of one.
         You might approach it using a struct or record type to keep things clean:</p>
             
@@ -334,14 +259,14 @@ struct cpu_state
 }</pre>
 
         <p>Unfortunately, there's a problem. 
-        Although it's possible to elide loads this way, 
-        it doesn't tell us which registers to use for each byte.
-        The one-register version works because each byte uses the lone register,
-        but for three registers, there's a decision to be made for each byte.</p>
+        Although we can keep track of each register this and elide stores,
+        it's not clear how we should handle loads.
+        Given a value not found in any register, which register should load it?
+        <p>
 
-        <p>These decisions can be made optimally by testing every possible combination of registers in a brute-force fashion, 
-        but this quickly becomes infeasible.
-        For each byte that needs uploading, there are three choices possible (one for each register).
+        <p>We can make these decisions optimally by generating assembly code for every possible combination of loads (brute force)
+        and only keeping the best one, but this quickly becomes infeasible.
+        For each byte that needs loading, there are three choices possible.
         The number of combinations will grow at an exponential rate.</p>
 
         <img src="codegen/tree.png">
@@ -358,28 +283,28 @@ struct cpu_state
         </p>
 
 <pre>
-lda #1      ; Load register A
-sta PPUDATA ; Upload register A to video RAM
-sta PPUDATA ; Upload register A to video RAM
-ldx #2      ; Load register X
-stx PPUDATA ; Upload register X to video RAM
-ldy #3      ; Load register Y
-sty PPUDATA ; Upload register Y to video RAM
+lda #1
+sta PPUDATA
+ldx #2
+stx PPUDATA
+ldy #3
+sty PPUDATA
+sta PPUDATA
 </pre>
 
 
 <pre>
-ldx #1      ; Load register X
-stx PPUDATA ; Upload register X to video RAM
-lda #1      ; Load register A
-sta PPUDATA ; Upload register A to video RAM
-ldx #2      ; Load register X
-stx PPUDATA ; Upload register X to video RAM
-ldy #3      ; Load register Y
-sty PPUDATA ; Upload register Y to video RAM
+ldy #1
+sty PPUDATA
+ldx #2
+stx PPUDATA
+ldy #3
+sty PPUDATA
+lda #1
+sta PPUDATA
 </pre>
 
-<p>Both upload the sequence (1, 1, 2, 3), and both leave the registers at (A = 1, X = 2, Y = 3).
+<p>Both upload the sequence (1, 2, 3, 1), and both leave the registers at (A = 1, X = 2, Y = 3).
 The second one requires an extra load though, so it can be pruned.</p>
 
 <p>Keep in mind that this works for partial snippets of code too.
@@ -392,50 +317,29 @@ then it will generate all the combinations for the second byte and prune some, a
 The pruning is done by storing the results in a hash table, indexed by each combination's "cpu_state"
 (the struct introduced earlier).</p>
 
-<p>At the end of the algorithm, several combinations will exist.
-The solution will be the lowest-costing combination of the bunch.</p>
-
-<p>Here's pseudocode:</p>
-
-<pre>
-for each byte to upload:
-    next_hash_map.clear()
-
-    for each combination in prev_hash_map:
-        for each register (A, X, Y):
-            new_combination = combination
-            if new_combination.cpu_state.register != byte:
-                Append a load to new_combination.code
-                new_combination.cost += 1
-                new_combination.cpu_state.register = byte
-
-            next_hash_map.insert(new_combination)
-            if next_hash_map already had this cpu_state: 
-                Keep the lowest-costing one
-
-    swap(next_hash_map,  prev_hash_map)</pre>
-
-<p>For better performance, there are more ways we can prune.
-One good method is to keep track of the current best (lowest-costing) combination,
-and prune other combinations that are slower by three or more loads.
-This preserves optimality, as three loads is enough to convert from any "cpu_state" to another.
+<p>For better performance, an additional method of pruning will be used.
+If we keep track of the current best combination at each iteration step,
+we can prune other combinations that are slower by three or more loads.
+This preserves optimality of the final result, as three loads is enough to convert from any "cpu_state" to another.
 </p>
 
-<p>Applying this, the pseudocode becomes:</p>
+<p>Putting all this together, the algorithm to elide loads in a 3-register CPU becomes:</p>
 
 <pre>
+prev_hash_map.clear()
+
 for each byte to upload:
     next_lowest_cost = INFINITY
     next_hash_map.clear()
 
     for each combination in prev_hash_map:
-        if combination.cost &gt;= prev_lowest_cost + 3:
+        if combination.cost &gt;= prev_lowest_cost + 3:   // Second method of pruning
             continue
 
         for each register (A, X, Y):
             new_combination = combination
             if new_combination.cpu_state.register != byte:
-                Append a load to new_combination.code
+                new_combination.code.append_load()
                 new_combination.cost += 1
                 new_combination.cpu_state.register = byte
 
@@ -443,7 +347,7 @@ for each byte to upload:
                 next_lowest_cost = combination.cost
 
             next_hash_map.insert(new_combination)
-            if next_hash_map already had this cpu_state: 
+            if next_hash_map already had this cpu_state:  // First method of pruning
                 Keep the lowest-costing one
 
     swap(next_hash_map, prev_hash_map)
@@ -452,22 +356,6 @@ for each byte to upload:
 <p>(If you want to see actual code, I've put a C++ implementation 
 <a href="https://coliru.stacked-crooked.com/a/d9b6528f72b870a1">here</a>
 and <a href="https://pastebin.com/raw/HAh3smh1">here</a>.)</p>
-
-<h4>Even More Ways to Prune</h4>
-
-<p>There are more ways to prune, but they're not applicable to how my compiler works.
-For instance, instead of comparing cpu_states as 3-tuples, it's better to compare them as sets,
-as there's no behavoral differences between the three registers. 
-Likewise, if <i>any</i> register in "cpu_state" matches the byte to upload,
-there's no point in trying any other register.
-But again, these ideas can not be used for my compiler.</p>
-
-<p>There is also a way to prune which <i>is</i> useful to a compiler, but not vice versa.
-Once the number combinations surpasses some specified amount (say, 100 or so), 
-the highest-costing ones above this threshold are pruned.
-This means the final result will not always be optimal, but it ensures that the runtime performance remains linear and predictable.</p>
-
-
 
         <img src="codegen/bebop.gif">
         <br><sup>I converted the Cowboy Bebop intro to a NES ROM using this animation process.
@@ -482,10 +370,10 @@ This means the final result will not always be optimal, but it ensures that the 
 
         <p>
         Well, consider this: <b>Instead of processing a sequence of bytes with this algorithm, 
-            process the sequence of IR operations created earlier.</b></p>
+            let's process the sequence of IR operations created earlier.</b></p>
 
         <p>Here's the ordered sequence of IR operations, from earlier.
-        I've added variable names (Q, R, S, T):</p>
+        I've added variable names (Q, R, S, T) as placeholders for each node:</p>
 
         <pre>
 Q = call fn
@@ -503,34 +391,40 @@ return T</pre>
         </ol>
 
         <p>Putting this into practice, I'll show how the algorithm handles the ordered IR.
-        To start, it will generate all the combinations for the <b>"call fn"</b> IR operation,
-        of which there is only one valid assembly code sequence:</p>
+        The algorithm starts by generating combinations for the first operation: <b>"call fn"</b>,
+        which there is only one:</p>
 
         <pre>
+; call fn:
 jsr fn   ; Call the function
 sta Q    ; Store the result into variable Q
          ; cpu_state is now (A = Q, X = ?, Y = ?)</pre>
-
-        <p>By "generate", I mean it's copy-pasting a pattern containing these instructions,
-        like expanding a macro.</p>
 
         <p>After that, it will generate the combinations for the <b>XOR operation (^)</b>.
         There's a single assembly instruction which does this: "EOR",
         but since XOR is commutative, two code combinations exist:
         </p>
 
-        <pre>
+        <pre>; call fn:
+jsr fn   ; Call the function
+sta Q    ; Store the result into variable Q
+         ; cpu_state is now (A = Q, X = ?, Y = ?)
+; xor:
 lda #5 ; Load 5 into register A
 eor Q  ; XOR register A with variable Q
 sta R  ; Store the result into variable R
        ; cpu_state is (A = R, X = ?, Y = ?)</pre>
 
-        <pre>
+        <pre>; call fn:
+jsr fn   ; Call the function
+sta Q    ; Store the result into variable Q
+         ; cpu_state is now (A = Q, X = ?, Y = ?)
+; xor:
 eor #5 ; XOR register A with variable 5
 sta R  ; Store the result into variable R
        ; cpu_state is (A = R, X = ?, Y = ?)</pre>
 
-        <p>The second combination does not need to load the Q variable, as it's already loaded in the register.
+        <p>The second combination does not need a load instruction for the Q variable, as it's already loaded in the register.
         Since both of these code sequences have the same side effect, the first combination will be pruned.</p>
 
         <p>Now, for the <b>AND operation (&amp;)</b>.
@@ -539,12 +433,30 @@ sta R  ; Store the result into variable R
         This results in four combinations, so I'll only show the two that won't get pruned:
         </p>
 
-        <pre>
+        <pre>; call fn:
+jsr fn   ; Call the function
+sta Q    ; Store the result into variable Q
+         ; cpu_state is now (A = Q, X = ?, Y = ?)
+; xor:
+eor #5 ; XOR register A with variable 5
+sta R  ; Store the result into variable R
+       ; cpu_state is (A = R, X = ?, Y = ?)
+; and:
 and #3   ; AND register A with 5
 sta S    ; Store the result into variable S
          ; cpu_state is (A = S, X = ?, Y = ?)</pre>
 
-        <pre>
+        </pre>
+
+        <pre>; call fn:
+jsr fn   ; Call the function
+sta Q    ; Store the result into variable Q
+         ; cpu_state is now (A = Q, X = ?, Y = ?)
+; xor:
+eor #5 ; XOR register A with variable 5
+sta R  ; Store the result into variable R
+       ; cpu_state is (A = R, X = ?, Y = ?)
+; and:
 ldx #3   ; Load 3 into register X
 sax S    ; Store the AND of registers A and X into variable S
          ; cpu_state is (A = R, X = 3, Y = ?)</pre>
@@ -552,23 +464,42 @@ sax S    ; Store the AND of registers A and X into variable S
         <p>For the <b>subtraction operation (-)</b>, the SBC instruction will be used following a SEC instruction to set the carry flag.
         As subtraction isn't commutative, there's only one way to do this, but since the previous operation generated two combinations,
         this operation will result in two combinations too. 
-        I'll include the previous AND operation in the code snippets, for clarity.
         </p>
 
-        <pre>
+        <pre>; call fn:
+jsr fn   ; Call the function
+sta Q    ; Store the result into variable Q
+         ; cpu_state is now (A = Q, X = ?, Y = ?)
+; xor:
+eor #5 ; XOR register A with variable 5
+sta R  ; Store the result into variable R
+       ; cpu_state is (A = R, X = ?, Y = ?)
+; and:
 and #3   ; AND register A with 5
 sta S    ; Store the result into variable S
          ; cpu_state is (A = S, X = ?, Y = ?)
+; subtract:
 lda R    ; Load R into register A
 sec
 sbc S    ; Subtract S from register A
 sta T    ; Store the result into variable T
          ; cpu_state is (A = T, X = ?, Y = ?)</pre>
 
-        <pre>
+        </pre>
+
+        <pre>; call fn:
+jsr fn   ; Call the function
+sta Q    ; Store the result into variable Q
+         ; cpu_state is now (A = Q, X = ?, Y = ?)
+; xor:
+eor #5 ; XOR register A with variable 5
+sta R  ; Store the result into variable R
+       ; cpu_state is (A = R, X = ?, Y = ?)
+; and:
 ldx #3   ; Load 3 into register X
 sax S    ; Store the AND of registers A and X into variable S
          ; cpu_state is (A = R, X = 3, Y = ?)
+; subtract:
 sec
 sbc S    ; Subtract S from register A
 sta T    ; Store the result into variable T
@@ -620,26 +551,25 @@ rts</pre>
         <h3>Basic Block Instruction Selection - Part 3: Continuations</h3>
 
         <p>As shown, compiling an IR operation boils down to generating a bunch of combinations.
-        However, if you were to go in and implement each combination for each operation,
+        However, if you were write code to translate IR operations into assembly combinations,
         you'd find it to be a repetive, menial coding task.
         </p>
 
-        <p>The issue is, our combinations have combinations of their own. 
-        For example, to generate a SAX instruction, one value needs to be loaded into register A,
-        another into register X, followed by the SAX instruction.
-        But as there is more than one way to load a value into a register 
-        (including different addressing modes), 
-        there will be a few combinations for loading in A, 
-        multiplied by a few combinations for loading in X. </p>
+        <p>The issue relates to the number of combinations. 
+        For each IR operation, there will be a few valid instructions that can implement it,
+        and each of those instructions will have its own variants, resulting in more combinations.
+        Multiply these together (and double it for communicative operations), 
+        and you'll end up with a lot of combinations per IR operation.</p>
 
         <img src="codegen/xzibit.jpg">
+        <br><sub>Our combinations have combinations!</sub>
 
         <p>It would be nice to abstract these details away and create building blocks for 
         implementing operations. Luckily, I found a solution by using continuations.</p>
 
         <p>Each step (or "building block") will be implemented as a function written in 
         <a href="https://en.wikipedia.org/wiki/Continuation-passing_style">continuation-passing style</a>.
-        Instead of returning, these functions will call their continuations with each instruction they want to test.
+        Instead of returning, these functions will call their continuations with each instruction they want to generate a combination for.
         For example, to generate three combinations, the continuation will be called three times with three different instructions.
         </p>
 
@@ -648,14 +578,14 @@ rts</pre>
         <pre>
 load_A(desired_value, cpu_state, continuation)
     if cpu_state.A == desired_value
-        continuation(NOP)
+        continuation(cpu_state, NOP)
     else if cpu_state.X == desired_value
-        continuation(TXA)
+        continuation(cpu_state, TXA)
     else if cpu_state.Y == desired_value
-        continuation(TYA)
+        continuation(cpu_state, TYA)
     else
-        continuation(LDA)
-        continuation(LAX)</pre>
+        continuation(cpu_state, LDA)
+        continuation(cpu_state, LAX)</pre>
 
         <p>
         If the value is already present in one of the registers: either nothing happens (NOP), or a transfer between registers occurs (TXA, TYA).
@@ -670,18 +600,13 @@ load_A(desired_value, cpu_state, continuation)
         <pre>
 compose(load_A(L), load_X(R), instruction(SAX))</pre>
 
-        <p>This single line could cover 50 different assembly sequences, all handling different combinations of instructions and addressing modes.
+        <p>A single line like this can cover 50 different assembly sequences, all handling different combinations of instructions and addressing modes.
         It's much easier to write than trying to enumerate all the possibilities by hand.</p>
-
-        <p>Unfortunately, I'm going to the leave implementation of this vague, as it depends on the language used.
-        In my case, I was using C++, and implemented the continuations as <a href="https://en.wikipedia.org/wiki/Template_(C%2B%2B)">templates</a>.</p>
 
         <h3>Control Flow - Part 1: Basics</h3>
 
-        <p>So far, the algorithm I've described is tied to basic blocks and does not handle control flow (branches, loops, etc), 
-        but it's easy to extend.
-        It turns out that branch operations can be handled like any other operation 
-        &mdash; just create combinations of instructions and prune &mdash; using labels decided in advance.
+        <p>Although the algorithm I've described is tied to basic blocks, it can handle control flow (branches, loops, etc) too.
+        Branch operations are not special &mdash; they generate assembly combinations like any other.
         </p>
 
         <p>For example, take a look at this control flow graph (the rectangles are basic blocks):</p>
@@ -690,7 +615,7 @@ compose(load_A(L), load_X(R), instruction(SAX))</pre>
 
         <p>Each basic block in this graph will be assigned a unique label name (L1, L2, L3, etc).</p>
 
-        <p>Now we'll generate the code for each basic block separately, implementing branches as instructions that work with these label names.
+        <p>Now we'll generate the code for each basic block <i>separately</i>, implementing control flow as instructions involving these labels.
         Once every basic block has its code generated, we can concatenate the results:</p>
 
         <pre>
@@ -752,7 +677,7 @@ L1:
         <br><sup>New method: Use the output states from generating a basic block as the input states to the next.</sup>
 
         <p>This is an iterative process where each node can be processed multiple times.
-        When a node is processed, it will trigger its successors to be processed next. This will repeat until a fixed point is reached.
+        When a node is processed, it will trigger its successors to be processed next passing outputs as inputs. This will repeat until a fixed point is reached.
         </p>
 
         <p>Going back to the loop example, initial iterations will produce inefficient code,
@@ -766,7 +691,7 @@ L1:
 
         <h3>Control Flow - Part 3: Some Loads Required</h3>
 
-        <p>Although the method above generates better code, 
+        <p>Although the method above generates improved code, 
         it's no longer possible to get a working program by concatenating the lowest-costing combinations.
         The issue is, each code combination now expects some specific register values as inputs,
         but the output of one combination may not correspond to the input of another.
@@ -802,23 +727,22 @@ L1:
 
         <h3>Control Flow - Part 4: PBQP</h3>
 
-        <p>The woes above are caused by selecting only the lowest-costing combinations,
+        <p>The woes above are caused by selecting only the lowest-costing combinations per basic block,
         without taking into consideration the compatability between input/output states.
-        It would be better to factor in the cost of these loads, so that the sum of
-        the chosen combinations with the extra loads is minimized. </p>
+        Ideally, we'd factor in the cost of inserted loads.</p>
 
-        <p>If this sounds like an optimization problem, that's because it is.
-        It's called the <a href="https://beza1e1.tuxen.de/articles/pbqp.html">Partitioned Boolean Quadratic Problem</a>, 
-        or PBQP for short.</p>
+        <p>Doing so is an optimization problem, and one which closely maps to the
+        <a href="https://beza1e1.tuxen.de/articles/pbqp.html">Partitioned Boolean Quadratic Problem</a> (PBQP).
+        If we can solve a PBQP problem, we can select optimal combinations for our basic blocks.</p>
 
-        <p>Unfortunately, not much has been written on PBQP, and what does exist is hard to read:</p>
+        <p>Unfortunately, not much has been written on PBQP, and what does exist is hard to read for most:</p>
         <img src="codegen/pbqp.png">
         <br><sup><a href="http://www.complang.tuwien.ac.at/scholz/pbqp.html">Image Source</a></sup>
-        <p>My advice is that instead of struggling over equations, it's easier to understand PBQP by thinking visually, in terms of graphs.
+        <p>My advice is that instead of struggling over equations, it's easier to learn PBQP by thinking visually, in terms of graphs.
         </p>
 
         <p>Imagine a graph where each node has a finite list of choices,
-        and each of these choices has a cost.
+        and each of those choices has a cost.
         The goal PBQP is to pick one choice for each node, minimizing the total cost.
         The catch is, an additional cost is incurred for every edge in the graph
         based on the choices made at the edge's vertices.
@@ -843,7 +767,7 @@ L1:
         The algorithm works on the graph, reducing and combining nodes until none remain. 
         At the end, the algorithm works backwards, using the steps it took to decide which choices to make.</p>
 
-        <p>Going back to the compiler, the problem I was describing fits perfectly into PBQP:</p>
+        <p>Going back to the compiler, the problem I was describing fits perfectly into this visualization:</p>
         <ul>
             <li>The graph is the control-flow graph.</li>
             <li>The nodes are the basic blocks.</li>
@@ -862,24 +786,6 @@ L1:
 
         <p>Which is optimal.</p>
 
-        <h3>Peep-Hole and Other Cleanup</h3>
-
-        <p>The generated assembly code should be high quality at this point, 
-        but a few small gains can still be had using 
-        <a href="https://en.wikipedia.org/wiki/Peephole_optimization">peep-hole optimization</a>.
-        Mostly, this is done for the loads inserted at the very end (between basic-block transitions),
-        as those weren't generated using the combination method, and so lack typical optimization.
-        </p>
-
-        <p>In addition to peephole, it's recommended to clean up the branch code a bit.
-        In my own implementation, I generate instructions for both destinations of the branch, and then remove one in this cleanup pass.</p>
-
-        <p>There can also be some benefit to reordering instructions. 
-        Sometimes, this is useful because the operation order was not optimal,
-        but other times it's useful because the combination algorithm places loads right before they're used.
-        Both of these are hard to do, so my compiler only reorders loads, 
-        moving them based on liveness information and pattern matching.</p>
-
         <h2>Complexity and Performance</h2>
 
         <ul>
@@ -887,52 +793,37 @@ L1:
             In practice, typical code is very easy to order.</li>
             <li>I don't know what the complexity of going out of SSA is, but I'm assuming its O(N<sup>2</sup>). 
                     Regardless, the runtime cost is negligable.</li>
-            <li>Code-generating basic blocks is O(N), with a high constant multiplier.
+            <li>Code-generating basic blocks is O(N) with respect to the number of IR operations, with a high constant multiplier.
                 This has a impactful runtime cost, with the bottleneck being the hash table.
-                I use a very fast hash-table of my own design (amusingly, it's faster than the so-called <a href="https://probablydance.com/2017/02/26/i-wrote-the-fastest-hashtable/">"fastest hash table"</a>), which alleviates this.
+                I use a very fast hash-table of my own design, which alleviates this.
             </li>
             <li>The PBQP problem is solved in O(N) relative to the number of edges, and O(N<sup>3</sup>) relative to the number of choices.
                 This <i>can</i> be a big runtime cost, but isn't an issue so long as the number of choices is kept small.
                 I reckon the PBQP solver could be implemented using SIMD if necessary, but I haven't found the need.</li>
+            <li>Repeatedly generating basic blocks has some awful complexity,
+                but because of the simulated annealing it becomes O(N).
+                A significant cost at this step is cache misses caused by reading assembly combinations.
+                With proper technique, many of these cache misses can be avoided.
+            </li>
         </ul>
 
-        <p>Generating combinations easily fills the cache, and once generated, 
-        there's a ton of cache misses involved in reading the combinations back.
-        Thus, it's a good idea to evaluate and discard the combinations in a manner that doesn't require </p>
+        <h2>Conclusion</h2>
 
-        TODO!!!
-
-        <p>Rather than tracking memory precisely, 
-        I allocate combinations in a hefty memory pool and free them after each step.
-        I did experiment with a few garbage-collection ideas, but none proved fruitful.</p>
-
-        <p>Coming up with a decent implementation of continuations in C++ was challenging.
-        The issue was, either compilation speed would blow up, or run-time speed would blow up, or both.
-        Eventually, I settled on using templates to generate linked-lists of functions, which are then evaluated.
-        This was the fastest at both compile-time and run-time, but it's difficult for me to assess why.
+        <p>This code generator has worked well enough for me.
+        Although parts of it are hairy, the continuations make it easy to add new operations
+        and I don't see much technical debt in the code. The generated assembly code has been good, albeit not perfect. 
+        As stated, it beat other compilers for the benchmarks I ran, but I'm sure others could beat mine as well.
+        My only goal was to produce a good compiler, not the best.
         </p>
 
-        <h3>Control Flow - Part 3: PBQP</h3>
-
-        <h2>Other Approaches</h2>
-
-        <p>As I mentioned in the beginning, I know very little about </p>
-
-        <p>This article is really about code-generation, but I'll provide a </p>
-
-        <h2>Unfair Advantages</h2>
-
-        <p>
-            I really don't like 
-
-            The first benefit my compiler has is that I'm using the so-called "illegal" (or "unofficial") instructions.
+        <p>As I mentioned in the beginning, I don't have deep knowlege of other code generation techniques.
+        Most of the papers on code generation I've seen involve ILP / SAT solvers and take minutes, if not hours to compile a long function.
+        Besides, everything nowadays is designed for RISC architectures, which is totally unlike the 6502.
+        You might think that papers from the 1970s would be more useful, but in the 70s computers were sluggish
+        and the algorithms designed for them were O(N) and compensating.
+        You just don't see advice like "hash everything and run it a million times" back then.
         </p>
 
-        <img src="codegen/phi1.png">
-        <img src="codegen/phi2.png">
-        <img src="codegen/phi3.png">
-
-
-        <p><a href="index.html#softwarearticles">[More programming articles]</a> <a href="index.html">[Back to my homepage]</a></p>
+        <p><a href="index.html#softwarearticles">[More programming articles]</a> <a href="index.html">[Back to my homepage]</a><a href="work.html">[Hire me]</a></p>
     </body>
 </html>

@@ -20,3 +20,8 @@ table, th, td {
 td, th { padding: 4px; }
 
 img { max-width: 100%; }
+
+.quote { 
+    padding: 1em;
+    background-color: rgba(20, 20, 80, 0.05); 
+}
