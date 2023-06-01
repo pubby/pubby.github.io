@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="author" content="Copyright (c) 2023, Pubby">
 <title>NESFab</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -209,13 +209,10 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
-.exampleblock>.content>:first-child{margin-top:0}
-.exampleblock>.content>:last-child{margin-bottom:0}
 .sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
-.sidebarblock>:first-child{margin-top:0}
-.sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
-.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
 .literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
@@ -394,7 +391,7 @@ b.conum *{color:inherit!important}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
 h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
@@ -442,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>NESFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 0.4</span>
+<span id="revdate">Version 0.6</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -647,8 +644,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#modifiers">14. Modifiers</a>
 <ul class="sectlevel2">
 <li><a href="#mod_flags">14.1. Modifier Flags</a></li>
-<li><a href="#mod_stows">14.2. <code>stows</code></a></li>
-<li><a href="#mod_employs">14.3. <code>employs</code></a></li>
+<li><a href="#mod_stows">14.2. <code>stows</code></a>
+<ul class="sectlevel3">
+<li><a href="#_stows_omni">14.2.1. <code>stows omni</code></a></li>
+</ul>
+</li>
+<li><a href="#mod_employs">14.3. <code>employs</code></a>
+<ul class="sectlevel3">
+<li><a href="#_employs_vars_and_employs_data">14.3.1. <code>employs vars</code> and <code>employs data</code></a></li>
+</ul>
+</li>
 <li><a href="#mod_preserves">14.4. <code>preserves</code></a></li>
 <li><a href="#mod_data">14.5. <code>data</code></a></li>
 <li><a href="#mod_vars">14.6. <code>vars</code></a></li>
@@ -753,7 +758,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_types">17. Types</a>
 <ul class="sectlevel2">
-<li><a href="#_scalar_types">17.1. Scalar Types</a>
+<li><a href="#type_scalar">17.1. Scalar Types</a>
 <ul class="sectlevel3">
 <li><a href="#type_integer">17.1.1. Integer Types</a></li>
 <li><a href="#_unit_fractional_types">17.1.2. Unit-Fractional Types</a></li>
@@ -888,10 +893,10 @@ Instead, only global variables of a <a href="#type_paa">specific type</a> can be
 <p>The operators <code>&amp;</code>, <code>|</code>, and <code>^</code> have a <a href="#binop">higher precedence</a> than in C.</p>
 </li>
 <li>
-<p>Combined-assignment operators, like <code>+=</code> or <code>&lt;&#8656;</code>, return a value of type <code>Bool</code>, representing the carry.</p>
+<p>Combined-assignment operators, like <code>+=</code>, return a value of type <code>Bool</code>, representing the carry.</p>
 </li>
 <li>
-<p>Division is unsupported.</p>
+<p>Division is unsupported at the language level.</p>
 </li>
 <li>
 <p>Array operators (<code>[]</code> and <code>{}</code>) are split into 8-bit and 16-bit versions, with the 8-bit versions having better performance.</p>
@@ -4951,7 +4956,7 @@ The variable will reset to this value at the start of the program,
 but also whenever a <a href="#kw_goto_mode_statement"><code>goto mode</code> statement</a> occurs and the variable&#8217;s group is not <a href="#mod_preserves">preserved</a></p>
 </div>
 <div class="paragraph">
-<p>The same group can be declared multiple times,
+<p>The same <code>vars</code> group can be declared multiple times,
 with each declaration defining additional global variables.
 The group will be defined as the union of these declarations.</p>
 </div>
@@ -5011,7 +5016,7 @@ vars /my_group
 </ul>
 </div>
 <div class="paragraph">
-<p>The same group can be declared multiple times,
+<p>The same <code>data</code> group can be declared multiple times,
 with each declaration defining additional global variables.
 The group will be defined as the union of these declarations.</p>
 </div>
@@ -6084,8 +6089,8 @@ You will also need a <code>puf1_music</code> audio target.
 <div class="sect2">
 <h3 id="mod_flags">14.1. Modifier Flags</h3>
 <div class="paragraph">
-<p>Modifier flags are specified prefixed with a <code>-</code> or <code>+</code> character.
-<code>-</code> is used to disable the modifier, while <code>+</code> is used to enable it.</p>
+<p>Modifier flags are specified prefixed with a <code>-</code> or <code>` character.
+`-` is used to disable the modifier, while `</code> is used to enable it.</p>
 </div>
 <div class="paragraph">
 <p>The following flags exist:</p>
@@ -6160,6 +6165,27 @@ to enable string literals to use said <code>charmap</code>.</p>
 </li>
 </ul>
 </div>
+<div class="sect3">
+<h4 id="_stows_omni">14.2.1. <code>stows omni</code></h4>
+<div class="paragraph">
+<p>The <code>stows omni</code> modifier behaves like <code>stows</code>, except it stores its data inside an <code>omni data</code> group.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>: stows omni /group_name</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/group_name</code> is a single <code>omni data</code> group which string literals will be stored in.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="mod_employs">14.3. <code>employs</code></h3>
@@ -6196,6 +6222,29 @@ The <code>employs</code> modifier is only required in these circumstances:</p>
 <p><code>/group_names</code> is an optional list of groups.</p>
 </li>
 </ul>
+</div>
+<div class="sect3">
+<h4 id="_employs_vars_and_employs_data">14.3.1. <code>employs vars</code> and <code>employs data</code></h4>
+<div class="paragraph">
+<p>For additional control, <code>employs vars</code> and/or <code>employs data</code> modifiers can be used.
+These behave like <code>employs</code>, but only include the <code>vars</code> and/or <code>data</code> definitions of each groups.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>: employs vars /group_names
+: employs data /group_names</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/group_names</code> is an optional list of groups.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -6726,6 +6775,9 @@ Its behavior depends on the left hand side of the operator:</p>
 <p>For <a href="#type_struct">structure values</a>, returns the specified member as an lvalue.</p>
 </li>
 <li>
+<p>For <a href="#type_scalar">scalar values</a>, returns the specified byte or pointer member as an lvalue.</p>
+</li>
+<li>
 <p>For <a href="#kw_fn"><code>fn</code> values</a> and <a href="#type_paa">PAA values</a>, returns the <a href="#kw_ct"><code>ct</code></a> value in its scope.</p>
 </li>
 </ul>
@@ -6740,7 +6792,84 @@ the result is a callable function with the label being the entry point.</p>
 <div class="listingblock">
 <div class="content">
 <pre>foo.bar = 10               // Modify a struct member
+some_uu.a = 10             // Modify a byte
 some_asm_fn.some_label(10) // Call an assembly function</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Scalar value members:</strong></p>
+</div>
+<div class="paragraph">
+<p>Scalars of types such as <code>UU</code>, <code>SSSF</code>, or <code>CCC</code> have the following members defined for them, when applicable:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Member</th>
+<th class="tableblock halign-left valign-top">Defined For</th>
+<th class="tableblock halign-left valign-top">Byte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.a</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalars</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1st (lowest) whole byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.b</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalars</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2nd whole byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.c</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalars</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3d whole byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.z</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalars</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1st (highest) fractional byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.y</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalars</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2nd fractional byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.x</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalars</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3rd fractional byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.bank</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only Pointers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bank byte</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.ptr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only Pointers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Non-banked pointer</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>These members can be read or set using operator <code>.</code> like struct members can.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>UUU foo = $123456
+foo.a = 0   // Set the low byte.    foo is now $123400
+foo.b = 0   // Set the middle byte. foo is now $120000
+foo.c = 0   // Set the high byte.   foo is now $000000</pre>
 </div>
 </div>
 </div>
@@ -8065,7 +8194,7 @@ Likewise, to write a string containing line breaks, you must use escape sequence
 <h2 id="_types">17. Types</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_scalar_types">17.1. Scalar Types</h3>
+<h3 id="type_scalar">17.1. Scalar Types</h3>
 <div class="sect3">
 <h4 id="type_integer">17.1.1. Integer Types</h4>
 <div class="paragraph">
@@ -8643,7 +8772,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-04-07 22:01:00 -0500
+Last updated 2023-06-01 14:37:31 -0500
 </div>
 </div>
 </body>
