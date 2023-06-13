@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>NESFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 0.6</span>
+<span id="revdate">Version 0.7</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -644,19 +644,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#modifiers">14. Modifiers</a>
 <ul class="sectlevel2">
 <li><a href="#mod_flags">14.1. Modifier Flags</a></li>
-<li><a href="#mod_stows">14.2. <code>stows</code></a>
+<li><a href="#mod_nmi">14.2. <code>nmi</code></a></li>
+<li><a href="#mod_irq">14.3. <code>irq</code></a></li>
+<li><a href="#mod_stows">14.4. <code>stows</code></a>
 <ul class="sectlevel3">
-<li><a href="#_stows_omni">14.2.1. <code>stows omni</code></a></li>
+<li><a href="#_stows_omni">14.4.1. <code>stows omni</code></a></li>
 </ul>
 </li>
-<li><a href="#mod_employs">14.3. <code>employs</code></a>
+<li><a href="#mod_employs">14.5. <code>employs</code></a>
 <ul class="sectlevel3">
-<li><a href="#_employs_vars_and_employs_data">14.3.1. <code>employs vars</code> and <code>employs data</code></a></li>
+<li><a href="#_employs_vars_and_employs_data">14.5.1. <code>employs vars</code> and <code>employs data</code></a></li>
 </ul>
 </li>
-<li><a href="#mod_preserves">14.4. <code>preserves</code></a></li>
-<li><a href="#mod_data">14.5. <code>data</code></a></li>
-<li><a href="#mod_vars">14.6. <code>vars</code></a></li>
+<li><a href="#mod_preserves">14.6. <code>preserves</code></a></li>
+<li><a href="#mod_data">14.7. <code>data</code></a></li>
+<li><a href="#mod_vars">14.8. <code>vars</code></a></li>
 </ul>
 </li>
 <li><a href="#_operators_2">15. Operators</a>
@@ -3690,7 +3692,7 @@ by storing into the address.</p>
 <div class="paragraph">
 <p>The <code>fence</code> statement is used for both writing concurrent code, and for interacting with hardware.
 It imposes constraints on how global variables are loaded and stored,
-preventing the compiler from re-ordering them.</p>
+preventing the compiler from reordering them.</p>
 </div>
 <div class="paragraph">
 <p>More precisely:</p>
@@ -3706,7 +3708,24 @@ preventing the compiler from re-ordering them.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Why is <code>fence</code> a thing?</strong></p>
+<p>A function tracks a global variable if it reads or writes that variable, or if it calls another function that does.
+When dereferencing a pointer, the pointer&#8217;s groups define the set of globals to track.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>fence</code> does not instruct the compiler <strong>which</strong> globals to track.
+To do that, the modifier <a href="#kw_employs"><code>employs</code></a> is required.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Why is <code>fence</code> a thing in concurrent code?</strong></p>
 </div>
 <div class="paragraph">
 <p>The NESFab compiler performs optimizations which moves loads and stores around.
@@ -3722,13 +3741,13 @@ bar = 20</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The compile is free to re-order these global variable assignments, storing into <code>bar</code> before <code>foo</code>.
+<p>The compile is free to reorder these global variable assignments, storing into <code>bar</code> before <code>foo</code>.
 However, imagine if an interrupt were to occur between these stores.
 The interrupt would see that <code>bar</code> equals <code>20</code>, but not <code>foo</code> equals <code>10</code>,
 as the store to <code>foo</code> hasn&#8217;t happened yet.</p>
 </div>
 <div class="paragraph">
-<p>To prevent this re-ordering, a <code>fence</code> statement can be used:</p>
+<p>To prevent this reordering, a <code>fence</code> statement can be used:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3741,12 +3760,51 @@ bar = 20</pre>
 <p>Now if the interurpt sees that <code>bar</code> equals <code>20</code>, <code>foo</code> must equal <code>10</code>.</p>
 </div>
 <div class="paragraph">
+<p><strong>Why is <code>fence</code> a thing in sequential code?</strong></p>
+</div>
+<div class="paragraph">
+<p>Optimizations which reorder code can affect sequential code, too.
+For example, consider the following code which turns the grayscale bit of <code>PPUMASK</code> on until <code>game_update</code> completes.
+Visually, this will depict how long it takes for <code>game_update</code> to run by displaying a grayscale stripe on the screen.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>while true
+    {PPUMASK}(PPUMASK_GRAYSCALE_ON | PPUMASK_ON)
+    game_update()
+    {PPUMASK}(PPUMASK_ON)
+    nmi</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unfortunately, this code may not work as intended.
+The compiler is allowed to reorder the <code>game_update</code> call and move it before the first <code>PPUMASK</code> write, or after the second <code>PPUMASK</code> write.
+This is because the compiler sees no connection between the two; there is no dependency from one to another, as they do not involve the same global variables.</p>
+</div>
+<div class="paragraph">
+<p>To fix the problem, two <code>fence</code> statements are used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>while true
+    {PPUMASK}(PPUMASK_GRAYSCALE_ON | PPUMASK_ON)
+    fence
+    game_update()
+    fence
+    {PPUMASK}(PPUMASK_ON)
+    nmi</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These force the <code>game_update</code> call to remain between the <code>PPUMASK</code> writes.</p>
+</div>
+<div class="paragraph">
 <p><strong>Another purpose for <code>fence</code>:</strong></p>
 </div>
 <div class="paragraph">
 <p><code>fence</code> is also used when interacting with the hardware directly.
 When reading or writing a global variable via its hardware address,
-two <code>fence</code> statements are required with the hardware access between them.
+two <code>fence</code> statements are recommended with the hardware access between them.
 These <code>fence</code> statements instruct the compiler to store the global before the hardware access,
 and load the value after it.</p>
 </div>
@@ -3761,21 +3819,34 @@ fence</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Without these <code>fence</code> instructions, the compiler would not recognize that global variables are being read.
-and so the resulting read may have incorrect results.</p>
+<p>Without the first <code>fence</code> instruction, the compiler would not recognize that global variables are being read.
+and so the resulting read may have incorrect results.
+The second <code>fence</code>, although largely uncessary, ensures that future reads to <code>oam</code> occur after <code>OAMDMA</code> completes.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<code>fence</code> does not instruct the compiler <strong>which</strong> globals to track.
-To do that, the modifier <a href="#hw_employs">[hw_employs]</a> is required.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Note that this only applies when an address is written, and that write has an effect which dereferences the address.
+It is not necessary to use <code>fence</code> when a value is passed normally:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// fence isn't needed here:
+{PPUDATA}(some_var)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Likewise, it is not necessary to use <code>fence</code> when the address is not dereferenced:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// fence isn't needed here:
+{PPUDATA}(&amp;some_var.a)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>More on dependencies and side effects:</strong></p>
+</div>
+<div class="paragraph">
+<p>One way to think about <code>fence</code> is that the program is outputting a list of hardware reads and writes (i.e. those involving the PPU), and the compiler makes sure the order and the data written matches the original code.</p>
 </div>
 </div>
 <div class="sect2">
@@ -4518,7 +4589,10 @@ While the mode function is executing, NMIs will be handled using the supplied <c
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#mod_nmi">[mod_nmi]</a>.</p>
+<p><a href="#mod_nmi"><code>nmi</code></a>.</p>
+</li>
+<li>
+<p><a href="#mod_irq"><code>irq</code></a>.</p>
 </li>
 <li>
 <p><a href="#mod_employs"><code>employs</code></a>.</p>
@@ -4576,7 +4650,7 @@ This happens transparently from the programmer; no <a href="https://en.wikipedia
 <div class="sect2">
 <h3 id="kw_nmi">13.26. <code>nmi</code></h3>
 <div class="paragraph">
-<p>The keyword <code>nmi</code> can be used as a statement, or as a declaration.</p>
+<p>The keyword <code>nmi</code> can be used as a statement, a declaration, or as <a href="#mod_nmi">a modifier</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="kw_nmi_statement">13.26.1. <code>nmi</code> statement</h4>
@@ -4682,7 +4756,7 @@ as otherwise the game would speed up or slow down based on how much computation 
 <div class="sect2">
 <h3 id="kw_irq">13.27. <code>irq</code></h3>
 <div class="paragraph">
-<p>The keyword <code>irq</code> can be used as a statement, or as a declaration.</p>
+<p>The keyword <code>irq</code> can be used as a statement, a declaration, or as <a href="#mod_irq">a modifier</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="kw_irq_statement">13.27.1. <code>irq</code> statement</h4>
@@ -6121,7 +6195,7 @@ You will also need a <code>puf1_music</code> audio target.
 <li>
 <p><code>+static</code>: Allocate the function in every bank.
 This modifier is incompatible with functions that can return with a different active bank than they started in.
-For &lt;kw_asm, <code>asm</code>&gt; functions, you must validate this yourself.</p>
+For <a href="#kw_asm"><code>asm</code></a> functions, you must validate this yourself.</p>
 </li>
 <li>
 <p><code>palette_3</code>: Converts 4-byte palettes into 3-byte palettes.</p>
@@ -6145,7 +6219,81 @@ For &lt;kw_asm, <code>asm</code>&gt; functions, you must validate this yourself.
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_stows">14.2. <code>stows</code></h3>
+<h3 id="mod_nmi">14.2. <code>nmi</code></h3>
+<div class="paragraph">
+<p>The <code>nmi</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_mode"><code>mode</code></a> declaration to specify the mode&#8217;s NMI handler.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>: nmi nmi_handler</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>nmi_handler</code> is a <a href="#kw_nmi_function"><code>nmi</code> function</a> handler to be used while this mode is executing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>nmi</code> modifier is optional. Modes without one will use an NMI handler that immediately returns from the interrupt.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nmi my_nmi()
+    {PPUMASK}(PPUMASK_ON)
+
+mode foo()
+: nmi my_nmi
+    // ...</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mod_irq">14.3. <code>irq</code></h3>
+<div class="paragraph">
+<p>The <code>irq</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_mode"><code>mode</code></a> declaration to specify the mode&#8217;s IRQ handler.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>: irq irq_handler</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>irq_handler</code> is an <a href="#kw_irq_function"><code>irq</code> function</a> handler to be used while this mode is executing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>irq</code> modifier is optional. Modes without one will use an IRQ handler that immediately returns from the interrupt.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>irq my_irq()
+    {PPUMASK}(PPUMASK_ON)
+
+mode foo()
+: irq my_irq
+    // ...</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mod_stows">14.4. <code>stows</code></h3>
 <div class="paragraph">
 <p>The <code>stows</code> <a href="#modifiers">modifier</a> is used inside <a href="#kw_charmap"><code>charmap</code></a> definitions
 to enable string literals to use said <code>charmap</code>.</p>
@@ -6166,7 +6314,7 @@ to enable string literals to use said <code>charmap</code>.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_stows_omni">14.2.1. <code>stows omni</code></h4>
+<h4 id="_stows_omni">14.4.1. <code>stows omni</code></h4>
 <div class="paragraph">
 <p>The <code>stows omni</code> modifier behaves like <code>stows</code>, except it stores its data inside an <code>omni data</code> group.</p>
 </div>
@@ -6188,7 +6336,7 @@ to enable string literals to use said <code>charmap</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_employs">14.3. <code>employs</code></h3>
+<h3 id="mod_employs">14.5. <code>employs</code></h3>
 <div class="paragraph">
 <p>The <code>employs</code> <a href="#modifiers">modifier</a> instructs a function to be dependent on a group.
 From the time the function is called to the time the function returns,
@@ -6224,7 +6372,7 @@ The <code>employs</code> modifier is only required in these circumstances:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_employs_vars_and_employs_data">14.3.1. <code>employs vars</code> and <code>employs data</code></h4>
+<h4 id="_employs_vars_and_employs_data">14.5.1. <code>employs vars</code> and <code>employs data</code></h4>
 <div class="paragraph">
 <p>For additional control, <code>employs vars</code> and/or <code>employs data</code> modifiers can be used.
 These behave like <code>employs</code>, but only include the <code>vars</code> and/or <code>data</code> definitions of each groups.</p>
@@ -6248,7 +6396,7 @@ These behave like <code>employs</code>, but only include the <code>vars</code> a
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_preserves">14.4. <code>preserves</code></h3>
+<h3 id="mod_preserves">14.6. <code>preserves</code></h3>
 <div class="paragraph">
 <p>The <code>preserves</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_goto_mode_statement"><code>goto mode</code> statement</a>
 to specify which variables are kept, and which are reset to their initial value.</p>
@@ -6274,7 +6422,7 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_data">14.5. <code>data</code></h3>
+<h3 id="mod_data">14.7. <code>data</code></h3>
 <div class="paragraph">
 <p>The <code>data</code> <a href="#modifiers">modifier</a> is used to document which <code>data</code> <a href="#groups">groups</a> a function uses.</p>
 </div>
@@ -6298,7 +6446,7 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_vars">14.6. <code>vars</code></h3>
+<h3 id="mod_vars">14.8. <code>vars</code></h3>
 <div class="paragraph">
 <p>The <code>vars</code> <a href="#modifiers">modifier</a> is used to document which <code>vars</code> <a href="#groups">groups</a> a function uses.</p>
 </div>
@@ -7834,7 +7982,7 @@ The return type is the argument type converted to unsigned.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SS positive = abs(SS(-10))</pre>
+<pre>UU positive = abs(SS(-10))</pre>
 </div>
 </div>
 </div>
@@ -8772,7 +8920,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-06-01 14:37:31 -0500
+Last updated 2023-06-12 21:17:44 -0500
 </div>
 </div>
 </body>
