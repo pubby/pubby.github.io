@@ -38,6 +38,15 @@ h1, h2, h3 {
     margin-right: auto;
 }
 
+.games {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: row wrap;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .intro {
     font-size: 1.25em;
 }
@@ -69,6 +78,8 @@ h1, h2, h3 {
     text-decoration: none;
     text-align: center;
     font-size: 0.8em;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 a:link { color: orange; }
