@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>NESFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 0.7</span>
+<span id="revdate">Version 0.8</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -473,19 +473,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_version_v">5.3. <code>version</code> (<code>-v</code>)</a></li>
 <li><a href="#_input_i">5.4. <code>input</code> (<code>-i</code>)</a></li>
 <li><a href="#_output_o">5.5. <code>output</code> (<code>-o</code>)</a></li>
-<li><a href="#codedir">5.6. <code>code-dir</code> (<code>-I</code>)</a></li>
-<li><a href="#_resource_dir_r">5.7. <code>resource-dir</code> (<code>-R</code>)</a></li>
-<li><a href="#opt_mapper">5.8. <code>mapper</code> (<code>-M</code>)</a></li>
-<li><a href="#opt_mirroring">5.9. <code>mirroring</code> (<code>-m</code>)</a></li>
-<li><a href="#opt_prg">5.10. <code>prg-size</code> (<code>-p</code>)</a></li>
-<li><a href="#opt_chr">5.11. <code>chr-size</code> (<code>-c</code>)</a></li>
-<li><a href="#opt_bus_conflicts">5.12. <code>bus-conflicts</code></a></li>
-<li><a href="#opt_system">5.13. <code>system</code> (<code>-S</code>)</a></li>
-<li><a href="#opt_unsafe_bank_switch">5.14. <code>unsafe-bank-switch</code></a></li>
-<li><a href="#opt_mlb">5.15. <code>mlb</code></a></li>
-<li><a href="#_threads_j">5.16. <code>threads</code> (<code>-j</code>)</a></li>
-<li><a href="#_error_on_warning_w">5.17. <code>error-on-warning</code> (<code>-W</code>)</a></li>
-<li><a href="#_pause">5.18. <code>pause</code></a></li>
+<li><a href="#opt_codedir">5.6. <code>code-dir</code> (<code>-I</code>)</a></li>
+<li><a href="#opt_resdir">5.7. <code>resource-dir</code> (<code>-R</code>)</a></li>
+<li><a href="#opt_nesdir">5.8. <code>nesfab-dir</code> (<code>-N</code>)</a></li>
+<li><a href="#opt_mapper">5.9. <code>mapper</code> (<code>-M</code>)</a></li>
+<li><a href="#opt_mirroring">5.10. <code>mirroring</code> (<code>-m</code>)</a></li>
+<li><a href="#opt_prg">5.11. <code>prg-size</code> (<code>-p</code>)</a></li>
+<li><a href="#opt_chr">5.12. <code>chr-size</code> (<code>-c</code>)</a></li>
+<li><a href="#opt_bus_conflicts">5.13. <code>bus-conflicts</code></a></li>
+<li><a href="#opt_sram">5.14. <code>sram</code></a></li>
+<li><a href="#opt_system">5.15. <code>system</code> (<code>-S</code>)</a></li>
+<li><a href="#opt_unsafe_bank_switch">5.16. <code>unsafe-bank-switch</code></a></li>
+<li><a href="#opt_mlb">5.17. <code>mlb</code></a></li>
+<li><a href="#_threads_j">5.18. <code>threads</code> (<code>-j</code>)</a></li>
+<li><a href="#_error_on_warning_w">5.19. <code>error-on-warning</code> (<code>-W</code>)</a></li>
+<li><a href="#_pause">5.20. <code>pause</code></a></li>
+<li><a href="#_sloppy">5.21. <code>sloppy</code></a></li>
 </ul>
 </li>
 <li><a href="#mappers">6. Supported Mappers</a>
@@ -493,297 +496,302 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#mapper_nrom">6.1. <code>nrom</code></a></li>
 <li><a href="#mapper_anrom">6.2. <code>anrom</code></a></li>
 <li><a href="#mapper_bnrom">6.3. <code>bnrom</code></a></li>
-<li><a href="#mapper_cnrom">6.4. <code>cnrom</code></a></li>
-<li><a href="#mapper_gnrom">6.5. <code>gnrom</code></a></li>
-<li><a href="#mapper_colordreams">6.6. <code>colordreams</code></a></li>
-<li><a href="#mapper_gtrom">6.7. <code>gtrom</code></a></li>
-<li><a href="#mapper_mmc1">6.8. <code>mmc1</code></a></li>
-<li><a href="#mapper_189">6.9. <code>189</code> (MMC3 Variant)</a></li>
+<li><a href="#mapperubnrom">6.4. <code>unrom</code></a></li>
+<li><a href="#mapper_cnrom">6.5. <code>cnrom</code></a></li>
+<li><a href="#mapper_gnrom">6.6. <code>gnrom</code></a></li>
+<li><a href="#mapper_colordreams">6.7. <code>colordreams</code></a></li>
+<li><a href="#mapper_gtrom">6.8. <code>gtrom</code></a></li>
+<li><a href="#mapper_mmc1">6.9. <code>mmc1</code></a></li>
+<li><a href="#mapper_mmc3">6.10. <code>mmc3</code></a></li>
+<li><a href="#mapper_189">6.11. <code>189</code> (MMC3 Variant)</a></li>
 </ul>
 </li>
-<li><a href="#value_semantics">7. Value Semantics</a></li>
-<li><a href="#_indentation">8. Indentation</a></li>
-<li><a href="#banks">9. Banks</a></li>
-<li><a href="#groups">10. Groups</a></li>
-<li><a href="#_comments_2">11. Comments</a>
+<li><a href="#identifiers">7. Identifiers</a></li>
+<li><a href="#value_semantics">8. Value Semantics</a></li>
+<li><a href="#_indentation">9. Indentation</a></li>
+<li><a href="#banks">10. Banks</a></li>
+<li><a href="#groups">11. Groups</a></li>
+<li><a href="#_comments_2">12. Comments</a>
 <ul class="sectlevel2">
-<li><a href="#_single_line_comments">11.1. Single-Line Comments</a></li>
-<li><a href="#_multi_line_comments">11.2. Multi-Line Comments</a></li>
+<li><a href="#_single_line_comments">12.1. Single-Line Comments</a></li>
+<li><a href="#_multi_line_comments">12.2. Multi-Line Comments</a></li>
 </ul>
 </li>
-<li><a href="#byte_blocks">12. Byte Blocks</a>
+<li><a href="#byte_blocks">13. Byte Blocks</a>
 <ul class="sectlevel2">
-<li><a href="#byte_blocks_typed_data">12.1. Typed Data</a></li>
-<li><a href="#byte_blocks_untyped_data">12.2. Untyped Data</a></li>
-<li><a href="#_assembly_instructions">12.3. Assembly Instructions</a></li>
-<li><a href="#_special_statements">12.4. Special Statements</a></li>
+<li><a href="#byte_blocks_typed_data">13.1. Typed Data</a></li>
+<li><a href="#byte_blocks_untyped_data">13.2. Untyped Data</a></li>
+<li><a href="#_assembly_instructions">13.3. Assembly Instructions</a></li>
+<li><a href="#_special_statements">13.4. Special Statements</a></li>
 </ul>
 </li>
-<li><a href="#_keywords">13. Keywords</a>
+<li><a href="#_keywords">14. Keywords</a>
 <ul class="sectlevel2">
-<li><a href="#_if">13.1. <code>if</code></a></li>
-<li><a href="#_else">13.2. <code>else</code></a></li>
-<li><a href="#kw_while">13.3. <code>while</code></a></li>
-<li><a href="#kw_for">13.4. <code>for</code></a></li>
-<li><a href="#kw_do">13.5. <code>do</code></a></li>
-<li><a href="#kw_break">13.6. <code>break</code></a></li>
-<li><a href="#_continue">13.7. <code>continue</code></a></li>
-<li><a href="#kw_switch">13.8. <code>switch</code></a>
+<li><a href="#_if">14.1. <code>if</code></a></li>
+<li><a href="#_else">14.2. <code>else</code></a></li>
+<li><a href="#kw_while">14.3. <code>while</code></a></li>
+<li><a href="#kw_for">14.4. <code>for</code></a></li>
+<li><a href="#kw_do">14.5. <code>do</code></a></li>
+<li><a href="#kw_break">14.6. <code>break</code></a></li>
+<li><a href="#_continue">14.7. <code>continue</code></a></li>
+<li><a href="#kw_switch">14.8. <code>switch</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_switch_asm">13.8.1. <code>switch</code> statement (byte block)</a></li>
+<li><a href="#kw_switch_asm">14.8.1. <code>switch</code> statement (byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_case">13.9. <code>case</code></a></li>
-<li><a href="#kw_default">13.10. <code>default</code></a></li>
-<li><a href="#kw_goto">13.11. <code>goto</code></a>
+<li><a href="#kw_case">14.9. <code>case</code></a></li>
+<li><a href="#kw_default">14.10. <code>default</code></a></li>
+<li><a href="#kw_goto">14.11. <code>goto</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_goto_statement">13.11.1. <code>goto</code> statement</a></li>
-<li><a href="#kw_goto_mode_statement">13.11.2. <code>goto mode</code> statement</a></li>
-<li><a href="#kw_goto_asm">13.11.3. <code>goto</code> (assembly byte block)</a></li>
-<li><a href="#kw_goto_mode_asm">13.11.4. <code>goto mode</code> (assembly byte block)</a></li>
+<li><a href="#kw_goto_statement">14.11.1. <code>goto</code> statement</a></li>
+<li><a href="#kw_goto_mode_statement">14.11.2. <code>goto mode</code> statement</a></li>
+<li><a href="#kw_goto_asm">14.11.3. <code>goto</code> (assembly byte block)</a></li>
+<li><a href="#kw_goto_mode_asm">14.11.4. <code>goto mode</code> (assembly byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_label">13.12. <code>label</code></a>
+<li><a href="#kw_label">14.12. <code>label</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_label_asm">13.12.1. <code>label</code> statement (byte block)</a></li>
+<li><a href="#kw_label_asm">14.12.1. <code>label</code> statement (byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_return">13.13. <code>return</code></a>
+<li><a href="#kw_return">14.13. <code>return</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_return_statement">13.13.1. <code>return</code> statement</a></li>
-<li><a href="#kw_return_expression">13.13.2. <code>return</code> expression</a></li>
+<li><a href="#kw_return_statement">14.13.1. <code>return</code> statement</a></li>
+<li><a href="#kw_return_expression">14.13.2. <code>return</code> expression</a></li>
 </ul>
 </li>
-<li><a href="#kw_swap">13.14. <code>swap</code></a></li>
-<li><a href="#kw_fence">13.15. <code>fence</code></a></li>
-<li><a href="#kw_true">13.16. <code>true</code></a></li>
-<li><a href="#kw_false">13.17. <code>false</code></a></li>
-<li><a href="#kw_ready">13.18. <code>ready</code></a></li>
-<li><a href="#kw_nmi_counter">13.19. <code>nmi_counter</code></a></li>
-<li><a href="#kw_state">13.20. <code>state</code></a>
+<li><a href="#kw_swap">14.14. <code>swap</code></a></li>
+<li><a href="#kw_fence">14.15. <code>fence</code></a></li>
+<li><a href="#kw_true">14.16. <code>true</code></a></li>
+<li><a href="#kw_false">14.17. <code>false</code></a></li>
+<li><a href="#kw_read">14.18. <code>read</code></a></li>
+<li><a href="#kw_write">14.19. <code>write</code></a></li>
+<li><a href="#kw_ready">14.20. <code>ready</code></a></li>
+<li><a href="#kw_nmi_counter">14.21. <code>nmi_counter</code></a></li>
+<li><a href="#kw_state">14.22. <code>state</code></a>
 <ul class="sectlevel3">
-<li><a href="#_state_read">13.20.1. <code>state</code> read</a></li>
-<li><a href="#_state_write">13.20.2. <code>state</code> write</a></li>
+<li><a href="#_state_read">14.22.1. <code>state</code> read</a></li>
+<li><a href="#_state_write">14.22.2. <code>state</code> write</a></li>
 </ul>
 </li>
-<li><a href="#kw_system">13.21. <code>system</code></a>
+<li><a href="#kw_system">14.23. <code>system</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_system_ntsc">13.21.1. <code>SYSTEM_NTSC</code></a></li>
-<li><a href="#kw_system_pal">13.21.2. <code>SYSTEM_PAL</code></a></li>
-<li><a href="#kw_system_dendy">13.21.3. <code>SYSTEM_DENDY</code></a></li>
-<li><a href="#kw_system_unknown">13.21.4. <code>SYSTEM_UNKNOWN</code></a></li>
+<li><a href="#kw_system_ntsc">14.23.1. <code>SYSTEM_NTSC</code></a></li>
+<li><a href="#kw_system_pal">14.23.2. <code>SYSTEM_PAL</code></a></li>
+<li><a href="#kw_system_dendy">14.23.3. <code>SYSTEM_DENDY</code></a></li>
+<li><a href="#kw_system_unknown">14.23.4. <code>SYSTEM_UNKNOWN</code></a></li>
 </ul>
 </li>
-<li><a href="#kw_ppu_regs">13.22. PPU Registers</a>
+<li><a href="#kw_ppu_regs">14.24. PPU Registers</a>
 <ul class="sectlevel3">
-<li><a href="#kw_ppuctrl">13.22.1. <code>PPUCTRL</code></a></li>
-<li><a href="#kw_ppumask">13.22.2. <code>PPUMASK</code></a></li>
-<li><a href="#kw_ppustatus">13.22.3. <code>PPUSTATUS</code></a></li>
-<li><a href="#kw_oamaddr">13.22.4. <code>OAMADDR</code></a></li>
-<li><a href="#kw_oamdata">13.22.5. <code>OAMDATA</code></a></li>
-<li><a href="#kw_ppuscroll">13.22.6. <code>PPUSCROLL</code></a></li>
-<li><a href="#kw_ppuaddr">13.22.7. <code>PPUADDR</code></a></li>
-<li><a href="#kw_ppudata">13.22.8. <code>PPUDATA</code></a></li>
-<li><a href="#kw_oamdma">13.22.9. <code>OAMDMA</code></a></li>
+<li><a href="#kw_ppuctrl">14.24.1. <code>PPUCTRL</code></a></li>
+<li><a href="#kw_ppumask">14.24.2. <code>PPUMASK</code></a></li>
+<li><a href="#kw_ppustatus">14.24.3. <code>PPUSTATUS</code></a></li>
+<li><a href="#kw_oamaddr">14.24.4. <code>OAMADDR</code></a></li>
+<li><a href="#kw_oamdata">14.24.5. <code>OAMDATA</code></a></li>
+<li><a href="#kw_ppuscroll">14.24.6. <code>PPUSCROLL</code></a></li>
+<li><a href="#kw_ppuaddr">14.24.7. <code>PPUADDR</code></a></li>
+<li><a href="#kw_ppudata">14.24.8. <code>PPUDATA</code></a></li>
+<li><a href="#kw_oamdma">14.24.9. <code>OAMDMA</code></a></li>
 </ul>
 </li>
-<li><a href="#kw_fn">13.23. <code>fn</code></a>
+<li><a href="#kw_fn">14.25. <code>fn</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_fn_asm">13.23.1. <code>fn</code> statement (assembly byte block)</a></li>
+<li><a href="#kw_fn_asm">14.25.1. <code>fn</code> statement (assembly byte block)</a></li>
 </ul>
 </li>
-<li><a href="#kw_ct">13.24. <code>ct</code></a>
+<li><a href="#kw_ct">14.26. <code>ct</code></a>
 <ul class="sectlevel3">
-<li><a href="#_ct_fn">13.24.1. <code>ct fn</code></a></li>
-<li><a href="#_ct_value">13.24.2. <code>ct</code> value</a></li>
+<li><a href="#_ct_fn">14.26.1. <code>ct fn</code></a></li>
+<li><a href="#_ct_value">14.26.2. <code>ct</code> value</a></li>
 </ul>
 </li>
-<li><a href="#kw_mode">13.25. <code>mode</code></a></li>
-<li><a href="#kw_nmi">13.26. <code>nmi</code></a>
+<li><a href="#kw_mode">14.27. <code>mode</code></a></li>
+<li><a href="#kw_nmi">14.28. <code>nmi</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_nmi_statement">13.26.1. <code>nmi</code> statement</a></li>
-<li><a href="#kw_nmi_asm">13.26.2. <code>nmi</code> statement (byte block)</a></li>
-<li><a href="#kw_nmi_function">13.26.3. <code>nmi</code> function</a></li>
+<li><a href="#kw_nmi_statement">14.28.1. <code>nmi</code> statement</a></li>
+<li><a href="#kw_nmi_asm">14.28.2. <code>nmi</code> statement (byte block)</a></li>
+<li><a href="#kw_nmi_function">14.28.3. <code>nmi</code> function</a></li>
 </ul>
 </li>
-<li><a href="#kw_irq">13.27. <code>irq</code></a>
+<li><a href="#kw_irq">14.29. <code>irq</code></a>
 <ul class="sectlevel3">
-<li><a href="#kw_irq_statement">13.27.1. <code>irq</code> statement</a></li>
-<li><a href="#kw_irq_function">13.27.2. <code>irq</code> function</a></li>
+<li><a href="#kw_irq_statement">14.29.1. <code>irq</code> statement</a></li>
+<li><a href="#kw_irq_function">14.29.2. <code>irq</code> function</a></li>
 </ul>
 </li>
-<li><a href="#kw_asm">13.28. <code>asm</code></a></li>
-<li><a href="#kw_struct">13.29. <code>struct</code></a></li>
-<li><a href="#kw_vars">13.30. <code>vars</code></a></li>
-<li><a href="#kw_data">13.31. <code>data</code></a></li>
-<li><a href="#kw_omni">13.32. <code>omni</code></a></li>
-<li><a href="#kw_charmap">13.33. <code>charmap</code></a></li>
-<li><a href="#_chrrom">13.34. <code>chrrom</code></a></li>
-<li><a href="#kw_file">13.35. <code>file</code></a>
+<li><a href="#kw_asm">14.30. <code>asm</code></a></li>
+<li><a href="#kw_struct">14.31. <code>struct</code></a></li>
+<li><a href="#kw_vars">14.32. <code>vars</code></a></li>
+<li><a href="#kw_data">14.33. <code>data</code></a></li>
+<li><a href="#kw_omni">14.34. <code>omni</code></a></li>
+<li><a href="#kw_charmap">14.35. <code>charmap</code></a></li>
+<li><a href="#_chrrom">14.36. <code>chrrom</code></a></li>
+<li><a href="#kw_file">14.37. <code>file</code></a>
 <ul class="sectlevel3">
-<li><a href="#file_bin">13.35.1. Binary file formats</a></li>
-<li><a href="#file_txt">13.35.2. <code>.txt</code> format</a></li>
-<li><a href="#file_png">13.35.3. <code>.png</code> format</a></li>
-<li><a href="#file_raw">13.35.4. <code>raw</code> target</a></li>
-<li><a href="#file_fmt">13.35.5. <code>fmt</code> target</a></li>
-<li><a href="#file_pbz">13.35.6. <code>pbz</code> target</a></li>
-<li><a href="#file_rlz">13.35.7. <code>rlz</code> target</a></li>
+<li><a href="#file_bin">14.37.1. Binary file formats</a></li>
+<li><a href="#file_txt">14.37.2. <code>.txt</code> format</a></li>
+<li><a href="#file_png">14.37.3. <code>.png</code> format</a></li>
+<li><a href="#file_raw">14.37.4. <code>raw</code> target</a></li>
+<li><a href="#file_fmt">14.37.5. <code>fmt</code> target</a></li>
+<li><a href="#file_pbz">14.37.6. <code>pbz</code> target</a></li>
+<li><a href="#file_rlz">14.37.7. <code>rlz</code> target</a></li>
 </ul>
 </li>
-<li><a href="#kw_macro">13.36. <code>macro</code></a></li>
-<li><a href="#kw_audio">13.37. <code>audio</code></a>
+<li><a href="#kw_macro">14.38. <code>macro</code></a></li>
+<li><a href="#kw_audio">14.39. <code>audio</code></a>
 <ul class="sectlevel3">
-<li><a href="#audio_puf1_music">13.37.1. <code>puf1_music</code> target</a></li>
-<li><a href="#audio_puf1_sfx">13.37.2. <code>puf1_sfx</code> target</a></li>
+<li><a href="#audio_puf1_music">14.39.1. <code>puf1_music</code> target</a></li>
+<li><a href="#audio_puf1_sfx">14.39.2. <code>puf1_sfx</code> target</a></li>
 </ul>
 </li>
-<li><a href="#kw_stows">13.38. <code>stows</code></a></li>
-<li><a href="#kw_employs">13.39. <code>employs</code></a></li>
+<li><a href="#kw_stows">14.40. <code>stows</code></a></li>
+<li><a href="#kw_employs">14.41. <code>employs</code></a></li>
 </ul>
 </li>
-<li><a href="#modifiers">14. Modifiers</a>
+<li><a href="#modifiers">15. Modifiers</a>
 <ul class="sectlevel2">
-<li><a href="#mod_flags">14.1. Modifier Flags</a></li>
-<li><a href="#mod_nmi">14.2. <code>nmi</code></a></li>
-<li><a href="#mod_irq">14.3. <code>irq</code></a></li>
-<li><a href="#mod_stows">14.4. <code>stows</code></a>
+<li><a href="#mod_flags">15.1. Modifier Flags</a></li>
+<li><a href="#mod_nmi">15.2. <code>nmi</code></a></li>
+<li><a href="#mod_irq">15.3. <code>irq</code></a></li>
+<li><a href="#mod_stows">15.4. <code>stows</code></a>
 <ul class="sectlevel3">
-<li><a href="#_stows_omni">14.4.1. <code>stows omni</code></a></li>
+<li><a href="#_stows_omni">15.4.1. <code>stows omni</code></a></li>
 </ul>
 </li>
-<li><a href="#mod_employs">14.5. <code>employs</code></a>
+<li><a href="#mod_employs">15.5. <code>employs</code></a>
 <ul class="sectlevel3">
-<li><a href="#_employs_vars_and_employs_data">14.5.1. <code>employs vars</code> and <code>employs data</code></a></li>
+<li><a href="#_employs_vars_and_employs_data">15.5.1. <code>employs vars</code> and <code>employs data</code></a></li>
 </ul>
 </li>
-<li><a href="#mod_preserves">14.6. <code>preserves</code></a></li>
-<li><a href="#mod_data">14.7. <code>data</code></a></li>
-<li><a href="#mod_vars">14.8. <code>vars</code></a></li>
+<li><a href="#mod_preserves">15.6. <code>preserves</code></a></li>
+<li><a href="#mod_data">15.7. <code>data</code></a></li>
+<li><a href="#mod_vars">15.8. <code>vars</code></a></li>
 </ul>
 </li>
-<li><a href="#_operators_2">15. Operators</a>
+<li><a href="#_operators_2">16. Operators</a>
 <ul class="sectlevel2">
-<li><a href="#_operator_tables">15.1. Operator Tables</a>
+<li><a href="#_operator_tables">16.1. Operator Tables</a>
 <ul class="sectlevel3">
-<li><a href="#unary_ops">15.1.1. Unary Operators</a></li>
-<li><a href="#binop">15.1.2. Binary Operators</a></li>
-<li><a href="#fnop">15.1.3. Function-like Operators</a></li>
+<li><a href="#unary_ops">16.1.1. Unary Operators</a></li>
+<li><a href="#binop">16.1.2. Binary Operators</a></li>
+<li><a href="#fnop">16.1.3. Function-like Operators</a></li>
 </ul>
 </li>
-<li><a href="#_operator_listings">15.2. Operator Listings</a>
+<li><a href="#_operator_listings">16.2. Operator Listings</a>
 <ul class="sectlevel3">
-<li><a href="#get_pointer">15.2.1. Get Pointer <code>@</code></a></li>
-<li><a href="#get_hw_addr">15.2.2. Get Hardware Address <code>&amp;</code></a></li>
-<li><a href="#unary_plus">15.2.3. Unary Plus <code>+</code></a></li>
-<li><a href="#unary_negate">15.2.4. Unary Negate <code>-</code></a></li>
-<li><a href="#unary_bitwise_not">15.2.5. Unary Bitwise NOT <code>~</code></a></li>
-<li><a href="#unary_logical_not">15.2.6. Unary Logical NOT <code>!</code></a></li>
-<li><a href="#member_access">15.2.7. Member Access <code>.</code></a></li>
-<li><a href="#multiply">15.2.8. Multiply <code>*</code></a></li>
-<li><a href="#assign_multiply">15.2.9. Assign by Multiply (<code>*=</code>)</a></li>
-<li><a href="#add">15.2.10. Add <code>+</code></a></li>
-<li><a href="#assign_add">15.2.11. Assign by Add <code>+=</code></a></li>
-<li><a href="#subtract">15.2.12. Subtract <code>-</code></a></li>
-<li><a href="#assign_subtract">15.2.13. Assign by Subtract <code>-=</code></a></li>
-<li><a href="#rotate_left">15.2.14. Rotate Left <code>&lt;-&lt;</code></a></li>
-<li><a href="#assign_rotate_left">15.2.15. Assign by Rotate Left <code>&lt;=&lt;</code></a></li>
-<li><a href="#rotate_right">15.2.16. Rotate Right <code>&gt;-&gt;</code></a></li>
-<li><a href="#assign_rotate_right">15.2.17. Assign by Rotate Right <code>&gt;=&gt;</code></a></li>
-<li><a href="#shift_left">15.2.18. Shift Left <code>&lt;&lt;</code></a></li>
-<li><a href="#assign_shift_left">15.2.19. Assign by Shift Left <code>&lt;&lt;=</code></a></li>
-<li><a href="#shift_right">15.2.20. Shift Right <code>&gt;&gt;</code></a></li>
-<li><a href="#assign_shift_right">15.2.21. Assign by Shift Right <code>&gt;&gt;=</code></a></li>
-<li><a href="#bitwise_and">15.2.22. Bitwise AND <code>&amp;</code></a></li>
-<li><a href="#assign_bitwise_and">15.2.23. Assign by Bitwise AND <code>&amp;=</code></a></li>
-<li><a href="#bitwise_xor">15.2.24. Bitwise XOR <code>^</code></a></li>
-<li><a href="#assign_bitwise_xor">15.2.25. Assign by Bitwise XOR <code>^=</code></a></li>
-<li><a href="#bitwise_or">15.2.26. Bitwise OR <code>|</code></a></li>
-<li><a href="#assign_bitwise_or">15.2.27. Assign by Bitwise OR <code>|=</code></a></li>
-<li><a href="#logical_and">15.2.28. Logical AND <code>&amp;&amp;</code></a></li>
-<li><a href="#logical_or">15.2.29. Logical OR <code>||</code></a></li>
-<li><a href="#less_than">15.2.30. Less Than <code>&lt;</code></a></li>
-<li><a href="#less_than_or_equal_to">15.2.31. Less Than or Equal To <code>&lt;=</code></a></li>
-<li><a href="#greater_than">15.2.32. Greater Than <code>&gt;</code></a></li>
-<li><a href="#greater_than_or_equal_to">15.2.33. Greater Than or Equal To <code>&gt;=</code></a></li>
-<li><a href="#equal_to">15.2.34. Equal To <code>==</code></a></li>
-<li><a href="#not_equal_to">15.2.35. Not Equal To <code>!=</code></a></li>
-<li><a href="#assign">15.2.36. Assign <code>=</code></a></li>
+<li><a href="#get_pointer">16.2.1. Get Pointer <code>@</code></a></li>
+<li><a href="#get_hw_addr">16.2.2. Get Hardware Address <code>&amp;</code></a></li>
+<li><a href="#unary_plus">16.2.3. Unary Plus <code>+</code></a></li>
+<li><a href="#unary_negate">16.2.4. Unary Negate <code>-</code></a></li>
+<li><a href="#unary_bitwise_not">16.2.5. Unary Bitwise NOT <code>~</code></a></li>
+<li><a href="#unary_logical_not">16.2.6. Unary Logical NOT <code>!</code></a></li>
+<li><a href="#member_access">16.2.7. Member Access <code>.</code></a></li>
+<li><a href="#multiply">16.2.8. Multiply <code>*</code></a></li>
+<li><a href="#assign_multiply">16.2.9. Assign by Multiply (<code>*=</code>)</a></li>
+<li><a href="#add">16.2.10. Add <code>+</code></a></li>
+<li><a href="#assign_add">16.2.11. Assign by Add <code>+=</code></a></li>
+<li><a href="#subtract">16.2.12. Subtract <code>-</code></a></li>
+<li><a href="#assign_subtract">16.2.13. Assign by Subtract <code>-=</code></a></li>
+<li><a href="#rotate_left">16.2.14. Rotate Left <code>&lt;-&lt;</code></a></li>
+<li><a href="#assign_rotate_left">16.2.15. Assign by Rotate Left <code>&lt;=&lt;</code></a></li>
+<li><a href="#rotate_right">16.2.16. Rotate Right <code>&gt;-&gt;</code></a></li>
+<li><a href="#assign_rotate_right">16.2.17. Assign by Rotate Right <code>&gt;=&gt;</code></a></li>
+<li><a href="#shift_left">16.2.18. Shift Left <code>&lt;&lt;</code></a></li>
+<li><a href="#assign_shift_left">16.2.19. Assign by Shift Left <code>&lt;&lt;=</code></a></li>
+<li><a href="#shift_right">16.2.20. Shift Right <code>&gt;&gt;</code></a></li>
+<li><a href="#assign_shift_right">16.2.21. Assign by Shift Right <code>&gt;&gt;=</code></a></li>
+<li><a href="#bitwise_and">16.2.22. Bitwise AND <code>&amp;</code></a></li>
+<li><a href="#assign_bitwise_and">16.2.23. Assign by Bitwise AND <code>&amp;=</code></a></li>
+<li><a href="#bitwise_xor">16.2.24. Bitwise XOR <code>^</code></a></li>
+<li><a href="#assign_bitwise_xor">16.2.25. Assign by Bitwise XOR <code>^=</code></a></li>
+<li><a href="#bitwise_or">16.2.26. Bitwise OR <code>|</code></a></li>
+<li><a href="#assign_bitwise_or">16.2.27. Assign by Bitwise OR <code>|=</code></a></li>
+<li><a href="#logical_and">16.2.28. Logical AND <code>&amp;&amp;</code></a></li>
+<li><a href="#logical_or">16.2.29. Logical OR <code>||</code></a></li>
+<li><a href="#less_than">16.2.30. Less Than <code>&lt;</code></a></li>
+<li><a href="#less_than_or_equal_to">16.2.31. Less Than or Equal To <code>&lt;=</code></a></li>
+<li><a href="#greater_than">16.2.32. Greater Than <code>&gt;</code></a></li>
+<li><a href="#greater_than_or_equal_to">16.2.33. Greater Than or Equal To <code>&gt;=</code></a></li>
+<li><a href="#equal_to">16.2.34. Equal To <code>==</code></a></li>
+<li><a href="#not_equal_to">16.2.35. Not Equal To <code>!=</code></a></li>
+<li><a href="#assign">16.2.36. Assign <code>=</code></a></li>
 </ul>
 </li>
-<li><a href="#array_access">15.3. Array and pointer access</a>
+<li><a href="#array_access">16.3. Array and pointer access</a>
 <ul class="sectlevel3">
-<li><a href="#array_access_u">15.3.1. <code>[]</code> U-indexed access</a></li>
-<li><a href="#array_access_uu">15.3.2. <code>{}</code> UU-indexed access</a></li>
+<li><a href="#array_access_u">16.3.1. <code>[]</code> U-indexed access</a></li>
+<li><a href="#array_access_uu">16.3.2. <code>{}</code> UU-indexed access</a></li>
 </ul>
 </li>
-<li><a href="#_hardware_operators">15.4. Hardware operators</a>
+<li><a href="#_hardware_operators">16.4. Hardware operators</a>
 <ul class="sectlevel3">
-<li><a href="#hw_read">15.4.1. <code>{}()</code> Hardware read</a></li>
-<li><a href="#hw_write">15.4.2. <code>{}()</code> Hardware write</a></li>
+<li><a href="#hw_read">16.4.1. <code>{}()</code> Hardware read</a></li>
+<li><a href="#hw_write">16.4.2. <code>{}()</code> Hardware write</a></li>
 </ul>
 </li>
-<li><a href="#fn_call">15.5. Function calls</a></li>
-<li><a href="#sizeof">15.6. <code>sizeof</code></a>
+<li><a href="#fn_call">16.5. Function calls</a></li>
+<li><a href="#sizeof">16.6. <code>sizeof</code></a>
 <ul class="sectlevel3">
-<li><a href="#sizeof_type">15.6.1. <code>sizeof</code> Type</a></li>
-<li><a href="#sizeof_expr">15.6.2. <code>sizeof</code>(expression)</a></li>
+<li><a href="#sizeof_type">16.6.1. <code>sizeof</code> Type</a></li>
+<li><a href="#sizeof_expr">16.6.2. <code>sizeof</code>(expression)</a></li>
 </ul>
 </li>
-<li><a href="#len">15.7. <code>len</code></a>
+<li><a href="#len">16.7. <code>len</code></a>
 <ul class="sectlevel3">
-<li><a href="#len_type">15.7.1. <code>len</code> Type</a></li>
-<li><a href="#len_expr">15.7.2. <code>len</code>(expression)</a></li>
-<li><a href="#abs_expr">15.7.3. <code>abs</code>(expression)</a></li>
-<li><a href="#min_expr">15.7.4. <code>min</code>(expression)</a></li>
-<li><a href="#max_expr">15.7.5. <code>max</code>(expression)</a></li>
+<li><a href="#len_type">16.7.1. <code>len</code> Type</a></li>
+<li><a href="#len_expr">16.7.2. <code>len</code>(expression)</a></li>
+<li><a href="#abs_expr">16.7.3. <code>abs</code>(expression)</a></li>
+<li><a href="#min_expr">16.7.4. <code>min</code>(expression)</a></li>
+<li><a href="#max_expr">16.7.5. <code>max</code>(expression)</a></li>
 </ul>
 </li>
-<li><a href="#casts">15.8. Explicit Type Casts</a>
+<li><a href="#casts">16.8. Explicit Type Casts</a>
 <ul class="sectlevel3">
-<li><a href="#_zero_initializations">15.8.1. Zero Initializations</a></li>
-<li><a href="#_array_fills">15.8.2. Array Fills</a></li>
+<li><a href="#_zero_initializations">16.8.1. Zero Initializations</a></li>
+<li><a href="#_array_fills">16.8.2. Array Fills</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_literals">16. Literals</a>
+<li><a href="#_literals">17. Literals</a>
 <ul class="sectlevel2">
-<li><a href="#_boolean_literals">16.1. Boolean Literals</a></li>
-<li><a href="#_numeric_literals">16.2. Numeric Literals</a></li>
-<li><a href="#_string_and_character_literals">16.3. String and Character Literals</a>
+<li><a href="#_boolean_literals">17.1. Boolean Literals</a></li>
+<li><a href="#_numeric_literals">17.2. Numeric Literals</a></li>
+<li><a href="#_string_and_character_literals">17.3. String and Character Literals</a>
 <ul class="sectlevel3">
-<li><a href="#_syntax_and_semantics">16.3.1. Syntax and Semantics</a></li>
-<li><a href="#_escape_sequences">16.3.2. Escape Sequences</a></li>
+<li><a href="#_syntax_and_semantics">17.3.1. Syntax and Semantics</a></li>
+<li><a href="#_escape_sequences">17.3.2. Escape Sequences</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_types">17. Types</a>
+<li><a href="#_types">18. Types</a>
 <ul class="sectlevel2">
-<li><a href="#type_scalar">17.1. Scalar Types</a>
+<li><a href="#type_scalar">18.1. Scalar Types</a>
 <ul class="sectlevel3">
-<li><a href="#type_integer">17.1.1. Integer Types</a></li>
-<li><a href="#_unit_fractional_types">17.1.2. Unit-Fractional Types</a></li>
-<li><a href="#type_fixed">17.1.3. Fixed-point Types</a></li>
-<li><a href="#_numeric_constant_types">17.1.4. Numeric Constant Types</a></li>
-<li><a href="#type_bool">17.1.5. Bool</a></li>
-<li><a href="#_void">17.1.6. Void</a></li>
+<li><a href="#type_integer">18.1.1. Integer Types</a></li>
+<li><a href="#_unit_fractional_types">18.1.2. Unit-Fractional Types</a></li>
+<li><a href="#type_fixed">18.1.3. Fixed-point Types</a></li>
+<li><a href="#_numeric_constant_types">18.1.4. Numeric Constant Types</a></li>
+<li><a href="#type_bool">18.1.5. Bool</a></li>
+<li><a href="#_void">18.1.6. Void</a></li>
 </ul>
 </li>
-<li><a href="#type_arithmetic">17.2. Arithmetic Types</a></li>
-<li><a href="#type_quantity">17.3. Quantity Types</a>
+<li><a href="#type_arithmetic">18.2. Arithmetic Types</a></li>
+<li><a href="#type_quantity">18.3. Quantity Types</a>
 <ul class="sectlevel3">
-<li><a href="#type_ptr">17.3.1. Pointer Types</a></li>
-<li><a href="#type_address">17.3.2. Address Types</a></li>
+<li><a href="#type_ptr">18.3.1. Pointer Types</a></li>
+<li><a href="#type_address">18.3.2. Address Types</a></li>
 </ul>
 </li>
-<li><a href="#_arrays">17.4. Arrays</a>
+<li><a href="#_arrays">18.4. Arrays</a>
 <ul class="sectlevel3">
-<li><a href="#type_tea">17.4.1. Typed Element Arrays (TEAs)</a></li>
-<li><a href="#type_paa">17.4.2. Pointer-Addressable Arrays (PAAs)</a></li>
+<li><a href="#type_tea">18.4.1. Typed Element Arrays (TEAs)</a></li>
+<li><a href="#type_paa">18.4.2. Pointer-Addressable Arrays (PAAs)</a></li>
 </ul>
 </li>
-<li><a href="#type_struct">17.5. Structures</a></li>
+<li><a href="#type_struct">18.5. Structures</a></li>
 </ul>
 </li>
 </ul>
@@ -1169,7 +1177,7 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="codedir">5.6. <code>code-dir</code> (<code>-I</code>)</h3>
+<h3 id="opt_codedir">5.6. <code>code-dir</code> (<code>-I</code>)</h3>
 <div class="paragraph">
 <p>Specifies a directory to be searched when compiling source code files.
 This option can be used multiple times to specify multiple directories.</p>
@@ -1197,13 +1205,13 @@ without having to reference the directory name.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_resource_dir_r">5.7. <code>resource-dir</code> (<code>-R</code>)</h3>
+<h3 id="opt_resdir">5.7. <code>resource-dir</code> (<code>-R</code>)</h3>
 <div class="paragraph">
 <p>Specifies a directory to be searched when importing data files.
 This option can be used multiple times to specify multiple directories.</p>
 </div>
 <div class="paragraph">
-<p>This behaves like <a href="#codedir"><code>code-dir</code></a>, but applies to the files imported by the <a href="#kw_file"><code>file</code> keyword</a>.</p>
+<p>This behaves like <a href="#opt_codedir"><code>code-dir</code></a>, but applies to the files imported by the <a href="#kw_file"><code>file</code> keyword</a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Command-line usage:</strong></p>
@@ -1223,7 +1231,44 @@ This option can be used multiple times to specify multiple directories.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_mapper">5.8. <code>mapper</code> (<code>-M</code>)</h3>
+<h3 id="opt_nesdir">5.8. <code>nesfab-dir</code> (<code>-N</code>)</h3>
+<div class="paragraph">
+<p>Specifies a directory to be searched when importing source code and data files.
+This option can be used multiple times to specify multiple directories.</p>
+</div>
+<div class="paragraph">
+<p>This behaves like defining both <a href="#opt_codedir"><code>code-dir</code></a> and <a href="#opt_resdir"><code>resource-dir</code></a>, but <code>nesfab-dir</code> has a lower search priority.</p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --nesfab-dir "some_directory/"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab-dir = some_directory/</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the environment variable <code>NESFAB</code> can also be used to set this value.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>export NESFAB=/home/pubby/nesfab/</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="opt_mapper">5.9. <code>mapper</code> (<code>-M</code>)</h3>
 <div class="paragraph">
 <p>Specifies the mapper used. The argument is a <a href="#mappers">mapper name</a>.
 This option can only be specified once.</p>
@@ -1249,7 +1294,7 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_mirroring">5.9. <code>mirroring</code> (<code>-m</code>)</h3>
+<h3 id="opt_mirroring">5.10. <code>mirroring</code> (<code>-m</code>)</h3>
 <div class="paragraph">
 <p>Specifies the mirroring used for <a href="#mappers">mappers with fixed mirrorings</a>.
 This option can only be specified once.</p>
@@ -1304,7 +1349,7 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_prg">5.10. <code>prg-size</code> (<code>-p</code>)</h3>
+<h3 id="opt_prg">5.11. <code>prg-size</code> (<code>-p</code>)</h3>
 <div class="paragraph">
 <p>Specifies the size of PRG (the amount of memory for code) in increments of 1 KiB.
 This option can only be specified once.</p>
@@ -1343,7 +1388,7 @@ Only the default size is asserted to be commonly available.
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_chr">5.11. <code>chr-size</code> (<code>-c</code>)</h3>
+<h3 id="opt_chr">5.12. <code>chr-size</code> (<code>-c</code>)</h3>
 <div class="paragraph">
 <p>Specifies the size of CHR (the amount of memory for tilesets) in increments of 1 KiB.
 This option can only be specified once.</p>
@@ -1382,16 +1427,26 @@ Only the default size is asserted to be commonly available.
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_bus_conflicts">5.12. <code>bus-conflicts</code></h3>
+<h3 id="opt_bus_conflicts">5.13. <code>bus-conflicts</code></h3>
 <div class="paragraph">
 <p>Specifies whether the mapper has bus conflicts.
 This option can only be specified once.</p>
 </div>
 <div class="paragraph">
-<p>The following arguments are valid:
-- To disable: <code>0</code>, <code>false,</code> or <code>off</code>.
-- To enable: <code>1</code>, <code>true,</code> or <code>on</code>.
-- For the default value: <code>default</code>.</p>
+<p>The following arguments are valid:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To disable: <code>0</code>, <code>false,</code> or <code>off</code>.</p>
+</li>
+<li>
+<p>To enable: <code>1</code>, <code>true,</code> or <code>on</code>.</p>
+</li>
+<li>
+<p>For the default value: <code>default</code>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>The default value depends on the <a href="#mappers">mapper.</a></p>
@@ -1414,7 +1469,67 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_system">5.13. <code>system</code> (<code>-S</code>)</h3>
+<h3 id="opt_sram">5.14. <code>sram</code></h3>
+<div class="paragraph">
+<p>Specifies whether the mapper should include 8KiB of RAM, mapped to addresses $6000-$7FFF.</p>
+</div>
+<div class="paragraph">
+<p>The following arguments are valid:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To disable: <code>0</code>, <code>false,</code> or <code>off</code>.</p>
+</li>
+<li>
+<p>To enable SRAM which saves across resets: <code>persistent</code>.</p>
+</li>
+<li>
+<p>To enable SRAM which does not save across resets: <code>volatile</code>.</p>
+</li>
+<li>
+<p>To enable and use the mapper&#8217;s default save behavior: <code>1</code>, <code>true,</code> or <code>on</code>.</p>
+</li>
+<li>
+<p>For the default value: <code>default</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The default value depends on the <a href="#mappers">mapper.</a></p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --sram volatile</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sram = volatile</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Just because the compiler accepts a <code>sram</code> value does not mean that corresponding hardware exists in the real world.
+Only the default <code>sram</code> value is asserted to be commonly available.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="opt_system">5.15. <code>system</code> (<code>-S</code>)</h3>
 <div class="paragraph">
 <p>Specifies the target NES system, which will be accessible using the <a href="#kw_system"><code>system</code> keyword</a>.
 This option can only be specified once.</p>
@@ -1486,7 +1601,7 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_unsafe_bank_switch">5.14. <code>unsafe-bank-switch</code></h3>
+<h3 id="opt_unsafe_bank_switch">5.16. <code>unsafe-bank-switch</code></h3>
 <div class="paragraph">
 <p>By default, the compiler generates <a href="#banks">bank</a> switching code which is resilient to hardware interrupts.
 For many games, this added safety is unnecessary and slows the code down.
@@ -1537,7 +1652,7 @@ Some mappers, such as BNROM, do not benefit from <code>unsafe-bank-switch</code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_mlb">5.15. <code>mlb</code></h3>
+<h3 id="opt_mlb">5.17. <code>mlb</code></h3>
 <div class="paragraph">
 <p><code>mlb</code> specifies a <a href="https://www.mesen.ca/">Mesen</a> .mlb label file to output.
 This file will contain addresses used by the program, for the purpose of debugging.</p>
@@ -1560,7 +1675,7 @@ This file will contain addresses used by the program, for the purpose of debuggi
 </div>
 </div>
 <div class="sect2">
-<h3 id="_threads_j">5.16. <code>threads</code> (<code>-j</code>)</h3>
+<h3 id="_threads_j">5.18. <code>threads</code> (<code>-j</code>)</h3>
 <div class="paragraph">
 <p>Specifies how many threads the compiler can use, enabling parallel compilation.
 This option expects an integer argument, and can only be specified once.</p>
@@ -1603,7 +1718,7 @@ due to that platform having a buggy implementation of threads.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_error_on_warning_w">5.17. <code>error-on-warning</code> (<code>-W</code>)</h3>
+<h3 id="_error_on_warning_w">5.19. <code>error-on-warning</code> (<code>-W</code>)</h3>
 <div class="paragraph">
 <p>This option turns warnings into errors and halts compilation whenever a warning occurs.
 This option expects no arguments and can only be specified once.</p>
@@ -1626,7 +1741,7 @@ This option expects no arguments and can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_pause">5.18. <code>pause</code></h3>
+<h3 id="_pause">5.20. <code>pause</code></h3>
 <div class="paragraph">
 <p>This option pauses the compiler before exiting until input is received on stdin.
 It is intended to be used on Microsoft Windows to keep the Command Prompt window open until you&#8217;re ready to close it.
@@ -1651,6 +1766,29 @@ This option expects no arguments.</p>
 <div class="paragraph">
 <p>To make NESFab always pause on Microsoft Windows, first create a shortcut to the NESFab executable.
 Then, in the shortcut&#8217;s properties, put <code>--pause</code> after the target path.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sloppy">5.21. <code>sloppy</code></h3>
+<div class="paragraph">
+<p>This option improves compilation speed at the cost of program optimization.
+It can be disabled on a per-function basis with the modifier <a href="#mod_flags"><code>-sloppy</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --sloppy</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sloppy = 1</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1686,6 +1824,9 @@ and only consider switching once your program grows too large for it.</p>
 </li>
 <li>
 <p><a href="#opt_bus_conflicts"><code>bus-conflicts</code></a></p>
+</li>
+<li>
+<p><a href="#opt_sram"><code>sram</code></a></p>
 </li>
 </ul>
 </div>
@@ -1773,12 +1914,16 @@ It is easy to use and offers good performance, but is lacking in features and me
 <td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">N/r</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
 </tr>
 </tbody>
 </table>
@@ -1866,6 +2011,10 @@ Related mappers like AMROM can be had using configuration options.
 <td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Bit 4 changes mirroring</p></td>
 </tr>
@@ -1906,7 +2055,7 @@ Related mappers like AMROM can be had using configuration options.
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2048 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8192 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
 </tr>
 <tr>
@@ -1947,6 +2096,10 @@ Related mappers like AMROM can be had using configuration options.
 <td class="tableblock halign-left valign-top"><p class="tableblock">By default, yes</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
 </tr>
@@ -1958,7 +2111,105 @@ Related mappers like AMROM can be had using configuration options.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_cnrom">6.4. <code>cnrom</code></h3>
+<h3 id="mapperubnrom">6.4. <code>unrom</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/UxROM"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>UNROM supports lots of PRG, like BNROM, but differs in that it has a fixed bank.
+Because of this, UNROM requires manual ROM layout with the <a href="#mod_flags"><code>+static</code> modifier</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Typically, BNROM is better for NESFab than UNROM, as it does not require the use of <code>+static</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4096 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB (RAM)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H or V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_cnrom">6.5. <code>cnrom</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/CNROM"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2028,6 +2279,10 @@ Related mappers like AMROM can be had using configuration options.
 <td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
 </tr>
@@ -2039,7 +2294,7 @@ Related mappers like AMROM can be had using configuration options.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_gnrom">6.5. <code>gnrom</code></h3>
+<h3 id="mapper_gnrom">6.6. <code>gnrom</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/GxROM"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2121,6 +2376,10 @@ Related mappers like MHROM can be had using configuration options.
 <td class="tableblock halign-left valign-top"><p class="tableblock">By default, yes</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Low 4 bits switch CHR</p></td>
 </tr>
@@ -2132,7 +2391,7 @@ Related mappers like MHROM can be had using configuration options.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_colordreams">6.6. <code>colordreams</code></h3>
+<h3 id="mapper_colordreams">6.7. <code>colordreams</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/Color_Dreams"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2214,6 +2473,10 @@ PRG above 128 KiB may not be supported on physical cartridges.
 <td class="tableblock halign-left valign-top"><p class="tableblock">By default, yes</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High 4 bits switch CHR</p></td>
 </tr>
@@ -2225,7 +2488,7 @@ PRG above 128 KiB may not be supported on physical cartridges.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_gtrom">6.7. <code>gtrom</code></h3>
+<h3 id="mapper_gtrom">6.8. <code>gtrom</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/GTROM"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2239,7 +2502,7 @@ PRG above 128 KiB may not be supported on physical cartridges.
 <div class="title">Note</div>
 </td>
 <td class="content">
-See the standard library file <code>lib/mapper_gtrom.fab</code>.
+See the standard library file <code>lib/mapper/gtrom.fab</code>.
 </td>
 </tr>
 </table>
@@ -2307,6 +2570,10 @@ See the standard library file <code>lib/mapper_gtrom.fab</code>.
 <td class="tableblock halign-left valign-top"><p class="tableblock">Never</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High 4 bits switch nametable, CHR, and LEDs</p></td>
 </tr>
@@ -2318,7 +2585,7 @@ See the standard library file <code>lib/mapper_gtrom.fab</code>.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_mmc1">6.8. <code>mmc1</code></h3>
+<h3 id="mapper_mmc1">6.9. <code>mmc1</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/MMC1"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2333,7 +2600,7 @@ Unfortunately, MMC1 is very slow to interface.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-See the standard library file <code>lib/mapper_mmc1.fab</code>.
+See the standard library file <code>lib/mapper/mmc1.fab</code>.
 </td>
 </tr>
 </table>
@@ -2401,6 +2668,10 @@ See the standard library file <code>lib/mapper_mmc1.fab</code>.
 <td class="tableblock halign-left valign-top"><p class="tableblock">Never</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sets internal $8000 register</p></td>
 </tr>
@@ -2412,14 +2683,14 @@ See the standard library file <code>lib/mapper_mmc1.fab</code>.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_189">6.9. <code>189</code> (MMC3 Variant)</h3>
+<h3 id="mapper_mmc3">6.10. <code>mmc3</code></h3>
 <div class="paragraph">
-<p><a href="https://www.nesdev.org/wiki/INES_189"><strong>NESDev Wiki Page</strong></a></p>
+<p><a href="https://www.nesdev.org/wiki/MMC3"><strong>NESDev Wiki Page</strong></a></p>
 </div>
 <div class="paragraph">
-<p>Mapper 189 is a <a href="https://www.nesdev.org/wiki/MMC3">MMC3</a> variant originally designed for bootleg games.
-Is it an excellent choice for those wanting MMC3 features in NESFab,
-but has the caveat of being an uncommon mapper.</p>
+<p>MMC3 is a flexible ASIC mapper with CHR banking, mirroring controls, and a scanline counter.
+Because MMC3 uses fixed banks, it requires manual ROM layout with the <a href="#mod_flags"><code>+static</code> modifier</a>.
+See <a href="#mapper_189">mapper <code>189</code></a> for an alternative.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2428,7 +2699,131 @@ but has the caveat of being an uncommon mapper.</p>
 <div class="title">Note</div>
 </td>
 <td class="content">
-See the standard library file <code>lib/mapper_mmc3.fab</code>.
+In NESFab&#8217;s implementation of MMC3, the two highest bits of <code>$8000</code> cannot and should not be set.
+When writing to <code>$8000</code>, leave the two highest bits zero.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+See the standard library file <code>lib/mapper/mmc3.fab</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Switchable H or V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Never</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not recommended</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_189">6.11. <code>189</code> (MMC3 Variant)</h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/INES_Mapper_189"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>Mapper 189 is a <a href="https://www.nesdev.org/wiki/MMC3">MMC3</a> variant originally designed for bootleg games.
+Is it an excellent choice for those wanting MMC3 features in NESFab, but has the caveat of being an uncommon mapper.
+Unlike <a href="#mapper_mmc3"><code>mmc3</code></a>, it does not support SRAM.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Unlike <a href="#mapper_mmc3">MMC3</a>, mapper 189 allows the highest bit of <code>$8000</code> to be set.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+See the standard library file <code>lib/mapper/mmc3.fab</code>.
 </td>
 </tr>
 </table>
@@ -2496,6 +2891,10 @@ See the standard library file <code>lib/mapper_mmc3.fab</code>.
 <td class="tableblock halign-left valign-top"><p class="tableblock">Never</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
 </tr>
@@ -2509,7 +2908,40 @@ See the standard library file <code>lib/mapper_mmc3.fab</code>.
 </div>
 </div>
 <div class="sect1">
-<h2 id="value_semantics">7. Value Semantics</h2>
+<h2 id="identifiers">7. Identifiers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Identifiers may contain letters, numbers, and underscores, but they cannot start with a number.
+To differentiate types names from other identifiers, the following rules apply:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>User-defined types are written in <code>PascalCase</code></p>
+</li>
+<li>
+<p>Other definitions are written in <code>snake_case</code> or <code>UPPERCASE_SNAKE_CASE</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For top-level definitions, identifiers beginning with <code>_</code> are visible only in their containing file.
+In other languages, this behavior is sometimes called <code>private</code>.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Foo    // A type name.
+foo    // A definition which isn't a type.
+_foo   // An identifier only visible to this file.</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="value_semantics">8. Value Semantics</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Values in NESFab are always passed and stored by <a href="https://en.wikipedia.org/wiki/Value_type_and_reference_type">value, not by reference</a>.
@@ -2535,7 +2967,7 @@ fn bar()
 </div>
 </div>
 <div class="sect1">
-<h2 id="_indentation">8. Indentation</h2>
+<h2 id="_indentation">9. Indentation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Indentation refers to the spaces at the beginning of each line.
@@ -2572,7 +3004,7 @@ The amount of spaces is up to you, but it must be consistent throughout the bloc
 </div>
 </div>
 <div class="sect1">
-<h2 id="banks">9. Banks</h2>
+<h2 id="banks">10. Banks</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The NES uses a 16-bit address space, but most games need more data than 16-bits can represent.
@@ -2601,14 +3033,14 @@ or storing the machine code in a specific location which won&#8217;t be switched
 </div>
 </div>
 <div class="sect1">
-<h2 id="groups">10. Groups</h2>
+<h2 id="groups">11. Groups</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Groups organize globals together based on how they are used in the program.
 In NESFab, each global variable and <a href="#type_paa">pointer-addressible array</a> is associated with a group.</p>
 </div>
 <div class="paragraph">
-<p>There are two types of groups: <code>vars</code> and <code>data</code>.</p>
+<p>There are two ways to declare groups: <code>vars</code> and <code>data</code>.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2636,6 +3068,18 @@ In NESFab, each global variable and <a href="#type_paa">pointer-addressible arra
 <div class="paragraph">
 <p>As a guideline, <code>omni data</code> uses more ROM space, but has better performance than <code>data</code>.
 Typically, it is recommended to use <code>data</code> for most everything, and only use <code>omni data</code> for small look-up tables that are frequently used.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The variables and data belonging to groups are always global and exist at top-level scope.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><strong>Why groups?</strong></p>
@@ -2669,16 +3113,123 @@ Typically, it is recommended to use <code>data</code> for most everything, and o
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p><strong>When are groups mentioned?</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>When declaring groups.</p>
+</li>
+<li>
+<p>In <a href="#type_ptr">pointer</a> types.</p>
+</li>
+<li>
+<p>In a <a href="#mod_preserves"><code>preserves</code></a> modifier.</p>
+</li>
+<li>
+<p>In a <a href="#mod_stows"><code>stows</code></a> modifier.</p>
+</li>
+<li>
+<p>In an <a href="#mod_employs"><code>employs</code></a> modifier.</p>
+</li>
+<li>
+<p>In a <a href="#mod_vars"><code>vars</code></a> modifier.</p>
+</li>
+<li>
+<p>In a <a href="#mod_data"><code>data</code></a> modifier.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>How dones one use groups?</strong></p>
+</div>
+<div class="paragraph">
+<p>For variables, it often makes sense to have at least one <code>vars</code> group per <code>mode</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>vars /main_menu
+    U cursor_y
+
+vars /game
+    U player_x
+    U player_y</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Often, certain variables will be used across different modes.
+These can receive their own groups:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>vars /high_scores
+    UU high_score = 0
+
+vars /settings
+    Bool swap_buttons = false
+    Bool mute = false</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use these variables without any special syntax.
+The compiler infers everything for you:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>fn move_right()
+    player_x += 1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The exception to this is when defining an <code>asm fn</code>.
+The compiler cannot infer the groups it uses, and so an <a href="#mod_employs"><code>employs</code></a> modifier is required:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>asm fn move_right()
+: employs /game
+    inc &amp;player_x
+    rts</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For data, create a group for each schema.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>data /levels
+    [] level1
+        // ...
+    [] level2
+        // ...
+
+data /songs
+    [] song1
+        // ...
+    [] song2
+        // ...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then you can use pointers to access this data:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>fn load_level(CCC/levels level)
+    // ...</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_comments_2">11. Comments</h2>
+<h2 id="_comments_2">12. Comments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>NESFab supports two kinds of <a href="https://en.wikipedia.org/wiki/Comment_(computer_programming)">comments</a>: single-line and multi-line.</p>
 </div>
 <div class="sect2">
-<h3 id="_single_line_comments">11.1. Single-Line Comments</h3>
+<h3 id="_single_line_comments">12.1. Single-Line Comments</h3>
 <div class="paragraph">
 <p>Single-line comments begin with the character sequence <code>//</code>, and terminate at the end of the line.</p>
 </div>
@@ -2691,7 +3242,7 @@ ct U foo = 10 // You can put them after lines of code to document it.</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_multi_line_comments">11.2. Multi-Line Comments</h3>
+<h3 id="_multi_line_comments">12.2. Multi-Line Comments</h3>
 <div class="paragraph">
 <p>Multi-line comments begin with the character sequence <code>/*</code> on a new line, and terminate with the character sequence <code>*/</code>, followed by a line ending.</p>
 </div>
@@ -2730,13 +3281,13 @@ Multi-line comments cannot share lines with code. */
 </div>
 </div>
 <div class="sect1">
-<h2 id="byte_blocks">12. Byte Blocks</h2>
+<h2 id="byte_blocks">13. Byte Blocks</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Byte blocks are a special syntax used to define inline assembly code and <a href="#paa_type">PAA</a> data.</p>
 </div>
 <div class="sect2">
-<h3 id="byte_blocks_typed_data">12.1. Typed Data</h3>
+<h3 id="byte_blocks_typed_data">13.1. Typed Data</h3>
 <div class="paragraph">
 <p>Data can be inserted into byte blocks using a syntax identical to <a href="#casts">casts</a>.</p>
 </div>
@@ -2759,10 +3310,20 @@ Multi-line comments cannot share lines with code. */
 </ul>
 </div>
 <div class="paragraph">
-<p>The value is <a href="#casts">cast</a>, then inserted into the byte block with the following order:
-- For numeric types, the bytes are inserted in little-endian order.
-- For <a href="#type_struct">structures</a>, the first member is inserted first, then the second, and so on.
-- For <a href="#type_TEA">TEAs</a>, the first element is inserted first, then the second, and so on.</p>
+<p>The value is <a href="#casts">cast</a>, then inserted into the byte block with the following order:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For numeric types, the bytes are inserted in little-endian order.</p>
+</li>
+<li>
+<p>For <a href="#type_struct">structures</a>, the first member is inserted first, then the second, and so on.</p>
+</li>
+<li>
+<p>For <a href="#type_TEA">TEAs</a>, the first element is inserted first, then the second, and so on.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -2778,7 +3339,7 @@ Multi-line comments cannot share lines with code. */
 </div>
 </div>
 <div class="sect2">
-<h3 id="byte_blocks_untyped_data">12.2. Untyped Data</h3>
+<h3 id="byte_blocks_untyped_data">13.2. Untyped Data</h3>
 <div class="paragraph">
 <p>The type name of <a href="#byte_blocks_typed_data">typed data</a> can be elided,
 causing the type to inferred from the expression.</p>
@@ -2814,7 +3375,7 @@ causing the type to inferred from the expression.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_assembly_instructions">12.3. Assembly Instructions</h3>
+<h3 id="_assembly_instructions">13.3. Assembly Instructions</h3>
 <div class="paragraph">
 <p>Assembly instructions can be inserted into byte blocks with a syntax similar to 6502 assemblers.</p>
 </div>
@@ -2940,7 +3501,7 @@ sre</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_special_statements">12.4. Special Statements</h3>
+<h3 id="_special_statements">13.4. Special Statements</h3>
 <div class="paragraph">
 <p>The following statements have special meaning inside of byte blocks:</p>
 </div>
@@ -2977,10 +3538,10 @@ sre</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_keywords">13. Keywords</h2>
+<h2 id="_keywords">14. Keywords</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_if">13.1. <code>if</code></h3>
+<h3 id="_if">14.1. <code>if</code></h3>
 <div class="paragraph">
 <p>The <code>if</code> <a href="#statement">statement</a> allows for conditional execution of <a href="#blocks">code blocks</a>.
 It behaves like <code>if</code> in most programming languages.</p>
@@ -3000,7 +3561,7 @@ If this evaluates to <code>true</code>, the body of the <code>if</code> statemen
 </div>
 </div>
 <div class="sect2">
-<h3 id="_else">13.2. <code>else</code></h3>
+<h3 id="_else">14.2. <code>else</code></h3>
 <div class="paragraph">
 <p>The <code>else</code> <a href="#statement">statement</a> allows for control flow to branch between two <a href="#blocks">code blocks</a>.
 It behaves like <code>else</code> in most programming languages.</p>
@@ -3038,7 +3599,7 @@ else
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_while">13.3. <code>while</code></h3>
+<h3 id="kw_while">14.3. <code>while</code></h3>
 <div class="paragraph">
 <p>The <code>while</code> <a href="#statement">statement</a> allows for looping control flow.
 It behaves like <code>while</code> in most programming languages.</p>
@@ -3058,7 +3619,7 @@ After the code in <code>code block</code> executes, control flow jumps back to t
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_for">13.4. <code>for</code></h3>
+<h3 id="kw_for">14.4. <code>for</code></h3>
 <div class="paragraph">
 <p>The <code>for</code> <a href="#statement">statement</a> allows for looping control flow, with more features than <a href="#kw_while"><code>while</code></a>.
 It behaves like <code>for</code> in most programming languages.</p>
@@ -3107,7 +3668,7 @@ It behaves like <code>for</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_do">13.5. <code>do</code></h3>
+<h3 id="kw_do">14.5. <code>do</code></h3>
 <div class="paragraph">
 <p>The <code>do</code> keyword can be prefixed to either <a href="#kw_while"><code>while</code></a> or <a href="#kw_for"><code>for</code></a> to alter their behavior.
 A loop with <code>do</code> skips the <code>condition</code> check of its first iteration.</p>
@@ -3138,7 +3699,7 @@ Loops written with <code>do</code> often have better runtime performance than lo
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_break">13.6. <code>break</code></h3>
+<h3 id="kw_break">14.6. <code>break</code></h3>
 <div class="paragraph">
 <p><code>break</code> ends the execution of the containing <a href="#kw_while"><code>while</code></a>, <a href="#kw_for"><code>for</code></a>, or <a href="#kw_switch"><code>switch</code></a> statement.
 It behaves like <code>break</code> in most programming languages.</p>
@@ -3166,7 +3727,7 @@ It behaves like <code>break</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_continue">13.7. <code>continue</code></h3>
+<h3 id="_continue">14.7. <code>continue</code></h3>
 <div class="paragraph">
 <p><code>continue</code> is used inside <a href="#kw_while"><code>while</code></a> or <a href="#kw_for"><code>for</code></a> statements,
 and causes control flow to jump to the end of the loop&#8217;s code block.
@@ -3193,7 +3754,7 @@ It behaves like <code>condition</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_switch">13.8. <code>switch</code></h3>
+<h3 id="kw_switch">14.8. <code>switch</code></h3>
 <div class="paragraph">
 <p>The <code>switch</code> statement branches control flow based on an byte value.
 <code>switch</code> is similar to <a href="#kw_if">[kw_if]</a>, but instead of having a choice between two code blocks,
@@ -3239,7 +3800,7 @@ Both of these label where control flow will jump.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_switch_asm">13.8.1. <code>switch</code> statement (byte block)</h4>
+<h4 id="kw_switch_asm">14.8.1. <code>switch</code> statement (byte block)</h4>
 <div class="paragraph">
 <p>In byte blocks, the <code>switch</code> statement causes the mapper to bank switch to a specified <a href="#banks">bank</a>.</p>
 </div>
@@ -3274,7 +3835,7 @@ switch ax     // Switch to the bank in those registers</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_case">13.9. <code>case</code></h3>
+<h3 id="kw_case">14.9. <code>case</code></h3>
 <div class="paragraph">
 <p><code>case</code> is used inside of <a href="#kw_switch"><code>switch</code></a> statements as a label.
 Control flow will jump to the <code>case</code> from the <code>switch</code> if the switch&#8217;s expression matches the <code>case</code> value.</p>
@@ -3310,7 +3871,7 @@ It can appear inside other statements such as <a href="#kw_for"><code>for</code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_default">13.10. <code>default</code></h3>
+<h3 id="kw_default">14.10. <code>default</code></h3>
 <div class="paragraph">
 <p><code>default</code> is used inside of <a href="#kw_switch"><code>switch</code></a> statements as a label.
 Control flow will jump to the <code>default</code> from the <code>switch</code> if the switch&#8217;s expression matches no enclosed <a href="#hw_case">[hw_case]</a> statement.</p>
@@ -3343,12 +3904,12 @@ It can appear inside other statements such as <a href="#kw_for"><code>for</code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_goto">13.11. <code>goto</code></h3>
+<h3 id="kw_goto">14.11. <code>goto</code></h3>
 <div class="paragraph">
 <p>The keyword <code>goto</code> has use in two different types of statements: <code>goto</code> and <code>goto mode</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_goto_statement">13.11.1. <code>goto</code> statement</h4>
+<h4 id="kw_goto_statement">14.11.1. <code>goto</code> statement</h4>
 <div class="paragraph">
 <p>The <code>goto</code> statement causes control flow to jump to a corresponding <a href="#kw_label"><code>label</code></a> in the same function.
 It behaves like <code>goto</code> in most programming languages.</p>
@@ -3379,7 +3940,7 @@ It behaves like <code>goto</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_goto_mode_statement">13.11.2. <code>goto mode</code> statement</h4>
+<h4 id="kw_goto_mode_statement">14.11.2. <code>goto mode</code> statement</h4>
 <div class="paragraph">
 <p>The <code>goto mode</code> statement causes control flow to jump to a <a href="#kw_mode"><code>mode</code></a>,
 discarding the current call stack and starting anew.
@@ -3432,7 +3993,7 @@ mode bar(U some_argument)
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_goto_asm">13.11.3. <code>goto</code> (assembly byte block)</h4>
+<h4 id="kw_goto_asm">14.11.3. <code>goto</code> (assembly byte block)</h4>
 <div class="paragraph">
 <p>In assembly functions, the <code>goto</code> statement causes control to switch execution to another function,
 clobbering all registers in the process.
@@ -3474,7 +4035,7 @@ asm fn bar()
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_goto_mode_asm">13.11.4. <code>goto mode</code> (assembly byte block)</h4>
+<h4 id="kw_goto_mode_asm">14.11.4. <code>goto mode</code> (assembly byte block)</h4>
 <div class="paragraph">
 <p>In assembly functions, the <code>goto mode</code> statement causes control to switch execution to a mode,
 clobbering all registers, discarding the current call stack, and starting anew.
@@ -3523,7 +4084,7 @@ asm fn bar()
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_label">13.12. <code>label</code></h3>
+<h3 id="kw_label">14.12. <code>label</code></h3>
 <div class="paragraph">
 <p>The <code>label</code> statement introduces a point which a <a href="#kw_goto_statement"><code>goto</code> statement</a> can jump to .
 It has no effect otherwise.
@@ -3559,7 +4120,7 @@ code_block</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_label_asm">13.12.1. <code>label</code> statement (byte block)</h4>
+<h4 id="kw_label_asm">14.12.1. <code>label</code> statement (byte block)</h4>
 <div class="paragraph">
 <p>Labels give names to specific addresses inside of byte blocks.
 They behave similarly to <a href="#kw_ct"><code>ct</code></a> definitions, defining values of type <a href="#type_address"><code>AA</code> and <code>AAA</code></a>.</p>
@@ -3607,9 +4168,9 @@ byte_block</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_return">13.13. <code>return</code></h3>
+<h3 id="kw_return">14.13. <code>return</code></h3>
 <div class="sect3">
-<h4 id="kw_return_statement">13.13.1. <code>return</code> statement</h4>
+<h4 id="kw_return_statement">14.13.1. <code>return</code> statement</h4>
 <div class="paragraph">
 <p>The <code>return</code> statement ends the execution of the current function,
 using its argument as the function&#8217;s return value.
@@ -3633,7 +4194,7 @@ It behaves like <code>return</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_return_expression">13.13.2. <code>return</code> expression</h4>
+<h4 id="kw_return_expression">14.13.2. <code>return</code> expression</h4>
 <div class="paragraph">
 <p>A <code>return</code> expression <strong>does not cause functions to return</strong>.
 Instead, it provides a handle to the current function&#8217;s return value.
@@ -3655,7 +4216,7 @@ by storing into the address.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_swap">13.14. <code>swap</code></h3>
+<h3 id="kw_swap">14.14. <code>swap</code></h3>
 <div class="paragraph">
 <p>The <code>swap</code> statement exchanges its arguments, assigning the first to the second and the second to the first.</p>
 </div>
@@ -3688,7 +4249,7 @@ by storing into the address.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_fence">13.15. <code>fence</code></h3>
+<h3 id="kw_fence">14.15. <code>fence</code></h3>
 <div class="paragraph">
 <p>The <code>fence</code> statement is used for both writing concurrent code, and for interacting with hardware.
 It imposes constraints on how global variables are loaded and stored,
@@ -3850,7 +4411,7 @@ It is not necessary to use <code>fence</code> when a value is passed normally:</
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_true">13.16. <code>true</code></h3>
+<h3 id="kw_true">14.16. <code>true</code></h3>
 <div class="paragraph">
 <p><code>true</code> is an expression of type <code>Bool</code>, and has a compile-time constant value.
 When converted to an integer type, it will have the value <code>1</code>.</p>
@@ -3865,7 +4426,7 @@ When converted to an integer type, it will have the value <code>1</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_false">13.17. <code>false</code></h3>
+<h3 id="kw_false">14.17. <code>false</code></h3>
 <div class="paragraph">
 <p><code>false</code> is an expression of type <code>Bool</code>, and has a compile-time constant value.
 When converted to an integer type, it will have the value <code>0</code>.</p>
@@ -3880,7 +4441,91 @@ When converted to an integer type, it will have the value <code>0</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_ready">13.18. <code>ready</code></h3>
+<h3 id="kw_read">14.18. <code>read</code></h3>
+<div class="paragraph">
+<p><code>read</code> is an expression used to access the value a pointer is pointing at, advancing the pointer in the process.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>read Type(ptr)</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Type</code> is a type name. The expression will read a value of this type from the pointer, returning it.</p>
+</li>
+<li>
+<p><code>ptr</code> is an lvalue expression with a pointer type. The expression will increment the pointer by <code>sizeof Type</code> bytes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>omni data
+    [] my_data
+        UU($1234)
+        UU($5678)
+
+mode main()
+    CC ptr = @my_data
+    UU first  = read UU(ptr)
+    UU second = read UU(ptr)</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kw_write">14.19. <code>write</code></h3>
+<div class="paragraph">
+<p><code>write</code> is an expression used to store a value at an address pointed-to by a pointer, advancing the pointer in the process.
+The expression returns no value.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>write Type(ptr, expr)</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Type</code> is a type name. The expression will write a value of this type to the pointer.</p>
+</li>
+<li>
+<p><code>ptr</code> is an lvalue expression with a pointer type. The expression will increment the pointer by <code>sizeof Type</code> bytes.</p>
+</li>
+<li>
+<p><code>expr</code> is an  expression of type <code>Type</code>. The value will be written at <code>ptr</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>vars
+    [] my_data
+        UU($1234)
+        UU($5678)
+
+mode main()
+    MM ptr = @my_data
+    write UU(ptr, $1234)
+    write UU(ptr, $5678)</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kw_ready">14.20. <code>ready</code></h3>
 <div class="paragraph">
 <p><code>ready</code> is an expression of type <code>Bool</code> which returns <code>true</code> if both an <a href="#nmi">NMI</a> is active and the program was <a href="#kw_nmi">waiting on one</a>,
 or <code>false</code> otherwise.
@@ -3929,7 +4574,7 @@ There is more than one way to achieve concurrent safety. See <a href="#kw_fence"
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_nmi_counter">13.19. <code>nmi_counter</code></h3>
+<h3 id="kw_nmi_counter">14.21. <code>nmi_counter</code></h3>
 <div class="paragraph">
 <p><code>nmi_counter</code> is an expression of type <code>U</code> whose value is incremented after each <a href="#nmi">NMI</a>.
 It can be used for timing purposes, to create simple animations, or to detect when NMI has occured.</p>
@@ -3948,7 +4593,7 @@ but the pointed-to value must never be modified by the program.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_state">13.20. <code>state</code></h3>
+<h3 id="kw_state">14.22. <code>state</code></h3>
 <div class="paragraph">
 <p>Some <a href="#mappers">mappers</a> have registers which combine bank switching with other functionality.
 For example, <code>ANROM</code> uses a bit to track the cartridge&#8217;s mirroring, and lets the programmer switch it on the fly.
@@ -3971,7 +4616,7 @@ Reading the state will return this copy instead of polling the hardware.
 </table>
 </div>
 <div class="sect3">
-<h4 id="_state_read">13.20.1. <code>state</code> read</h4>
+<h4 id="_state_read">14.22.1. <code>state</code> read</h4>
 <div class="paragraph">
 <p><code>state</code> is an expression of type <code>U</code> which returns the mapper&#8217;s last-set register state.</p>
 </div>
@@ -3997,7 +4642,7 @@ This address refers to the copy in RAM; modifying it does not notify the hardwar
 </div>
 </div>
 <div class="sect3">
-<h4 id="_state_write">13.20.2. <code>state</code> write</h4>
+<h4 id="_state_write">14.22.2. <code>state</code> write</h4>
 <div class="paragraph">
 <p><code>state</code> is an expression of type <code>Void</code> which sets the mapper&#8217;s register state.</p>
 </div>
@@ -4040,7 +4685,7 @@ Leave these bits set to <code>0</code>, or otherwise the program may crash.
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_system">13.21. <code>system</code></h3>
+<h3 id="kw_system">14.23. <code>system</code></h3>
 <div class="paragraph">
 <p><code>system</code> is an expression of type <code>U</code> which returns the <a href="#opt_system">current NES system</a>.</p>
 </div>
@@ -4107,7 +4752,7 @@ but the pointed-to value must never be modified by the program.</p>
 and its address cannot be taken.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_system_ntsc">13.21.1. <code>SYSTEM_NTSC</code></h4>
+<h4 id="kw_system_ntsc">14.23.1. <code>SYSTEM_NTSC</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_NTSC</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>0</code>.</p>
 </div>
@@ -4121,7 +4766,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_pal">13.21.2. <code>SYSTEM_PAL</code></h4>
+<h4 id="kw_system_pal">14.23.2. <code>SYSTEM_PAL</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_PAL</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>1</code>.</p>
 </div>
@@ -4135,7 +4780,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_dendy">13.21.3. <code>SYSTEM_DENDY</code></h4>
+<h4 id="kw_system_dendy">14.23.3. <code>SYSTEM_DENDY</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_DENDY</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>2</code>.</p>
 </div>
@@ -4149,7 +4794,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_system_unknown">13.21.4. <code>SYSTEM_UNKNOWN</code></h4>
+<h4 id="kw_system_unknown">14.23.4. <code>SYSTEM_UNKNOWN</code></h4>
 <div class="paragraph">
 <p><code>SYSTEM_UNKNOWN</code> is an expression of type <code>Int</code>, and has a compile-time constant value of <code>3</code>.</p>
 </div>
@@ -4164,7 +4809,7 @@ and its address cannot be taken.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_ppu_regs">13.22. PPU Registers</h3>
+<h3 id="kw_ppu_regs">14.24. PPU Registers</h3>
 <div class="paragraph">
 <p>The following <a href="https://www.nesdev.org/wiki/PPU_registers">PPU registers</a> have keywords.
 All of these are expressions of type <code>AA</code> with compile-time constant values.</p>
@@ -4220,7 +4865,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="kw_ppuctrl">13.22.1. <code>PPUCTRL</code></h4>
+<h4 id="kw_ppuctrl">14.24.1. <code>PPUCTRL</code></h4>
 <div class="paragraph">
 <p><code>PPUCTRL</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2000</code>.</p>
 </div>
@@ -4237,7 +4882,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppumask">13.22.2. <code>PPUMASK</code></h4>
+<h4 id="kw_ppumask">14.24.2. <code>PPUMASK</code></h4>
 <div class="paragraph">
 <p><code>PPUMASK</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2001</code>.</p>
 </div>
@@ -4254,7 +4899,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppustatus">13.22.3. <code>PPUSTATUS</code></h4>
+<h4 id="kw_ppustatus">14.24.3. <code>PPUSTATUS</code></h4>
 <div class="paragraph">
 <p><code>PPUSTATUS</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2002</code>.</p>
 </div>
@@ -4271,7 +4916,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamaddr">13.22.4. <code>OAMADDR</code></h4>
+<h4 id="kw_oamaddr">14.24.4. <code>OAMADDR</code></h4>
 <div class="paragraph">
 <p><code>OAMADDR</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2003</code>.</p>
 </div>
@@ -4288,7 +4933,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamdata">13.22.5. <code>OAMDATA</code></h4>
+<h4 id="kw_oamdata">14.24.5. <code>OAMDATA</code></h4>
 <div class="paragraph">
 <p><code>OAMDATA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2004</code>.</p>
 </div>
@@ -4305,7 +4950,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppuscroll">13.22.6. <code>PPUSCROLL</code></h4>
+<h4 id="kw_ppuscroll">14.24.6. <code>PPUSCROLL</code></h4>
 <div class="paragraph">
 <p><code>PPUSCROLL</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2005</code>.</p>
 </div>
@@ -4322,7 +4967,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppuaddr">13.22.7. <code>PPUADDR</code></h4>
+<h4 id="kw_ppuaddr">14.24.7. <code>PPUADDR</code></h4>
 <div class="paragraph">
 <p><code>PPUADDR</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2006</code>.</p>
 </div>
@@ -4339,7 +4984,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_ppudata">13.22.8. <code>PPUDATA</code></h4>
+<h4 id="kw_ppudata">14.24.8. <code>PPUDATA</code></h4>
 <div class="paragraph">
 <p><code>PPUDATA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$2007</code>.</p>
 </div>
@@ -4356,7 +5001,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_oamdma">13.22.9. <code>OAMDMA</code></h4>
+<h4 id="kw_oamdma">14.24.9. <code>OAMDMA</code></h4>
 <div class="paragraph">
 <p><code>OAMDMA</code> is an expression of type <code>AA</code>, and has a compile-time constant value of <code>$4014</code>.</p>
 </div>
@@ -4374,7 +5019,7 @@ All of these are expressions of type <code>AA</code> with compile-time constant 
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_fn">13.23. <code>fn</code></h3>
+<h3 id="kw_fn">14.25. <code>fn</code></h3>
 <div class="paragraph">
 <p>The <code>fn</code> keyword declares a
 <a href="https://en.wikipedia.org/wiki/Function_(computer_programming)">function</a>
@@ -4438,6 +5083,9 @@ Unlike other programming languages, functions in NESFab cannot be nested or recu
 <li>
 <p><a href="#mod_flags"><code>+static</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -4450,7 +5098,7 @@ Unlike other programming languages, functions in NESFab cannot be nested or recu
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_fn_asm">13.23.1. <code>fn</code> statement (assembly byte block)</h4>
+<h4 id="kw_fn_asm">14.25.1. <code>fn</code> statement (assembly byte block)</h4>
 <div class="paragraph">
 <p>In assembly functions, the <code>fn</code> statement calls a NESFab function,
 clobbering all registers in the process.</p>
@@ -4508,13 +5156,13 @@ asm fn bar()
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_ct">13.24. <code>ct</code></h3>
+<h3 id="kw_ct">14.26. <code>ct</code></h3>
 <div class="paragraph">
 <p><code>ct</code> is short for <em>compile-time</em>.
 The keyword can be prefixed onto value and function declarations to <strong>insist</strong> that their computations occur at compile-time.</p>
 </div>
 <div class="sect3">
-<h4 id="_ct_fn">13.24.1. <code>ct fn</code></h4>
+<h4 id="_ct_fn">14.26.1. <code>ct fn</code></h4>
 <div class="paragraph">
 <p>Syntax:</p>
 </div>
@@ -4528,7 +5176,7 @@ The keyword can be prefixed onto value and function declarations to <strong>insi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_ct_value">13.24.2. <code>ct</code> value</h4>
+<h4 id="_ct_value">14.26.2. <code>ct</code> value</h4>
 <div class="paragraph">
 <p>Syntax:</p>
 </div>
@@ -4546,7 +5194,7 @@ The keyword can be prefixed onto value and function declarations to <strong>insi
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_mode">13.25. <code>mode</code></h3>
+<h3 id="kw_mode">14.27. <code>mode</code></h3>
 <div class="paragraph">
 <p>The <code>mode</code> keyword declares a mode function at global scope.
 Modes are similar to <a href="#kw_fn">regular functions</a>, but they do not return.
@@ -4615,6 +5263,9 @@ While the mode function is executing, NMIs will be handled using the supplied <c
 <li>
 <p><a href="#mod_flags"><code>+static</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -4648,12 +5299,12 @@ This happens transparently from the programmer; no <a href="https://en.wikipedia
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_nmi">13.26. <code>nmi</code></h3>
+<h3 id="kw_nmi">14.28. <code>nmi</code></h3>
 <div class="paragraph">
 <p>The keyword <code>nmi</code> can be used as a statement, a declaration, or as <a href="#mod_nmi">a modifier</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_statement">13.26.1. <code>nmi</code> statement</h4>
+<h4 id="kw_nmi_statement">14.28.1. <code>nmi</code> statement</h4>
 <div class="paragraph">
 <p>The <code>nmi</code> statement blocks execution until an <a href="#kw_nmi_function"><code>nmi</code> function</a> occurs.
 Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</code></a> will evaluate to <a href="#kw_true"><code>true</code></a>.</p>
@@ -4668,7 +5319,7 @@ Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</c
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_asm">13.26.2. <code>nmi</code> statement (byte block)</h4>
+<h4 id="kw_nmi_asm">14.28.2. <code>nmi</code> statement (byte block)</h4>
 <div class="paragraph">
 <p>In byte blocks, the <code>nmi</code> statement blocks execution until an <a href="#kw_nmi_function"><code>nmi</code> function</a> occurs,
 clobbering all registers in the process.
@@ -4684,7 +5335,7 @@ Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</c
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_nmi_function">13.26.3. <code>nmi</code> function</h4>
+<h4 id="kw_nmi_function">14.28.3. <code>nmi</code> function</h4>
 <div class="paragraph">
 <p>The <code>nmi</code> keyword declares an <a href="https://www.nesdev.org/wiki/NMI">NMI</a> interrupt function at global scope.
 NMI interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return, and cannot be called.
@@ -4736,6 +5387,9 @@ so long as bit 7 of <a href="https://www.nesdev.org/wiki/PPU_registers#PPUCTRL">
 <li>
 <p><a href="#mod_flags"><code>+static</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -4754,12 +5408,12 @@ as otherwise the game would speed up or slow down based on how much computation 
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_irq">13.27. <code>irq</code></h3>
+<h3 id="kw_irq">14.29. <code>irq</code></h3>
 <div class="paragraph">
 <p>The keyword <code>irq</code> can be used as a statement, a declaration, or as <a href="#mod_irq">a modifier</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="kw_irq_statement">13.27.1. <code>irq</code> statement</h4>
+<h4 id="kw_irq_statement">14.29.1. <code>irq</code> statement</h4>
 <div class="paragraph">
 <p>The <code>irq</code> statement is used to enable or disable IRQ interrupt handling.
 When disabled, no IRQ functions will be called.</p>
@@ -4801,7 +5455,7 @@ The <code>irq</code> statement corresponds to assembly instructions <code>SEI</c
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_irq_function">13.27.2. <code>irq</code> function</h4>
+<h4 id="kw_irq_function">14.29.2. <code>irq</code> function</h4>
 <div class="paragraph">
 <p>The <code>irq</code> keyword declares an <a href="https://www.nesdev.org/wiki/IRQ">irq</a> interrupt function at global scope.
 IRQ interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return, and cannot be called.
@@ -4853,12 +5507,15 @@ or <a href="https://www.nesdev.org/wiki/MMC3">MMC3</a> scanline counter.</p>
 <li>
 <p><a href="#mod_flags"><code>+static</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
+</li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_asm">13.28. <code>asm</code></h3>
+<h3 id="kw_asm">14.30. <code>asm</code></h3>
 <div class="paragraph">
 <p>The <code>asm</code> keyword declares an function at global scope using <a href="#byte_blocks">byte block</a> inline assembly syntax.</p>
 </div>
@@ -4936,9 +5593,6 @@ and specifies the entry point to the function.</p>
 <p><a href="#mod_flags"><code>+zero_page</code>, <code>-zero_page</code></a></p>
 </li>
 <li>
-<p><a href="#mod_flags"><code>+graphviz</code></a></p>
-</li>
-<li>
 <p><a href="#mod_flags"><code>+info</code></a></p>
 </li>
 </ul>
@@ -4957,7 +5611,7 @@ Although the address cannot be taken of these labels, it is possible to call the
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_struct">13.29. <code>struct</code></h3>
+<h3 id="kw_struct">14.31. <code>struct</code></h3>
 <div class="paragraph">
 <p>The <code>struct</code> keyword is used to define new types (<a href="https://en.wikipedia.org/wiki/Record_(computer_science)">records</a>) at global scope.
 It behaves similarly to the <code>struct</code> keyword in other languages.</p>
@@ -5001,7 +5655,7 @@ so long as multi-dimensional arrays are not created.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_vars">13.30. <code>vars</code></h3>
+<h3 id="kw_vars">14.32. <code>vars</code></h3>
 <div class="paragraph">
 <p>The <code>vars</code> keyword declares a block of global variables, and potentially their <a href="#groups">group</a>.</p>
 </div>
@@ -5046,7 +5700,10 @@ The group will be defined as the union of these declarations.</p>
 <p><a href="#mod_flags"><code>+align</code></a></p>
 </li>
 <li>
-<p><a href="#mod_flags"><code>+zero_page</code></a></p>
+<p><a href="#mod_flags"><code>+zero_page</code>, <code>-zero_page</code></a></p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+sram</code>, <code>-sram</code></a></p>
 </li>
 </ul>
 </div>
@@ -5066,7 +5723,7 @@ vars /my_group
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_data">13.31. <code>data</code></h3>
+<h3 id="kw_data">14.33. <code>data</code></h3>
 <div class="paragraph">
 <p>The <code>data</code> keyword declares a <a href="#groups">group</a> and the pointer-addressable global constants inside of it.</p>
 </div>
@@ -5108,6 +5765,9 @@ The group will be defined as the union of these declarations.</p>
 <li>
 <p><a href="#mod_flags"><code>+dpcm</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+static</code></a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -5131,7 +5791,7 @@ The group will be defined as the union of these declarations.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_omni">13.32. <code>omni</code></h3>
+<h3 id="kw_omni">14.34. <code>omni</code></h3>
 <div class="paragraph">
 <p>The <code>omni</code> keyword can be prefixed to <a href="#kw_data"><code>data</code></a> to alter its behavior.
 Groups declared using <code>omni</code> will have their data duplicated across every bank of the ROM.
@@ -5168,7 +5828,7 @@ Additionally, pointers to <code>omni</code> data take up only two bytes, as oppo
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_charmap">13.33. <code>charmap</code></h3>
+<h3 id="kw_charmap">14.35. <code>charmap</code></h3>
 <div class="paragraph">
 <p>The <code>charmap</code> keyword defines character maps,
 which are sets of characters with a mapping from each character to byte values.
@@ -5380,7 +6040,7 @@ ct CCC/strings another_ptr = @some_string</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_chrrom">13.34. <code>chrrom</code></h3>
+<h3 id="_chrrom">14.36. <code>chrrom</code></h3>
 <div class="paragraph">
 <p>The <code>chrrom</code> keyword is only used for <a href="#mappers">mappers</a> which use CHR ROM (as opposed to CHR RAM).
 It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</a> syntax.</p>
@@ -5409,7 +6069,7 @@ It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_file">13.35. <code>file</code></h3>
+<h3 id="kw_file">14.37. <code>file</code></h3>
 <div class="paragraph">
 <p>The <code>file</code> keyword imports and converts data from an external file.
 It is only usable inside of a <a href="#byte_blocks">byte block</a>.</p>
@@ -5583,13 +6243,13 @@ Thus, <code>compressed_data</code> would gain the following members:</p>
 The second two are prefixed with <code>bg_</code>, as the previous label is <code>bg</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="file_bin">13.35.1. Binary file formats</h4>
+<h4 id="file_bin">14.37.1. Binary file formats</h4>
 <div class="paragraph">
 <p>The filetypes <code>.bin</code>, <code>.chr</code>, and <code>.nam</code> are loaded as raw binary data, with no conversions happening.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_txt">13.35.2. <code>.txt</code> format</h4>
+<h4 id="file_txt">14.37.2. <code>.txt</code> format</h4>
 <div class="paragraph">
 <p>The filetype <code>.txt</code> is interpreted as ASCII data, with newline sequences replaced with a single newline character.</p>
 </div>
@@ -5614,7 +6274,7 @@ The second two are prefixed with <code>bg_</code>, as the previous label is <cod
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_png">13.35.3. <code>.png</code> format</h4>
+<h4 id="file_png">14.37.3. <code>.png</code> format</h4>
 <div class="paragraph">
 <p>The filetype <code>.png</code> is interpreted as a <a href="https://en.wikipedia.org/wiki/PNG">PNG image</a> representing CHR tileset data.
 The input image must have dimensions that are multiples of 8 x 8 pixels.</p>
@@ -5626,7 +6286,7 @@ black represents color 0 and white represents color 3.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_raw">13.35.4. <code>raw</code> target</h4>
+<h4 id="file_raw">14.37.4. <code>raw</code> target</h4>
 <div class="paragraph">
 <p>The <code>raw</code> target imports raw binary data, without performing any filetype conversions.
 It accepts no arguments.</p>
@@ -5648,7 +6308,7 @@ It accepts no arguments.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_fmt">13.35.5. <code>fmt</code> target</h4>
+<h4 id="file_fmt">14.37.5. <code>fmt</code> target</h4>
 <div class="paragraph">
 <p>The <code>fmt</code> target imports data after first processing it using filetype conversions.
 It accepts no arguments.</p>
@@ -5670,7 +6330,7 @@ It accepts no arguments.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_pbz">13.35.6. <code>pbz</code> target</h4>
+<h4 id="file_pbz">14.37.6. <code>pbz</code> target</h4>
 <div class="paragraph">
 <p>The <code>pbz</code> target compresses the data into the PBZ encoding after first processing it using filetype conversions.
 It accepts no arguments.</p>
@@ -5744,7 +6404,7 @@ Starting from the highest bit and working to the lowest bit, the decompressed se
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_rlz">13.35.7. <code>rlz</code> target</h4>
+<h4 id="file_rlz">14.37.7. <code>rlz</code> target</h4>
 <div class="paragraph">
 <p>The <code>rlz</code> target compresses the data into the RLZ encoding after first processing it using filetype conversions.</p>
 </div>
@@ -5822,7 +6482,7 @@ If <code>false</code>, no <code>$00</code> will be appended. By default, the val
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_macro">13.36. <code>macro</code></h3>
+<h3 id="kw_macro">14.38. <code>macro</code></h3>
 <div class="paragraph">
 <p>The <code>macro</code> keyword generates and compiles a new source file by substituting its arguments into a <code>.macrofab</code> file.
 It is only usable at top-level scope.</p>
@@ -5911,7 +6571,7 @@ vars
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_audio">13.37. <code>audio</code></h3>
+<h3 id="kw_audio">14.39. <code>audio</code></h3>
 <div class="paragraph">
 <p>The <code>audio</code> keyword imports and converts audio data from an external file,
 converting the data into code definitions.
@@ -5971,7 +6631,7 @@ It is only usable at top-level scope.</p>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="audio_puf1_music">13.37.1. <code>puf1_music</code> target</h4>
+<h4 id="audio_puf1_music">14.39.1. <code>puf1_music</code> target</h4>
 <div class="paragraph">
 <p>The <code>puf1_music</code> target converts music data and generates code compatible with the PUF music engine.</p>
 </div>
@@ -6047,7 +6707,7 @@ You will also need a <code>puf1_sfx</code> audio target.
 </div>
 </div>
 <div class="sect3">
-<h4 id="audio_puf1_sfx">13.37.2. <code>puf1_sfx</code> target</h4>
+<h4 id="audio_puf1_sfx">14.39.2. <code>puf1_sfx</code> target</h4>
 <div class="paragraph">
 <p>The <code>puf1_sfx</code> target converts sound effect data and generates code compatible with the PUF music engine.</p>
 </div>
@@ -6130,13 +6790,13 @@ You will also need a <code>puf1_music</code> audio target.
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_stows">13.38. <code>stows</code></h3>
+<h3 id="kw_stows">14.40. <code>stows</code></h3>
 <div class="paragraph">
 <p>See <a href="#mod_stows"><code>stows</code></a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="kw_employs">13.39. <code>employs</code></h3>
+<h3 id="kw_employs">14.41. <code>employs</code></h3>
 <div class="paragraph">
 <p>See <a href="#mod_employs"><code>employs</code></a>.</p>
 </div>
@@ -6144,7 +6804,7 @@ You will also need a <code>puf1_music</code> audio target.
 </div>
 </div>
 <div class="sect1">
-<h2 id="modifiers">14. Modifiers</h2>
+<h2 id="modifiers">15. Modifiers</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Modifiers add additional metadata to definitions.</p>
@@ -6161,10 +6821,10 @@ You will also need a <code>puf1_music</code> audio target.
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_flags">14.1. Modifier Flags</h3>
+<h3 id="mod_flags">15.1. Modifier Flags</h3>
 <div class="paragraph">
-<p>Modifier flags are specified prefixed with a <code>-</code> or <code>` character.
-`-` is used to disable the modifier, while `</code> is used to enable it.</p>
+<p>Modifier flags are specified prefixed with a <code>-</code> or <code>+</code> character.
+<code>-</code> is used to disable the modifier, while <code>+</code> is used to enable it.</p>
 </div>
 <div class="paragraph">
 <p>The following flags exist:</p>
@@ -6181,6 +6841,9 @@ You will also need a <code>puf1_music</code> audio target.
 <p><code>+zero_page</code>, <code>-zero_page</code>: Force / prevent variables from using fast zero-page RAM.</p>
 </li>
 <li>
+<p><code>+sram</code>, <code>-sram</code>: Force / prevent variables from using SRAM (see <a href="#opt_sram"><code>sram</code></a>).</p>
+</li>
+<li>
 <p><code>+spr_8x16</code>: Reorders <a href="#kw_file"><code>file</code></a> CHR data from 8x16 tiles to 8x8 tiles.</p>
 </li>
 <li>
@@ -6193,15 +6856,18 @@ You will also need a <code>puf1_music</code> audio target.
 <p><code>+dpcm</code>: Align and store the data in a ROM location suitable for DPCM.</p>
 </li>
 <li>
-<p><code>+static</code>: Allocate the function in every bank.
-This modifier is incompatible with functions that can return with a different active bank than they started in.
-For <a href="#kw_asm"><code>asm</code></a> functions, you must validate this yourself.</p>
+<p><code>+static</code>: Allocate the function or data in every bank (or force them into the fixed bank, for mappers with one).
+This modifier is incompatible with <a href="#kw_asm"><code>asm</code></a> functions that return in a different bank than they started in.
+You must validate this yourself.</p>
 </li>
 <li>
 <p><code>palette_3</code>: Converts 4-byte palettes into 3-byte palettes.</p>
 </li>
 <li>
-<p><code>palette_25</code>: Converts 32-byte palettes into 25-byte palette.</p>
+<p><code>palette_25</code>: Converts 32-byte palettes into 25-byte palettes.</p>
+</li>
+<li>
+<p><code>+sloppy</code>, <code>-sloppy</code>: Enables / disables faster compilation speed, at the cost of performance.</p>
 </li>
 </ul>
 </div>
@@ -6219,7 +6885,7 @@ For <a href="#kw_asm"><code>asm</code></a> functions, you must validate this you
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_nmi">14.2. <code>nmi</code></h3>
+<h3 id="mod_nmi">15.2. <code>nmi</code></h3>
 <div class="paragraph">
 <p>The <code>nmi</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_mode"><code>mode</code></a> declaration to specify the mode&#8217;s NMI handler.</p>
 </div>
@@ -6256,7 +6922,7 @@ mode foo()
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_irq">14.3. <code>irq</code></h3>
+<h3 id="mod_irq">15.3. <code>irq</code></h3>
 <div class="paragraph">
 <p>The <code>irq</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_mode"><code>mode</code></a> declaration to specify the mode&#8217;s IRQ handler.</p>
 </div>
@@ -6293,7 +6959,7 @@ mode foo()
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_stows">14.4. <code>stows</code></h3>
+<h3 id="mod_stows">15.4. <code>stows</code></h3>
 <div class="paragraph">
 <p>The <code>stows</code> <a href="#modifiers">modifier</a> is used inside <a href="#kw_charmap"><code>charmap</code></a> definitions
 to enable string literals to use said <code>charmap</code>.</p>
@@ -6314,7 +6980,7 @@ to enable string literals to use said <code>charmap</code>.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_stows_omni">14.4.1. <code>stows omni</code></h4>
+<h4 id="_stows_omni">15.4.1. <code>stows omni</code></h4>
 <div class="paragraph">
 <p>The <code>stows omni</code> modifier behaves like <code>stows</code>, except it stores its data inside an <code>omni data</code> group.</p>
 </div>
@@ -6336,7 +7002,7 @@ to enable string literals to use said <code>charmap</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_employs">14.5. <code>employs</code></h3>
+<h3 id="mod_employs">15.5. <code>employs</code></h3>
 <div class="paragraph">
 <p>The <code>employs</code> <a href="#modifiers">modifier</a> instructs a function to be dependent on a group.
 From the time the function is called to the time the function returns,
@@ -6372,7 +7038,7 @@ The <code>employs</code> modifier is only required in these circumstances:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_employs_vars_and_employs_data">14.5.1. <code>employs vars</code> and <code>employs data</code></h4>
+<h4 id="_employs_vars_and_employs_data">15.5.1. <code>employs vars</code> and <code>employs data</code></h4>
 <div class="paragraph">
 <p>For additional control, <code>employs vars</code> and/or <code>employs data</code> modifiers can be used.
 These behave like <code>employs</code>, but only include the <code>vars</code> and/or <code>data</code> definitions of each groups.</p>
@@ -6396,7 +7062,7 @@ These behave like <code>employs</code>, but only include the <code>vars</code> a
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_preserves">14.6. <code>preserves</code></h3>
+<h3 id="mod_preserves">15.6. <code>preserves</code></h3>
 <div class="paragraph">
 <p>The <code>preserves</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_goto_mode_statement"><code>goto mode</code> statement</a>
 to specify which variables are kept, and which are reset to their initial value.</p>
@@ -6422,7 +7088,7 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_data">14.7. <code>data</code></h3>
+<h3 id="mod_data">15.7. <code>data</code></h3>
 <div class="paragraph">
 <p>The <code>data</code> <a href="#modifiers">modifier</a> is used to document which <code>data</code> <a href="#groups">groups</a> a function uses.</p>
 </div>
@@ -6446,7 +7112,7 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_vars">14.8. <code>vars</code></h3>
+<h3 id="mod_vars">15.8. <code>vars</code></h3>
 <div class="paragraph">
 <p>The <code>vars</code> <a href="#modifiers">modifier</a> is used to document which <code>vars</code> <a href="#groups">groups</a> a function uses.</p>
 </div>
@@ -6472,12 +7138,12 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect1">
-<h2 id="_operators_2">15. Operators</h2>
+<h2 id="_operators_2">16. Operators</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_operator_tables">15.1. Operator Tables</h3>
+<h3 id="_operator_tables">16.1. Operator Tables</h3>
 <div class="sect3">
-<h4 id="unary_ops">15.1.1. Unary Operators</h4>
+<h4 id="unary_ops">16.1.1. Unary Operators</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -6538,7 +7204,7 @@ Operators with lower precedence numbers come earlier in the order of operations.
 </table>
 </div>
 <div class="sect3">
-<h4 id="binop">15.1.2. Binary Operators</h4>
+<h4 id="binop">16.1.2. Binary Operators</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -6751,7 +7417,7 @@ Operators with lower precedence numbers come earlier in the order of operations.
 </table>
 </div>
 <div class="sect3">
-<h4 id="fnop">15.1.3. Function-like Operators</h4>
+<h4 id="fnop">16.1.3. Function-like Operators</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -6833,15 +7499,15 @@ All function-like operators have left associativity and evaluate first in the or
 </div>
 </div>
 <div class="sect2">
-<h3 id="_operator_listings">15.2. Operator Listings</h3>
+<h3 id="_operator_listings">16.2. Operator Listings</h3>
 <div class="sect3">
-<h4 id="get_pointer">15.2.1. Get Pointer <code>@</code></h4>
+<h4 id="get_pointer">16.2.1. Get Pointer <code>@</code></h4>
 <div class="paragraph">
 <p>Converts an lvalue <a href="#type_paa">pointer-addressable array</a> into a corresponding pointer.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="get_hw_addr">15.2.2. Get Hardware Address <code>&amp;</code></h4>
+<h4 id="get_hw_addr">16.2.2. Get Hardware Address <code>&amp;</code></h4>
 <div class="paragraph">
 <p>Converts an lvalue into its corresponding hardware address, of type <code>AA</code> or <code>AAA</code>.</p>
 </div>
@@ -6852,7 +7518,7 @@ For regular code, it&#8217;s recommended to use <a href="#get_pointer">Get Point
 </div>
 </div>
 <div class="sect3">
-<h4 id="unary_plus">15.2.3. Unary Plus <code>+</code></h4>
+<h4 id="unary_plus">16.2.3. Unary Plus <code>+</code></h4>
 <div class="paragraph">
 <p>Returns its operand, type and value unchanged. The operand must be an <a href="#type_arithmetic">arithmetic type</a>.</p>
 </div>
@@ -6866,7 +7532,7 @@ For regular code, it&#8217;s recommended to use <a href="#get_pointer">Get Point
 </div>
 </div>
 <div class="sect3">
-<h4 id="unary_negate">15.2.4. Unary Negate <code>-</code></h4>
+<h4 id="unary_negate">16.2.4. Unary Negate <code>-</code></h4>
 <div class="paragraph">
 <p>Returns its operand subtracted from zero, type unchanged. The operand must be an <a href="#type_arithmetic">arithmetic type</a>.</p>
 </div>
@@ -6880,7 +7546,7 @@ For regular code, it&#8217;s recommended to use <a href="#get_pointer">Get Point
 </div>
 </div>
 <div class="sect3">
-<h4 id="unary_bitwise_not">15.2.5. Unary Bitwise NOT <code>~</code></h4>
+<h4 id="unary_bitwise_not">16.2.5. Unary Bitwise NOT <code>~</code></h4>
 <div class="paragraph">
 <p>Returns its operand with every bit flipped (1 becomes 0, and vice versa), type unchanged. The operand must be an <a href="#type_arithmetic">arithmetic type</a>.</p>
 </div>
@@ -6895,7 +7561,7 @@ For regular code, it&#8217;s recommended to use <a href="#get_pointer">Get Point
 </div>
 </div>
 <div class="sect3">
-<h4 id="unary_logical_not">15.2.6. Unary Logical NOT <code>!</code></h4>
+<h4 id="unary_logical_not">16.2.6. Unary Logical NOT <code>!</code></h4>
 <div class="paragraph">
 <p>Returns its operand, converted to type <code>Bool</code>, then negated (<code>true</code> becomes <code>false</code> and vice versa). The operand must be an <a href="#type_arithmetic">arithmetic type</a>.</p>
 </div>
@@ -6912,7 +7578,7 @@ For regular code, it&#8217;s recommended to use <a href="#get_pointer">Get Point
 </div>
 </div>
 <div class="sect3">
-<h4 id="member_access">15.2.7. Member Access <code>.</code></h4>
+<h4 id="member_access">16.2.7. Member Access <code>.</code></h4>
 <div class="paragraph">
 <p>Operator <code>.</code> is used to access members and nested values, and works similarly to other languages.
 Its behavior depends on the left hand side of the operator:</p>
@@ -7022,7 +7688,7 @@ foo.c = 0   // Set the high byte.   foo is now $000000</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="multiply">15.2.8. Multiply <code>*</code></h4>
+<h4 id="multiply">16.2.8. Multiply <code>*</code></h4>
 <div class="paragraph">
 <p>Returns its operands multiplied together, of a type large enough to hold the product.
 The return type is signed if either operand is signed, but unsigned otherwise.
@@ -7059,7 +7725,7 @@ However, if you need to do lots of multiplications, consider using lookup tables
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_multiply">15.2.9. Assign by Multiply (<code>*=</code>)</h4>
+<h4 id="assign_multiply">16.2.9. Assign by Multiply (<code>*=</code>)</h4>
 <div class="paragraph">
 <p>Multiplies its operands together, then assigns the value to the lvalue left operand, converting as needed.
 Returns the left operand&#8217;s new value.</p>
@@ -7075,7 +7741,7 @@ a *= b // Equivalent to a = U(a * b)</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="add">15.2.10. Add <code>+</code></h4>
+<h4 id="add">16.2.10. Add <code>+</code></h4>
 <div class="paragraph">
 <p>Returns the sum of its operands.
 The operands must be of the same <a href="#type_quantity">quantity type</a>, although <code>Int</code> and <code>Real</code> will convert.</p>
@@ -7090,7 +7756,7 @@ The operands must be of the same <a href="#type_quantity">quantity type</a>, alt
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_add">15.2.11. Assign by Add <code>+=</code></h4>
+<h4 id="assign_add">16.2.11. Assign by Add <code>+=</code></h4>
 <div class="paragraph">
 <p>Converts the right operand to the left operand&#8217;s type, then performs an addition using both operands and assigns the value to the lvalue left operand.
 Return the carry: a value of type <code>Bool</code> that is <code>true</code> when the resulting sum overflowed, and <code>false</code> otherwise.</p>
@@ -7119,7 +7785,7 @@ Unlike in other languages, this operator doesn&#8217;t return its left operand.
 </div>
 </div>
 <div class="sect3">
-<h4 id="subtract">15.2.12. Subtract <code>-</code></h4>
+<h4 id="subtract">16.2.12. Subtract <code>-</code></h4>
 <div class="paragraph">
 <p>Returns the difference of its operands (the right operand subtracted from the left).
 The operands must be of the same <a href="#type_quantity">quantity type</a>, although <code>Int</code> and <code>Real</code> will convert.</p>
@@ -7134,7 +7800,7 @@ The operands must be of the same <a href="#type_quantity">quantity type</a>, alt
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_subtract">15.2.13. Assign by Subtract <code>-=</code></h4>
+<h4 id="assign_subtract">16.2.13. Assign by Subtract <code>-=</code></h4>
 <div class="paragraph">
 <p>Converts the right operand to the left operand&#8217;s type, then performs a subtraction using both operands and assigns the value to the lvalue left operand.
 Return the carry: a value of type <code>Bool</code> that is <code>false</code> when the resulting sum underflowed, and <code>true</code> otherwise.</p>
@@ -7151,7 +7817,7 @@ x -= 300 // 'x' is now equal to 106 due to underflow. The expression returns 'fa
 </div>
 </div>
 <div class="sect3">
-<h4 id="rotate_left">15.2.14. Rotate Left <code>&lt;-&lt;</code></h4>
+<h4 id="rotate_left">16.2.14. Rotate Left <code>&lt;-&lt;</code></h4>
 <div class="paragraph">
 <p>Moves each of the bits of the left operand one place to the left, with the lowest bit being filled with the value of the right operand.
 The left operand must be a <a href="#type_quantity">type_quantity</a>, and the right operand must be type <code>Bool</code>.
@@ -7169,7 +7835,7 @@ U(%01111111) &lt;-&lt; false // Equivalent to U(%11111110)</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_rotate_left">15.2.15. Assign by Rotate Left <code>&lt;=&lt;</code></h4>
+<h4 id="assign_rotate_left">16.2.15. Assign by Rotate Left <code>&lt;=&lt;</code></h4>
 <div class="paragraph">
 <p>Performs a left rotation using both operands, then assigns the value to the lvalue left operand.
 Returns the carry: a value of type <code>Bool</code> equal to left operand&#8217;s highest bit prior to the operation.</p>
@@ -7185,7 +7851,7 @@ foo &lt;=&lt; false // Sets 'foo' to U(%10010100). Returns true.</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="rotate_right">15.2.16. Rotate Right <code>&gt;-&gt;</code></h4>
+<h4 id="rotate_right">16.2.16. Rotate Right <code>&gt;-&gt;</code></h4>
 <div class="paragraph">
 <p>Moves each of the bits of the right operand one place to the right, with the highest bit being filled with the value of the left operand.
 The right operand must be a <a href="#type_quantity">type_quantity</a>, and the left operand must be type <code>Bool</code>.
@@ -7215,7 +7881,7 @@ This operation corresponds to the 6502 assembly instruction <code>ROR</code>.
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_rotate_right">15.2.17. Assign by Rotate Right <code>&gt;=&gt;</code></h4>
+<h4 id="assign_rotate_right">16.2.17. Assign by Rotate Right <code>&gt;=&gt;</code></h4>
 <div class="paragraph">
 <p>Performs a right rotation using both operands, then assigns the value to the lvalue right operand.
 Returns the carry: a value of type <code>Bool</code> equal to right operand&#8217;s lowest bit prior to the operation.</p>
@@ -7243,7 +7909,7 @@ This operator requires an lvalue on the right side of the operator, which is unl
 </div>
 </div>
 <div class="sect3">
-<h4 id="shift_left">15.2.18. Shift Left <code>&lt;&lt;</code></h4>
+<h4 id="shift_left">16.2.18. Shift Left <code>&lt;&lt;</code></h4>
 <div class="paragraph">
 <p>Moves each of the bits of the left operand to the left N places, where N is the right operand of type <code>U</code>,
 and filling blank spaces with <code>0</code>.
@@ -7276,7 +7942,7 @@ and shifting by a variable (<code>x &lt;&lt; y)</code> generates a loop in the a
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_shift_left">15.2.19. Assign by Shift Left <code>&lt;&lt;=</code></h4>
+<h4 id="assign_shift_left">16.2.19. Assign by Shift Left <code>&lt;&lt;=</code></h4>
 <div class="paragraph">
 <p>Performs a left shift using both operands, then assigns the value to the lvalue left operand.
 Returns the carry: a value of type <code>Bool</code> equal to last bit shifted out (or <code>false</code> if no shifting occurred).</p>
@@ -7304,7 +7970,7 @@ Unlike in other languages, this operator doesn&#8217;t return its left operand.
 </div>
 </div>
 <div class="sect3">
-<h4 id="shift_right">15.2.20. Shift Right <code>&gt;&gt;</code></h4>
+<h4 id="shift_right">16.2.20. Shift Right <code>&gt;&gt;</code></h4>
 <div class="paragraph">
 <p>Moves each of the bits of the left operand to the right N places, where N is the right operand of type <code>U</code>.
 If the left operand is unsigned, the blank spaces are filled with <code>0</code>,
@@ -7341,7 +8007,7 @@ and shifting by a variable (<code>x &gt;&gt; y)</code> generates a loop in the a
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_shift_right">15.2.21. Assign by Shift Right <code>&gt;&gt;=</code></h4>
+<h4 id="assign_shift_right">16.2.21. Assign by Shift Right <code>&gt;&gt;=</code></h4>
 <div class="paragraph">
 <p>Performs a right shift using both operands, then assigns the value to the lvalue left operand.
 Returns the carry: a value of type <code>Bool</code> equal to last bit shifted out (or <code>false</code> if no shifting occurred).</p>
@@ -7369,7 +8035,7 @@ Unlike in other languages, this operator doesn&#8217;t return its left operand.
 </div>
 </div>
 <div class="sect3">
-<h4 id="bitwise_and">15.2.22. Bitwise AND <code>&amp;</code></h4>
+<h4 id="bitwise_and">16.2.22. Bitwise AND <code>&amp;</code></h4>
 <div class="paragraph">
 <p>Applies the AND operation across each bit of the operands, returning the result.
 The operands must be of the same <a href="#type_arithmetic">arithmetic type</a>, although <code>Int</code> and <code>Real</code> will convert.</p>
@@ -7387,7 +8053,7 @@ The operands must be of the same <a href="#type_arithmetic">arithmetic type</a>,
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_bitwise_and">15.2.23. Assign by Bitwise AND <code>&amp;=</code></h4>
+<h4 id="assign_bitwise_and">16.2.23. Assign by Bitwise AND <code>&amp;=</code></h4>
 <div class="paragraph">
 <p>Converts the right operand to the left operand&#8217;s type, then performs a bitwise AND using both operands and assigns the value to the lvalue left operand.
 Returns the left operand&#8217;s new value.</p>
@@ -7403,7 +8069,7 @@ foo &amp;= %10101010 // Sets 'foo' to U(%10100000)</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="bitwise_xor">15.2.24. Bitwise XOR <code>^</code></h4>
+<h4 id="bitwise_xor">16.2.24. Bitwise XOR <code>^</code></h4>
 <div class="paragraph">
 <p>Applies the XOR operation across each bit of the operands, returning the result.
 The operands must be of the same <a href="#type_arithmetic">arithmetic type</a>, although <code>Int</code> and <code>Real</code> will convert.</p>
@@ -7421,7 +8087,7 @@ The operands must be of the same <a href="#type_arithmetic">arithmetic type</a>,
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_bitwise_xor">15.2.25. Assign by Bitwise XOR <code>^=</code></h4>
+<h4 id="assign_bitwise_xor">16.2.25. Assign by Bitwise XOR <code>^=</code></h4>
 <div class="paragraph">
 <p>Converts the right operand to the left operand&#8217;s type, then performs a bitwise XOR using both operands and assigns the value to the lvalue left operand.
 Returns the left operand&#8217;s new value.</p>
@@ -7437,7 +8103,7 @@ foo ^= %10101010 // Sets 'foo' to U(%01011010)</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="bitwise_or">15.2.26. Bitwise OR <code>|</code></h4>
+<h4 id="bitwise_or">16.2.26. Bitwise OR <code>|</code></h4>
 <div class="paragraph">
 <p>Applies the OR operation across each bit of the operands, returning the result.
 The operands must be of the same <a href="#type_arithmetic">arithmetic type</a>, although <code>Int</code> and <code>Real</code> will convert.</p>
@@ -7455,7 +8121,7 @@ The operands must be of the same <a href="#type_arithmetic">arithmetic type</a>,
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign_bitwise_or">15.2.27. Assign by Bitwise OR <code>|=</code></h4>
+<h4 id="assign_bitwise_or">16.2.27. Assign by Bitwise OR <code>|=</code></h4>
 <div class="paragraph">
 <p>Converts the right operand to the left operand&#8217;s type, then performs a bitwise OR using both operands and assigns the value to the lvalue left operand.
 Returns the left operand&#8217;s new value.</p>
@@ -7471,7 +8137,7 @@ foo |= %10101010 // Sets 'foo' to U(%11111010)</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="logical_and">15.2.28. Logical AND <code>&amp;&amp;</code></h4>
+<h4 id="logical_and">16.2.28. Logical AND <code>&amp;&amp;</code></h4>
 <div class="paragraph">
 <p>Implements the <a href="https://en.wikipedia.org/wiki/Short-circuit_evaluation">"short-circuit"</a> version of the AND operation from boolean logic.</p>
 </div>
@@ -7492,7 +8158,7 @@ true  &amp;&amp; true   // Returns true</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="logical_or">15.2.29. Logical OR <code>||</code></h4>
+<h4 id="logical_or">16.2.29. Logical OR <code>||</code></h4>
 <div class="paragraph">
 <p>Implements the <a href="https://en.wikipedia.org/wiki/Short-circuit_evaluation">"short-circuit"</a> version of the OR operation from boolean logic.</p>
 </div>
@@ -7513,7 +8179,7 @@ true  || true   // Returns true</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="less_than">15.2.30. Less Than <code>&lt;</code></h4>
+<h4 id="less_than">16.2.30. Less Than <code>&lt;</code></h4>
 <div class="paragraph">
 <p>Compares the <a href="#type_arithmetic">arithmetic type</a> operands, returning <code>true</code> if the left operand is less than the right and <code>false</code> otherwise.
 The operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
@@ -7529,7 +8195,7 @@ The operands may be of different types. No types conversions occur besides <code
 </div>
 </div>
 <div class="sect3">
-<h4 id="less_than_or_equal_to">15.2.31. Less Than or Equal To <code>&lt;=</code></h4>
+<h4 id="less_than_or_equal_to">16.2.31. Less Than or Equal To <code>&lt;=</code></h4>
 <div class="paragraph">
 <p>Compares the <a href="#type_arithmetic">arithmetic type</a> operands, returning <code>true</code> if the left operand is less than or equal to the right and <code>false</code> otherwise.
 The operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
@@ -7545,7 +8211,7 @@ The operands may be of different types. No types conversions occur besides <code
 </div>
 </div>
 <div class="sect3">
-<h4 id="greater_than">15.2.32. Greater Than <code>&gt;</code></h4>
+<h4 id="greater_than">16.2.32. Greater Than <code>&gt;</code></h4>
 <div class="paragraph">
 <p>Compares the <a href="#type_arithmetic">arithmetic type</a> operands, returning <code>true</code> if the left operand is greater than the right and <code>false</code> otherwise.
 The operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
@@ -7561,7 +8227,7 @@ The operands may be of different types. No types conversions occur besides <code
 </div>
 </div>
 <div class="sect3">
-<h4 id="greater_than_or_equal_to">15.2.33. Greater Than or Equal To <code>&gt;=</code></h4>
+<h4 id="greater_than_or_equal_to">16.2.33. Greater Than or Equal To <code>&gt;=</code></h4>
 <div class="paragraph">
 <p>Compares the <a href="#type_arithmetic">arithmetic type</a> operands, returning <code>true</code> if the left operand is greater than or equal to the right and <code>false</code> otherwise.
 The operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
@@ -7577,7 +8243,7 @@ The operands may be of different types. No types conversions occur besides <code
 </div>
 </div>
 <div class="sect3">
-<h4 id="equal_to">15.2.34. Equal To <code>==</code></h4>
+<h4 id="equal_to">16.2.34. Equal To <code>==</code></h4>
 <div class="paragraph">
 <p>Compares the <a href="#type_arithmetic">arithmetic type</a> operands, returning <code>true</code> if the left operand is equal to the right and <code>false</code> otherwise.
 The operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
@@ -7593,7 +8259,7 @@ The operands may be of different types. No types conversions occur besides <code
 </div>
 </div>
 <div class="sect3">
-<h4 id="not_equal_to">15.2.35. Not Equal To <code>!=</code></h4>
+<h4 id="not_equal_to">16.2.35. Not Equal To <code>!=</code></h4>
 <div class="paragraph">
 <p>Compares the <a href="#type_arithmetic">arithmetic type</a> operands, returning <code>true</code> if the left operand is equal to the right and <code>false</code> otherwise.
 The operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
@@ -7609,7 +8275,7 @@ The operands may be of different types. No types conversions occur besides <code
 </div>
 </div>
 <div class="sect3">
-<h4 id="assign">15.2.36. Assign <code>=</code></h4>
+<h4 id="assign">16.2.36. Assign <code>=</code></h4>
 <div class="paragraph">
 <p>Stores the right operand into the left and returns the new value of the left operand.
 The right operand must have the same type as the left operand, although <code>Int</code> and <code>Real</code> will convert.</p>
@@ -7626,9 +8292,9 @@ foo = 10 // 'foo' is now equal to 10</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="array_access">15.3. Array and pointer access</h3>
+<h3 id="array_access">16.3. Array and pointer access</h3>
 <div class="sect3">
-<h4 id="array_access_u">15.3.1. <code>[]</code> U-indexed access</h4>
+<h4 id="array_access_u">16.3.1. <code>[]</code> U-indexed access</h4>
 <div class="paragraph">
 <p>Accesses the element value at an offset of type U, with 0-based indexing.</p>
 </div>
@@ -7661,7 +8327,7 @@ x = @paa[10]      // Read a PAA element</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="array_access_uu">15.3.2. <code>{}</code> UU-indexed access</h4>
+<h4 id="array_access_uu">16.3.2. <code>{}</code> UU-indexed access</h4>
 <div class="paragraph">
 <p>Accesses the element value at an offset of type UU, with 0-based indexing.</p>
 </div>
@@ -7707,9 +8373,9 @@ x = @paa{1000}      // Read a PAA element</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_hardware_operators">15.4. Hardware operators</h3>
+<h3 id="_hardware_operators">16.4. Hardware operators</h3>
 <div class="sect3">
-<h4 id="hw_read">15.4.1. <code>{}()</code> Hardware read</h4>
+<h4 id="hw_read">16.4.1. <code>{}()</code> Hardware read</h4>
 <div class="paragraph">
 <p>Returns the value at a RAM address.</p>
 </div>
@@ -7750,7 +8416,7 @@ To correctly read a NESFab variable this way, a <a href="#kw_fence"><code>fence<
 </div>
 </div>
 <div class="sect3">
-<h4 id="hw_write">15.4.2. <code>{}()</code> Hardware write</h4>
+<h4 id="hw_write">16.4.2. <code>{}()</code> Hardware write</h4>
 <div class="paragraph">
 <p>Assigns a value at a hardware address.</p>
 </div>
@@ -7795,7 +8461,7 @@ To correctly write a NESFab variable this way, a <a href="#kw_fence"><code>fence
 </div>
 </div>
 <div class="sect2">
-<h3 id="fn_call">15.5. Function calls</h3>
+<h3 id="fn_call">16.5. Function calls</h3>
 <div class="paragraph">
 <p>Calls the named function
 It behaves similarly to function calls in other languages.</p>
@@ -7828,12 +8494,12 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sizeof">15.6. <code>sizeof</code></h3>
+<h3 id="sizeof">16.6. <code>sizeof</code></h3>
 <div class="paragraph">
 <p><code>sizeof</code> expressions return the size in bytes of something.</p>
 </div>
 <div class="sect3">
-<h4 id="sizeof_type">15.6.1. <code>sizeof</code> Type</h4>
+<h4 id="sizeof_type">16.6.1. <code>sizeof</code> Type</h4>
 <div class="paragraph">
 <p>Returns the size in bytes of values belonging to a type as a compile-time constant value of type <code>Int</code>.</p>
 </div>
@@ -7862,7 +8528,7 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sizeof_expr">15.6.2. <code>sizeof</code>(expression)</h4>
+<h4 id="sizeof_expr">16.6.2. <code>sizeof</code>(expression)</h4>
 <div class="paragraph">
 <p>Returns the size in bytes of an expression&#8217;s value as a compile-time constant value of type <code>Int</code>.</p>
 </div>
@@ -7892,12 +8558,12 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="len">15.7. <code>len</code></h3>
+<h3 id="len">16.7. <code>len</code></h3>
 <div class="paragraph">
 <p><code>len</code> expressions return the number of array elements.</p>
 </div>
 <div class="sect3">
-<h4 id="len_type">15.7.1. <code>len</code> Type</h4>
+<h4 id="len_type">16.7.1. <code>len</code> Type</h4>
 <div class="paragraph">
 <p>Returns the number of array elements of values belonging to a type as a compile-time constant value of type <code>Int</code>.</p>
 </div>
@@ -7926,7 +8592,7 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="len_expr">15.7.2. <code>len</code>(expression)</h4>
+<h4 id="len_expr">16.7.2. <code>len</code>(expression)</h4>
 <div class="paragraph">
 <p>Returns the number of array elements of an expression&#8217;s value as a compile-time constant value of type <code>Int</code>.</p>
 </div>
@@ -7955,7 +8621,7 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="abs_expr">15.7.3. <code>abs</code>(expression)</h4>
+<h4 id="abs_expr">16.7.3. <code>abs</code>(expression)</h4>
 <div class="paragraph">
 <p><code>abs</code> first converts the argument to a signed representation,
 then it returns the absolute value of it.
@@ -7987,7 +8653,7 @@ The return type is the argument type converted to unsigned.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="min_expr">15.7.4. <code>min</code>(expression)</h4>
+<h4 id="min_expr">16.7.4. <code>min</code>(expression)</h4>
 <div class="paragraph">
 <p>Returns the minimum value of multiple <a href="#type_quantity">quantity types</a>.
 The return type is equivalent to the argument types, which must be the the same,
@@ -8018,7 +8684,7 @@ although <code>Int</code> and <code>Real</code> will convert.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="max_expr">15.7.5. <code>max</code>(expression)</h4>
+<h4 id="max_expr">16.7.5. <code>max</code>(expression)</h4>
 <div class="paragraph">
 <p>Returns the maximum value of multiple <a href="#type_quantity">quantity types</a>.
 The return type is equivalent to the argument types, which must be the the same,
@@ -8050,7 +8716,7 @@ although <code>Int</code> and <code>Real</code> will convert.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="casts">15.8. Explicit Type Casts</h3>
+<h3 id="casts">16.8. Explicit Type Casts</h3>
 <div class="paragraph">
 <p>Type casts convert values into different types.</p>
 </div>
@@ -8085,7 +8751,7 @@ This means that casting <code>UUU</code> to <code>U</code> discards the two most
 For example, <code>S(-1)</code> will cast to <code>U(255)</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="_zero_initializations">15.8.1. Zero Initializations</h4>
+<h4 id="_zero_initializations">16.8.1. Zero Initializations</h4>
 <div class="paragraph">
 <p>A type cast with no arguments is called a zero initialization.
 The value, its struct members, and its array elements are initialized to zero.</p>
@@ -8100,7 +8766,7 @@ SomeStruct() // equivalent to SomeStruct(0, 0)</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_array_fills">15.8.2. Array Fills</h4>
+<h4 id="_array_fills">16.8.2. Array Fills</h4>
 <div class="paragraph">
 <p>Array fills are used to create arrays where every element holds identical values.
 They are specified as an array cast, where the cast&#8217;s singular argument can be converted to the element type.</p>
@@ -8120,10 +8786,10 @@ a definition like a function, or something else.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_literals">16. Literals</h2>
+<h2 id="_literals">17. Literals</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_boolean_literals">16.1. Boolean Literals</h3>
+<h3 id="_boolean_literals">17.1. Boolean Literals</h3>
 <div class="paragraph">
 <p>There are two boolean literals:</p>
 </div>
@@ -8142,7 +8808,7 @@ a definition like a function, or something else.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_numeric_literals">16.2. Numeric Literals</h3>
+<h3 id="_numeric_literals">17.2. Numeric Literals</h3>
 <div class="paragraph">
 <p>Numeric literals can be either decimal, hexadecimal, or or binary. Hexadecimal literals are prefixed with a <code>$</code> character, while binary with <code>%</code>:</p>
 </div>
@@ -8168,9 +8834,9 @@ $.89AB // Hexadecimal
 </div>
 </div>
 <div class="sect2">
-<h3 id="_string_and_character_literals">16.3. String and Character Literals</h3>
+<h3 id="_string_and_character_literals">17.3. String and Character Literals</h3>
 <div class="sect3">
-<h4 id="_syntax_and_semantics">16.3.1. Syntax and Semantics</h4>
+<h4 id="_syntax_and_semantics">17.3.1. Syntax and Semantics</h4>
 <div class="paragraph">
 <p>Basic syntax:</p>
 </div>
@@ -8206,7 +8872,7 @@ This means functions for compressed strings also work with uncompressed strings.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_escape_sequences">16.3.2. Escape Sequences</h4>
+<h4 id="_escape_sequences">17.3.2. Escape Sequences</h4>
 <div class="paragraph">
 <p>Escape sequences denote characters that are either impossible or unwiedly to write otherwise.
 Every escape sequence begins with backslash character <code>\</code>, followed by one or more characters.</p>
@@ -8339,12 +9005,12 @@ Likewise, to write a string containing line breaks, you must use escape sequence
 </div>
 </div>
 <div class="sect1">
-<h2 id="_types">17. Types</h2>
+<h2 id="_types">18. Types</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="type_scalar">17.1. Scalar Types</h3>
+<h3 id="type_scalar">18.1. Scalar Types</h3>
 <div class="sect3">
-<h4 id="type_integer">17.1.1. Integer Types</h4>
+<h4 id="type_integer">18.1.1. Integer Types</h4>
 <div class="paragraph">
 <p>Unsigned integer types are expressed using the character <code>U</code>, while signed integer types use <code>S</code>.
 The values of signed integers are expressed in <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two&#8217;s complement</a> form.</p>
@@ -8400,7 +9066,7 @@ The values of signed integers are expressed in <a href="https://en.wikipedia.org
 </table>
 </div>
 <div class="sect3">
-<h4 id="_unit_fractional_types">17.1.2. Unit-Fractional Types</h4>
+<h4 id="_unit_fractional_types">18.1.2. Unit-Fractional Types</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -8434,7 +9100,7 @@ The values of signed integers are expressed in <a href="https://en.wikipedia.org
 </table>
 </div>
 <div class="sect3">
-<h4 id="type_fixed">17.1.3. Fixed-point Types</h4>
+<h4 id="type_fixed">18.1.3. Fixed-point Types</h4>
 <div class="paragraph">
 <p>An integer type and a unit-fractional type can be combined to form a fixed-point type, merging the ranges of both.
 The syntax is the integer type, followed by the unit-fractional type, without no other characters in-between.</p>
@@ -8475,7 +9141,7 @@ The syntax is the integer type, followed by the unit-fractional type, without no
 </table>
 </div>
 <div class="sect3">
-<h4 id="_numeric_constant_types">17.1.4. Numeric Constant Types</h4>
+<h4 id="_numeric_constant_types">18.1.4. Numeric Constant Types</h4>
 <div class="paragraph">
 <p><code>Int</code> and <code>Real</code> are used for compile-time constants.</p>
 </div>
@@ -8548,7 +9214,7 @@ ct Real GOLDEN_RATIO= 1.61803398875</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="type_bool">17.1.5. Bool</h4>
+<h4 id="type_bool">18.1.5. Bool</h4>
 <div class="paragraph">
 <p>The type <code>Bool</code> is short for "boolean", and represents the values <code>true</code> and <code>false</code>.</p>
 </div>
@@ -8593,7 +9259,7 @@ fn example()
 </div>
 </div>
 <div class="sect3">
-<h4 id="_void">17.1.6. Void</h4>
+<h4 id="_void">18.1.6. Void</h4>
 <div class="paragraph">
 <p>The type <code>Void</code> represents no value.
 Its purpose is to represent the return type of functions that return no value.</p>
@@ -8626,19 +9292,19 @@ as leaving the return type off of a function implies <code>Void</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="type_arithmetic">17.2. Arithmetic Types</h3>
+<h3 id="type_arithmetic">18.2. Arithmetic Types</h3>
 <div class="paragraph">
 <p>Arithmetic types are defined as all <a href="#type_integer">integer types</a>, <a href="#type_fixed">fixed-point types</a>, and <a href="#type_bool"><code>Bool</code></a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="type_quantity">17.3. Quantity Types</h3>
+<h3 id="type_quantity">18.3. Quantity Types</h3>
 <div class="paragraph">
 <p>Quantity types are types which can represent quantities.
 They are defined as all <a href="#type_integer">integer types</a>, <a href="#type_fixed">fixed-point types</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="type_ptr">17.3.1. Pointer Types</h4>
+<h4 id="type_ptr">18.3.1. Pointer Types</h4>
 <div class="paragraph">
 <p><a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)">Pointer</a> types represent addresses.
 Unlike pointers in other languages, pointers in NESFab can only point to <a href="#type_paa">pointer-addressible arrays</a>.</p>
@@ -8666,25 +9332,37 @@ Unlike pointers in other languages, pointers in NESFab can only point to <a href
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CC</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[$0000, $FFFF]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Constant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ROM</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>CCC</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[$00:$0000, $FF:$FFFF]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Constant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ROM</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>MM</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[$0000, $FFFF]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Mutable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAM</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>MMM</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[$00:$0000, $FF:$FFFF]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Mutable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[$0000, $FFFF]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAM or ROM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PPP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[$00:$0000, $FF:$FFFF]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAM or ROM</p></td>
 </tr>
 </tbody>
 </table>
@@ -8721,7 +9399,7 @@ For example, to create a pointer that can reference values belonging to the grou
 </div>
 </div>
 <div class="sect3">
-<h4 id="type_address">17.3.2. Address Types</h4>
+<h4 id="type_address">18.3.2. Address Types</h4>
 <div class="paragraph">
 <p>The address type <code>AA</code> is used for 16-bit hardware addresses,
 and has the same representation as <a href="#type_ptr">pointers</a>, ignoring <a href="#groups">groups</a>.
@@ -8759,14 +9437,14 @@ This type is used for inline assembly and hardware expressions.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_arrays">17.4. Arrays</h3>
+<h3 id="_arrays">18.4. Arrays</h3>
 <div class="paragraph">
 <p>NESFab has two kinds of <a href="https://en.wikipedia.org/wiki/Array_(data_structure)">array</a> types with different restrictions for each.
 The first has value semantics and behaves like arrays do in other languages, but cannot be referenced by pointers.
 The second can, but it very limited otherwise and can only represent elements of type U.</p>
 </div>
 <div class="sect3">
-<h4 id="type_tea">17.4.1. Typed Element Arrays (TEAs)</h4>
+<h4 id="type_tea">18.4.1. Typed Element Arrays (TEAs)</h4>
 <div class="paragraph">
 <p>A TEA is an array of a specified type, of any size between 1 and 65536. Two TEA variables are shown below.</p>
 </div>
@@ -8860,7 +9538,7 @@ One such pattern it recognizes is:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="type_paa">17.4.2. Pointer-Addressable Arrays (PAAs)</h4>
+<h4 id="type_paa">18.4.2. Pointer-Addressable Arrays (PAAs)</h4>
 <div class="paragraph">
 <p>PAAs only support a single element type: <code>U</code>, and can only be defined at global scope.
 Like TEAs, they can be any size from 1 to 65536.</p>
@@ -8906,7 +9584,7 @@ fn example()
 </div>
 </div>
 <div class="sect2">
-<h3 id="type_struct">17.5. Structures</h3>
+<h3 id="type_struct">18.5. Structures</h3>
 <div class="paragraph">
 <p>Structures (or "structs") are <a href="https://en.wikipedia.org/wiki/Record_(computer_science)">record types</a>,
 which allows one to aggregate multiple types into a single one.</p>
@@ -8920,7 +9598,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-06-12 21:17:44 -0500
+Last updated 2023-06-27 13:14:05 -0500
 </div>
 </div>
 </body>
