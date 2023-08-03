@@ -73,6 +73,7 @@
         </p>
 
         <pre><code>mapper = NROM
+nesfab-dir = ./
 output = maze.nes
 input = lib/nes.fab
 input = maze.fab</code></pre>
@@ -80,9 +81,10 @@ input = maze.fab</code></pre>
         <ul>
             <li>The "mapper" line should be obvious: it's telling the compiler to use the NROM mapper. 
                 Note that this line is optional, as NROM is NESFab's default mapper.</li>
+            <li>The "nesfab-dir" line specifies the directory of the NESFab installation. This allows the compiler to find the library files located there.</li>
             <li>The "output" line specifies the .nes file we'll be creating.</li>
             <li>The "input" lines specify the source code. 
-                The first line is a file from NESFab's standard library, and you should adjust the path to point to the correct place.
+                The first line is a file from NESFab's standard library.
                 If you don't have this file, download it from the <a href="https://github.com/pubby/nesfab/blob/master/lib/nes.fab">Github</a>.
                 The second line is for the source code you'll soon be creating.
             </li>
@@ -754,7 +756,7 @@ chrrom
     y &gt;&gt;= 3
 
     // Return the tile:
-    return (level_ptr + UU(y * 32))[x]</code></pre>
+    return (level_ptr + UU(y * 32))[x]</code></pre q>
 
     <p>The coordinates "x" and "y" are first divided by 8, transforming them from pixel units to tile units.
     Next, the level_ptr will be dereferenced, using these two coordinates as offsets. 
