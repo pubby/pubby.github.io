@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <link rel="stylesheet" href="../style.css">
+        <h1>NESFab Tutorial: Objects</h1>
+    </head>
+    <body>
+        <p>
+        A common question for <a href="../nesfab.html">NESFab</a> beginners is how to code game objects like the player, 
+        the enemies, and the projectiles.
+        In this tutorial, I'll explain how.
+        </p>
+
+        <h2>Structure Types</h2>
+
+        <p>When implementing a single-instance object like the player, you could define the variables directly:</p>
+
+<pre><code>vars
+    U player_x
+    U player_y
+    // ... and so on </code></pre>
+
+    <p>However, this technique becomes awkward when dealing with multiple objects, such as having several enemies or projectiles on the screen at once.
+    Worse, this style of code does not scale if you want your game to have two players.</p>
+
+    <p>A better approach is to organize your objects using structure types:</p>
+
+<pre><code>struct Player
+    U x
+    U y
+
+struct Enemy
+    U x
+    U y
+    U hitpoints
+
+struct Projectile
+    U x
+    U y
+    UF x_speed
+    UF y_speed</code></pre>
+
+<p>The code above defines three structure types: "<code>Player</code>", "<code>Enemy</code>" and "<code>Projectile</code>", each with their own data members. You can think of these types as being a framework for creating variables,
+and they can be used like other types in NESFab, such as <code>U</code> or <code>SS</code>:
+    </p>
+
+<pre><code>vars
+    Player player1    // Define a variable with type "Player"
+    Player player2    // Define another variable with type "Player"
+    U num_players     // We'll use this to track how many are playing
+</code></pre>
+
+<h2>Arrays</h2>
+    <p>The code above works, but it will be awkward to use. For every piece of code you write for <code>player1</code>, you will also have to write it for <code>player2</code>, which results in lots of duplication:</p>
+
+<pre><code>fn move_players()
+    // First handle player1:
+    if num_players &gt;= 1
+        if pads[0].helds &amp; BUTTON_RIGHT
+            player1.x += 1
+
+    // Then handle player2 in the same manner:
+    if num_players &gt;= 2
+        if pads[1].helds &amp; BUTTON_RIGHT
+            player2.x += 1
+</code></pre>
+
+    <p>The fix for this is to use arrays:</p>
+
+<pre><code>vars
+    Player[2] players // This array includes two players.
+    U num_players     // We'll use this to track how many are playing
+</code></pre>
+
+    <p>Then, if you want to apply a piece of code to both players, you can use a loop:</p>
+
+<pre><code>fn move_players()
+    for U i = 0; i < num_players; i += 1
+        if pads[i].helds &amp; BUTTON_RIGHT
+            players[i].x += 1
+</code></pre>
+
+<h2>Object Pools</h2>
+
+<p>Arrays can also be used to store objects that are created and destroyed during the game, such as enemies and projectiles.
+We'll call this technique an "object pool", and it looks very familiar:</p>
+
+<pre><code>vars
+    Enemy[8]
+    U num_enemies = 0
+</code></pre>
+
+    <p>This array has 8 elements, meaning we can have up to 8 enemies at once.
+    These 8 elements will always exist in memory, but we can always ignore some,
+    and use "<code>num_enemies</code>" to track how many there are.</p>
+
+    <p>For example, if "<code>num_enemies</code>" is 0, we'd ignore all 8 values.</p>
+
+    <img src="objects2.png">
+
+    <p>If "<code>num_enemies</code>" is 3, we'd care about the first 3 values, and ignore the last 5:</p>
+
+    <img src="objects1.png">
+
+    <p>In the images above, the red "V" caret shows the current value of "<code>num_enemies</code>".
+    Coincidentally, this position shows us how we can create new enemies.</p>
+
+    <h3>Creating Enemies</h3>
+
+    <p>To create a new enemy, we modify the element at index "<code>num_enemies</code>", the increment "<code>num_enemies</code>" by one:</p>
+
+<pre><code>fn create_enemy(Enemy new_enemy)
+    // Create a new enemy with a value equal to "new_enemy":
+    enemies[num_enemies] = new_enemy
+    num_enemies += 1
+</code></pre>
+
+    <p>Or in other words, we draw a smiley face under the red "V" caret:</p>
+
+    <img src="objects7.png">
+
+    <p>Then move the red caret to the right one spot:</p>
+
+    <img src="objects3.png">
+
+    <h3>Deleting Enemies</h3>
+
+    <p>When an enemy dies, we obviously want to stop tracking it.</p>
+
+    <p>First, the variables belonging to that enemy can be considered trash. 
+    Below, I've erased the smiley for the second object, as that's the one we'll be deleting.</p>
+
+    <img src="objects4.png">
+
+    <p>Next, we'll want to decrement "<code>num_enemies</code>", as we have one less object after deletion.</p>
+
+    <img src="objects5.png">
+
+    <p>The last step is to remove the gap. We can do this by moving the enemy at the end (which is always under the red caret) to fill in the hole.</p>
+
+    <img src="objects6.png">
+
+    <p>Translating this to code is simple enough. It's just a decrement, followed by an assignment:</p>
+
+<pre><code>fn delete_enemy(U i)
+    // Delete the enemy at index 'i':
+    num_enemies -= 1
+    enemies[i] = enemies[num_enemies]
+</code></pre>
+
+    <h3>Iterating Enemies</h3>
+
+    <p>Just like we did for players, we can write code that handles every living enemy using a loop.
+    For example, the code below prepares a sprite for each enemy.</p>
+
+<pre><code>fn update_enemy_sprites()
+    // Our stack index into OAM:
+    U o = 0
+
+    // Iterate over each living enemy:
+    for U i = 0; i < num_enemies; i += 1
+        set_oam(o, enemies[i].x, enemies[i].y - 1, $00, 0)
+        o += 4
+
+    // Clear the remainder of OAM
+    hide_oam(o)
+</code></pre>
+
+    <h2>Macros</h2>
+
+    <p>Instead of writing all of this object management code by hand, macros can be used to automate it.
+    In NESFab, macros are a way of generating code by replacing strings in a file template (the macro), with other strings (the macro arguments).</p>
+
+    <p>The NESFab standard library includes a few files for this: 
+    <code>"lib/object/object.fab"</code> and <code>"lib/object/pool_contiguous.fab"</code>, among others.
+    To get started, simply add these files to your .cfg file:</p>
+
+<pre><code>input = lib/object/object.fab
+input = lib/object/pool_contiguous.macrofab
+</code></pre>
+
+
+    <p>To use these macros, the "<code>macro</code>" keyword is used.
+    For example, we can generate an object pool for our enemies by writing the following line:</p>
+
+<pre><code>macro("pool_contiguous", "Enemy", "8", "enemies")</code></pre>
+
+    <p>To understand what this line is doing, it's instructive to open the <code>"lib/object/pool_contiguous.fab"</code> file and take a look.
+    You'll see something resembling ordinary NESFab code, but with # symbols mixed in.
+    These # symbols are placed around macro arguments, meaning they're the bits and pieces that will be replaced by macro arguments.</p>
+
+    <p>At the top of the macrofab file, you'll find the argument parameters, defined in order:</p>
+
+<pre><code>// Macro parameters:
+#:type:#        // The type of each object (probably a struct type).
+#:max_objects:# // The maximum number of objects that can exist at once
+#:name:#        // The name of the objects (e.g. "enemies")
+#:group:#       // The optional vars group to insert variables in.
+</code></pre>
+
+    <p>Beneath that, you'll see bits of code using those. For example:</p>
+
+<pre><code>vars #group#
+    U #name#_num = 0
+    #type#[#max_objects#] #name#
+</code></pre>
+
+<p>Going back to our use of the <code>macro</code> keyword, if we substitute in our arguments ("Enemy", "8", "enemies"), we'd generate this code:</p>
+
+<pre><code>vars
+    U enemies_num = 0
+    Enemy[8] enemies
+</code></pre>
+
+<p>We'd also generate a bunch of creation and deletion functions. Cool, huh?</p>
+
+<p><b>Note: For an example of using macros to generate object pools, check out "examples/objects" in the examples folder!</b></p>
+
+    <h2>Extra: Other Methods of Object Pools</h2>
+
+    <p>The object pools described in this tutorial can be called "contiguous", as they keep all the living objects at the start of the array, and all the ignored (dead) objects at the end, but that's not the only way to do an object pool!</p>
+
+    <p>An alternative approach is to allocate objects anywhere in the array, and use a flag to track if each element is living or dead.</p>
+
+    <img src="objects8.png">
+
+    <p>The cool thing about this approach is that an object's position in the array remains stable. 
+    If an object is at index 5, it will <i>always</i> be at position 5, until it dies.
+    This property is handy if you want to have objects that reference other objects.</p>
+
+    <p>The downside of this approach is that it's a more complicated, slower to iterate, and uses a little more RAM.
+    But still, it's good to know about for times when it's needed.</p>
+
+    <p>If you're interested in these types of pools, check out the standard macros 
+    <code>"lib/object/pool_stable.fab"</code> and <code>"lib/object/pool_stable.fab"</code>.</p>
+
+<h2>Extra: How many Structs/Pools to Use?</h2>
+
+    <p>Something beginners struggle with is knowing how many structure types to use.</p>
+
+    <p>For example, some beginners want to use a single structure type for each unique object:</p>
+
+<pre><code>struct Goomba
+    // ...
+
+struct Koopa
+    // ...
+
+struct HammerBro
+    // ...
+</pre></code>
+    <p>But this is a headache as you'll have a ton of pools to manage.</p>
+
+    <p>Other beginners try to use as few structure types as possible, even combining properties with the player:</p>
+<pre><code>struct GenericObject
+    // ...
+</pre></code>
+
+    <p>But this is also a headache as enemies are totally different from players which are totally different from projectiles.</p>
+
+    <p>My advice is to combine similar objects when convenient, and use a field to distinguish their behavior.
+    For example, you could define the enemies above like this:</p>
+
+<pre><code>ct U ENEMY_GOOMBA     = 0
+ct U ENEMY_KOOPA      = 1
+ct U ENEMY_HAMMER_BRO = 2
+
+struct Enemy
+    U class
+    U x
+    U y
+    // ...
+</pre></code>
+
+<p>The "<code>class</code>" field can be set to "<code>ENEMY_GOOMBA</code>" for goombas, or "<code>ENEMY_KOOPA</code>" for koopas, and so on.</p>
+
+<p>If you then add an unusual enemy that relies on totally different variables, you can always add a new struct and pool for it:</p>
+
+<pre><code>struct Bowser
+    // ...
+</pre></code>
+
+<p>Of course, you'd do the same sort of thing for projectiles, the player, and other objects you want.</p>
+
+
+    <p><a href="../index.html">[Back to my homepage]</a> | <a href="../nesfab.html">[Back to NESFab]</a></p>
+    </body>
+</html>
