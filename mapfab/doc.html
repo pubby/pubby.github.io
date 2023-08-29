@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>MapFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 0.1</span>
+<span id="revdate">Version 0.2</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -463,7 +463,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#object_class">4.7. Object Classes Tab</a></li>
 </ul>
 </li>
-<li><a href="#_mapfab_file_format">5. <code>.mapfab</code> File Format</a></li>
+<li><a href="#_file_formats">5. File Formats</a>
+<ul class="sectlevel2">
+<li><a href="#_mapfab_file_format">5.1. <code>.mapfab</code> File Format</a></li>
+<li><a href="#_json_file_format">5.2. <code>.json</code> File Format</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -832,10 +837,16 @@ When using NESFab, it&#8217;s recommended to name fields using <code>snake_case<
 </div>
 </div>
 <div class="sect1">
-<h2 id="_mapfab_file_format">5. <code>.mapfab</code> File Format</h2>
+<h2 id="_file_formats">5. File Formats</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>MapFab projects are saved as <code>.mapfab</code> files, which is a binary format.
+<p>MapFab can save projects in either a binary <code>.mapfab</code> format, or a text-based <code>.json</code> format.
+It is recommended to use a single format per project, instead of mixing both.</p>
+</div>
+<div class="sect2">
+<h3 id="_mapfab_file_format">5.1. <code>.mapfab</code> File Format</h3>
+<div class="paragraph">
+<p><code>.mapfab</code> files are a binary format.
 Data is packed into the file using one of three types:</p>
 </div>
 <div class="ulist">
@@ -889,14 +900,7 @@ Data is packed into the file using one of three types:</p>
 <p><strong><code>byte</code> Palette Count</strong> - The number of palettes. A value of 0 should be treated as 256.</p>
 </li>
 <li>
-<p><strong>For each Palette Count:</strong></p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p><strong><code>byte[25]</code> Palette</strong> - The palette&#8217;s colors from left to right.</p>
-</li>
-</ol>
-</div>
+<p><strong><code>byte[6400]</code> Palette</strong> - Palette colors from left-to-right, top-to-bottom.</p>
 </li>
 <li>
 <p><strong><code>byte</code> Metatile Set Count</strong> - The number of metatile sets. A value of 0 should be treated as 256.</p>
@@ -1023,11 +1027,161 @@ Data is packed into the file using one of three types:</p>
 </ol>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_json_file_format">5.2. <code>.json</code> File Format</h3>
+<div class="paragraph">
+<p>When saving as <a href="https://en.wikipedia.org/wiki/JSON">JSON</a>, the following schema is used:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>version</strong> - The current <code>.json</code> format version (currently 1).</p>
+</li>
+<li>
+<p><strong>collision_path</strong> - The path of the collision tileset, relative to the <code>.json</code> file.</p>
+</li>
+<li>
+<p><strong>chr</strong> - An array of JSON objects defining the CHR:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>name</strong> - The name of the CHR file.</p>
+</li>
+<li>
+<p><strong>path</strong> - The path of the CHR tileset, relative to the <code>.json</code> file.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>palettes</strong> - An object:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>num</strong> - The number of palettes.</p>
+</li>
+<li>
+<p><strong>data</strong> - An array of size 6400 defining the palette colors from left-to-right, top-to-bottom.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>metatile_sets</strong> - An array of JSON objects defining the metatile sets:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>name</strong> - The name of the metatile set.</p>
+</li>
+<li>
+<p><strong>chr</strong> - The name of the metatile set&#8217;s display CHR.</p>
+</li>
+<li>
+<p><strong>palette</strong> - The index of the metatile set&#8217;s display palette.</p>
+</li>
+<li>
+<p><strong>num</strong> - The number of metatiles in this set.</p>
+</li>
+<li>
+<p><strong>tiles</strong> - An array of size 1024, defining the tiles of the metatile set, left-to-right, to-to-bottom.</p>
+</li>
+<li>
+<p><strong>attributes</strong> - An array of size 256, definining the attributes of the metatile set, left-to-right, top-to-bottom.</p>
+</li>
+<li>
+<p><strong>collisions</strong> - An array of size 256, definining the collisions of the metatile set, left-to-right, top-to-bottom.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>object_classes</strong> - An array of JSON objects defining the object classes:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>name</strong> - The name of the object class.</p>
+</li>
+<li>
+<p><strong>color</strong> - An array of size 3, defining the the RGB components of the object class&#8217;s color.</p>
+</li>
+<li>
+<p><strong>fields</strong> - An array of JSON objects defining the object class&#8217;s fields:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p><strong>name</strong> - The name of the field.</p>
+</li>
+<li>
+<p><strong>type</strong> - The type of the field.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>levels</strong> - An array of JSON objects defining the levels:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>name</strong> - The name of the level.</p>
+</li>
+<li>
+<p><strong>macro</strong> - The level&#8217;s macro string.</p>
+</li>
+<li>
+<p><strong>chr</strong> - The name of the level&#8217;s CHR data.</p>
+</li>
+<li>
+<p><strong>palette</strong> - The index of the level&#8217;s palette.</p>
+</li>
+<li>
+<p><strong>metatile_set</strong> - The name of the level&#8217;s metatile set data.</p>
+</li>
+<li>
+<p><strong>width</strong> - The width of the level, in metatiles.</p>
+</li>
+<li>
+<p><strong>height</strong> - The height of the level, in metatiles.</p>
+</li>
+<li>
+<p><strong>tiles</strong> - An array of size width*height, defining the metatiles of the level, left-to-right, top-to-bottom.</p>
+</li>
+<li>
+<p><strong>objects</strong> - An array of JSON objects, defining the level&#8217;s objects:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p><strong>name</strong> - The name of the object.</p>
+</li>
+<li>
+<p><strong>object_class</strong> - The name of the object&#8217;s object class.</p>
+</li>
+<li>
+<p><strong>x</strong> - The X-position of the object.</p>
+</li>
+<li>
+<p><strong>y</strong> - The Y-position of the object.</p>
+</li>
+<li>
+<p><strong>fields</strong> - A JSON object, defining the object&#8217;s fields. Each member of the JSON object corresponds to a field in the object&#8217;s class.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-07-19 09:01:02 -0500
+Last updated 2023-08-20 08:32:12 -0500
 </div>
 </div>
 </body>
