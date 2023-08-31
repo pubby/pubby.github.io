@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-us">
+    <head>
+        <link rel="stylesheet" href="../style.css">
+        <h1>Tools and Resources for NESFab</h1>
+    </head>
+    <body>
+        <p>
+        This page contains a list of links for learning <a href="../nesfab.html">NESFab</a> and NES programming. 
+        </p>
+
+        <h2>Resources</h2>
+
+        <ul>
+            <li><a href="https://www.nesdev.org/wiki/Nesdev_Wiki">The NESDEV wiki</a>
+            provides documentation on the entire system.
+            In particular, the <a href="https://www.nesdev.org/wiki/PPU_registers">PPU registers</a> page is a must-read.
+            </li>
+            <li><a href="https://pubby.games/nesfab.html#tutorials">The NESFab homepage</a>
+            provides an ever-growing list of tutorials.
+            </li>
+            <li><a href="https://www.dustmop.io/blog/2015/04/28/nes-graphics-part-1/">Dustmop has written a series on NES graphics</a>,
+            which enlightens how 8-bit visuals work.
+            </li>
+            
+        </ul>
+
+        <h2>Tools</h2>
+
+        <h3>Text Editors</h3>
+
+        <p>You can use any text editor with NESFab, but 
+        <a href="https://github.com/pubby/nesfab/tree/master/syntax_highlighting">only a few have syntax highlighting</a>.
+        The following are guaranteed to work:
+        </p>
+        
+        <ul>
+            <li><a href="https://code.visualstudio.com/">Visual Studio Code</a>
+            is a modern text editor designed for developers.
+            </li>
+            <li><a href="https://www.vim.org/">Vim</a>
+            is an old, opinionated editor with many fans.
+            It has a steep learning curve, but is very rewarding to learn.
+            </li>
+        </ul>
+
+        <p>If you don't care about syntax highlighting, <a href="https://notepad-plus-plus.org/">Notepad++</a> is a great text editor for beginners.</p>
+
+        <h3>Graphics - Tilesets</h3>
+
+        <p>The NES is a tile-based system, and uses tilesets called <a href="https://www.nesdev.org/wiki/PPU_pattern_tables">CHR</a>. 
+        These tilesets are 2-bits-per-pixel, and are comprised of 8x8 pixel tiles.
+        The following programs can be used to create and edit these tilesets:</p>
+
+        <ul>
+            <li><a href="https://www.romhacking.net/utilities/119/">YY-CHR</a>
+            is a simple tool for editing CHR files. 
+            The nice thing about it is that it's designed around NES limitations, and works with .CHR files directly.
+            </li>
+            <li><a href="https://www.gimp.org/">GIMP</a>
+            is a powerful image editor, similar to Photoshop. 
+            Although it's not designed for pixel art, it suffices, especially when you enable indexed color mode.
+            </li>
+            <li><a href="https://mtpaint.sourceforge.net/">mtPaint</a>
+            is a simple image editor that's good at pixel art. It supports indexed colors, which is handy for designing CHR.
+            </li>
+        </ul>
+
+        <p>NESFab can input either .CHR files, or .PNG files, so feel free to use whatever you like.</p>
+
+        <h3>Graphics - Backgrounds and More</h3>
+
+        <p>To produce graphics, tiles are arranged to encompass a background, 
+        comprised of 256x240 pixel regions known as <a href="https://www.nesdev.org/wiki/PPU_nametables">nametables</a>.
+        Typically, these nametables are produced on-the-fly during gameplay, but in situations like title screens, it's handy to edit them by hand.
+        The following programs can be used:
+        </p>
+
+        <ul>
+            <li><a href="https://www.romhacking.net/utilities/802/">NES Screen Tool</a>
+            is a very simple tool for editing nametables. 
+            </li>
+            <li><a href="https://frankengraphics.itch.io/nexxt">NEXXT</a>
+            is an extension of NES Screen Tool, adding a myriad of features.
+            It also supports editing sprites and CHR.
+            </li>
+            <li><a href="https://nesrocks.itch.io/naw">NES Assets Workshop</a>
+            is a powerful editor designed around NES limitations.
+            It also supports editing sprites and CHR.
+            </li>
+        </ul>
+        
+        <p>Depending on your game, you may rely heavily on these, or you may not.</p>
+
+        <h3>Level Editors</h3>
+
+        <ul>
+            <li><a href="https://pubby.games/mapfab.html">MapFab</a>
+            is NESFab's official level editor.
+            It is flexible enough for most games, while being simple to use. 
+            NESFab can import its files directly.
+            </li>
+            <li><a href="https://www.mapeditor.org/">Tiled</a>
+            is a powerful, general-purpose level editor.
+            To use this, you'll have to write your own conversion scripts and work around its limitations.
+            </li>
+        </ul>
+
+        <h3>Audio</h3>
+
+        <p>NESFab includes its own audio driver called PUF, which has support for importing audio from the following programs:</p>
+
+        <ul>
+            <li><a href="https://github.com/Dn-Programming-Core-Management/Dn-FamiTracker">FamiTracker</a>
+            is a tracker-based music editor designed around NES limits.</li>
+            <li><a href="https://famistudio.org/">FamiStudio</a> is a piano-roll based music editor. When using it with NESFab, be sure to enable FamiTracker mode.</li>
+        </ul>
+
+        <p>Note that the PUF driver cannot handle every sound produced by these programs. 
+        Before composing music, it's a good idea to read the documentation in the driver source code.</p>
+
+        <h3>Emulators</h3>
+
+        <p>You'll want an emulator to test your game. The following are recommended:</p>
+
+        <ul>
+            <li><a href="https://www.mesen.ca/">Mesen2</a>
+            is an emulator with a crazy amount of features and excellent debugging support.
+            Every NES developer should have Mesen installed.</li>
+            <li><a href="https://fceux.com/web/home.html">FCEUX</a>
+            is a decent emulator with OK debugging support.</li>
+            <li><a href="https://www.qmtpro.com/~nes/nintendulator/">Nintendulator</a>
+            is a very accurate emulator with OK debugging support. In particular, it's good for PPU debugging..</li>
+        </ul>
+
+    <p><a href="../index.html">[Back to my homepage]</a> | <a href="../nesfab.html">[Back to NESFab]</a></p>
+    </body>
+</html>
