@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>NESFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 1.0</span>
+<span id="revdate">Version 1.1</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -486,10 +486,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#opt_unsafe_bank_switch">5.16. <code>unsafe-bank-switch</code></a></li>
 <li><a href="#opt_multicart">5.17. <code>multicart</code></a></li>
 <li><a href="#opt_mlb">5.18. <code>mlb</code></a></li>
-<li><a href="#_threads_j">5.19. <code>threads</code> (<code>-j</code>)</a></li>
-<li><a href="#_error_on_warning_w">5.20. <code>error-on-warning</code> (<code>-W</code>)</a></li>
-<li><a href="#_pause">5.21. <code>pause</code></a></li>
-<li><a href="#_sloppy">5.22. <code>sloppy</code></a></li>
+<li><a href="#opt_ctags">5.19. <code>ctags</code></a></li>
+<li><a href="#_threads_j">5.20. <code>threads</code> (<code>-j</code>)</a></li>
+<li><a href="#_error_on_warning_w">5.21. <code>error-on-warning</code> (<code>-W</code>)</a></li>
+<li><a href="#_pause">5.22. <code>pause</code></a></li>
+<li><a href="#_sloppy">5.23. <code>sloppy</code></a></li>
+<li><a href="#_ram_init">5.24. <code>--*ram-init</code></a></li>
 </ul>
 </li>
 <li><a href="#mappers">6. Supported Mappers</a>
@@ -740,7 +742,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_hardware_operators">17.4. Hardware operators</a>
 <ul class="sectlevel3">
 <li><a href="#hw_read">17.4.1. <code>{}()</code> Hardware read</a></li>
-<li><a href="#hw_write">17.4.2. <code>{}()</code> Hardware write</a></li>
+<li><a href="#hw_read_pair">17.4.2. <code>{,}()</code> Hardware read (pair)</a></li>
+<li><a href="#hw_write">17.4.3. <code>{}()</code> Hardware write</a></li>
+<li><a href="#hw_write_pair">17.4.4. <code>{,}(,)</code> Hardware write (pair)</a></li>
 </ul>
 </li>
 <li><a href="#fn_call">17.5. Function calls</a></li>
@@ -1747,7 +1751,43 @@ This file will contain addresses used by the program, for the purpose of debuggi
 </div>
 </div>
 <div class="sect2">
-<h3 id="_threads_j">5.19. <code>threads</code> (<code>-j</code>)</h3>
+<h3 id="opt_ctags">5.19. <code>ctags</code></h3>
+<div class="paragraph">
+<p><code>ctags</code> specifies a <a href="https://en.wikipedia.org/wiki/Ctags">Ctags</a> file to output.
+This file will contain source locations of global definitions, allowing text editors to better navigate.</p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --ctags ".tags"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ctags = ".tags"</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+To use CTags in VSCode, use the
+<a href="https://marketplace.visualstudio.com/items?itemName=jtanx.ctagsx">ctagsx</a> extension.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_threads_j">5.20. <code>threads</code> (<code>-j</code>)</h3>
 <div class="paragraph">
 <p>Specifies how many threads the compiler can use, enabling parallel compilation.
 This option expects an integer argument, and can only be specified once.</p>
@@ -1790,7 +1830,7 @@ due to that platform having a buggy implementation of threads.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_error_on_warning_w">5.20. <code>error-on-warning</code> (<code>-W</code>)</h3>
+<h3 id="_error_on_warning_w">5.21. <code>error-on-warning</code> (<code>-W</code>)</h3>
 <div class="paragraph">
 <p>This option turns warnings into errors and halts compilation whenever a warning occurs.
 This option expects no arguments and can only be specified once.</p>
@@ -1813,7 +1853,7 @@ This option expects no arguments and can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_pause">5.21. <code>pause</code></h3>
+<h3 id="_pause">5.22. <code>pause</code></h3>
 <div class="paragraph">
 <p>This option pauses the compiler before exiting until input is received on stdin.
 It is intended to be used on Microsoft Windows to keep the Command Prompt window open until you&#8217;re ready to close it.
@@ -1841,7 +1881,7 @@ Then, in the shortcut&#8217;s properties, put <code>--pause</code> after the tar
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sloppy">5.22. <code>sloppy</code></h3>
+<h3 id="_sloppy">5.23. <code>sloppy</code></h3>
 <div class="paragraph">
 <p>This option improves compilation speed at the cost of program optimization.
 It can be disabled on a per-function basis with the modifier <a href="#mod_flags"><code>-sloppy</code></a>.</p>
@@ -1860,6 +1900,44 @@ It can be disabled on a per-function basis with the modifier <a href="#mod_flags
 <div class="listingblock">
 <div class="content">
 <pre>sloppy = 1</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ram_init">5.24. <code>--*ram-init</code></h3>
+<div class="paragraph">
+<p><code>--ram-init</code>, <code>--sram-init</code>, and <code>--vram-init</code> cause their respective memory regions to be initialized to zero on reset.
+This initialization happens by writing a <code>0</code> byte to each address, ignoring any banking behavior the mapper may have.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It&#8217;s not recommended to use these compiler options, and it may result in brittle code.
+Instead, initialize variables and VRAM using code.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --ram-init --sram-init --vram-init</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>--ram-init = 1
+--sram-init = 1
+--vram-init = 1</pre>
 </div>
 </div>
 </div>
@@ -5731,7 +5809,22 @@ or <a href="https://www.nesdev.org/wiki/MMC3">MMC3</a> scanline counter.</p>
 <li>
 <p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
 </li>
+<li>
+<p><a href="#mod_flags"><code>+solo_interrupt</code></a></p>
+</li>
 </ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>asm</code> can be applied to <code>irq</code>, so long as <a href="#mod_flags"><code>+solo_interrupt</a> and `+static</code> are used.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -5829,6 +5922,19 @@ Although the address cannot be taken of these labels, it is possible to call the
 <div class="content">
 <pre>waste_time.loop()</pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>asm</code> can be applied to <code>irq</code>, so long as <a href="#mod_flags"><code>+solo_interrupt</a> and `+static</code> are used.
+<code>asm</code> is not currently supported with <code>nmi</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -6789,6 +6895,12 @@ It is only usable at top-level scope.</p>
 <li>
 <p><code>#`test`#</code> expands a macro argument, putting it inside <code>`</code> quotes and escaping its characters.</p>
 </li>
+<li>
+<p><code>\-"identifier"-</code> expands a macro argument, converting underscores to camel-case.</p>
+</li>
+<li>
+<p><code>\="identifier"=</code> expands a macro argument, converting underscores to snake-case.</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -7425,6 +7537,9 @@ You must validate this yourself.</p>
 </li>
 <li>
 <p><code>+fork_scope</code>: The invoked macro(s) will have access to private definitions inside the invoking file.</p>
+</li>
+<li>
+<p><code>+solo_interrupt</code>: Disable switchable interrupts and always use this interrupt.</p>
 </li>
 </ul>
 </div>
@@ -8934,7 +9049,7 @@ x = @paa{1000}      // Read a PAA element</pre>
 <div class="sect3">
 <h4 id="hw_read">17.4.1. <code>{}()</code> Hardware read</h4>
 <div class="paragraph">
-<p>Returns the value at a RAM address.</p>
+<p>Returns the value at a hardware address.</p>
 </div>
 <div class="paragraph">
 <p>Syntax:</p>
@@ -8966,14 +9081,47 @@ x = @paa{1000}      // Read a PAA element</pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-To correctly read a NESFab variable this way, a <a href="#kw_fence"><code>fence</code></a> is required, along with <a href="#kw_employs"><code>employs</code></a>.
+Although it is not recommended, to correctly read a NESFab variable this way, a <a href="#kw_fence"><code>fence</code></a> is required, along with <a href="#kw_employs"><code>employs</code></a>.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect3">
-<h4 id="hw_write">17.4.2. <code>{}()</code> Hardware write</h4>
+<h4 id="hw_read_pair">17.4.2. <code>{,}()</code> Hardware read (pair)</h4>
+<div class="paragraph">
+<p>Two compile-time constant addresses can be supplied to a hardware read expression, separated by a comma.
+Both addresses will be read, with the expression returning the result of the second one.</p>
+</div>
+<div class="paragraph">
+<p>In the generated assembly, NESFab will ensure that both reads occur together, without any code between them.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{address_a, address_b}()</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>address_a</code> and <code>address_b</code> are compile-time constant values of type <a href="#type_address"><code>AA</code></a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>U status = {PPUSTATUS, PPUSTATUS}() // Read the PPU's status register twice.</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="hw_write">17.4.3. <code>{}()</code> Hardware write</h4>
 <div class="paragraph">
 <p>Assigns a value at a hardware address.</p>
 </div>
@@ -9011,6 +9159,54 @@ To correctly read a NESFab variable this way, a <a href="#kw_fence"><code>fence<
 </td>
 <td class="content">
 To correctly write a NESFab variable this way, a <a href="#kw_fence"><code>fence</code></a> is required, along with <a href="#kw_employs"><code>employs</code></a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="hw_write_pair">17.4.4. <code>{,}(,)</code> Hardware write (pair)</h4>
+<div class="paragraph">
+<p>Two compile-time constant addresses can be supplied to a hardware write expression, separated by a comma.
+Both addresses will be written by their corresponding arguments.</p>
+</div>
+<div class="paragraph">
+<p>In the generated assembly, NESFab will ensure that both writes occur together, without any code between them.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{address_a, address_b}(value_a, value_b)</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>address_a</code> and <code>address_b</code> are compile-time constant values of type <a href="#type_address"><code>AA</code></a>.</p>
+</li>
+<li>
+<p><code>value_a</code> and <code>value_b</code> are expressions of type <code>U</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>{PPUDATA, PPUDATA}(10, 20) // Write to the PPU's data register twice</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This expression is most useful for mappers that require two hardware writes to interface, like MMC3.
 </td>
 </tr>
 </table>
@@ -9695,7 +9891,7 @@ The syntax is the integer type, followed by the unit-fractional type, without no
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>UF</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[$00.00, $FF.FF]</p></td>
 </tr>
 <tr>
@@ -10265,7 +10461,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-08-28 20:15:07 -0500
+Last updated 2023-09-18 21:43:32 -0500
 </div>
 </div>
 </body>
