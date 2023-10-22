@@ -499,14 +499,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#mapper_nrom">6.1. <code>nrom</code></a></li>
 <li><a href="#mapper_anrom">6.2. <code>anrom</code></a></li>
 <li><a href="#mapper_bnrom">6.3. <code>bnrom</code></a></li>
-<li><a href="#mapperubnrom">6.4. <code>unrom</code></a></li>
-<li><a href="#mapper_cnrom">6.5. <code>cnrom</code></a></li>
-<li><a href="#mapper_gnrom">6.6. <code>gnrom</code></a></li>
-<li><a href="#mapper_colordreams">6.7. <code>colordreams</code></a></li>
-<li><a href="#mapper_gtrom">6.8. <code>gtrom</code></a></li>
-<li><a href="#mapper_mmc1">6.9. <code>mmc1</code></a></li>
-<li><a href="#mapper_mmc3">6.10. <code>mmc3</code></a></li>
-<li><a href="#mapper_189">6.11. <code>189</code> (MMC3 Variant)</a></li>
+<li><a href="#mapper_unrom">6.4. <code>unrom</code></a></li>
+<li><a href="#mapper_30">6.5. <code>30</code></a></li>
+<li><a href="#mapper_cnrom">6.6. <code>cnrom</code></a></li>
+<li><a href="#mapper_gnrom">6.7. <code>gnrom</code></a></li>
+<li><a href="#mapper_colordreams">6.8. <code>colordreams</code></a></li>
+<li><a href="#mapper_gtrom">6.9. <code>gtrom</code></a></li>
+<li><a href="#mapper_mmc1">6.10. <code>mmc1</code></a></li>
+<li><a href="#mapper_mmc3">6.11. <code>mmc3</code></a></li>
+<li><a href="#mapper_189">6.12. <code>189</code> (MMC3 Variant)</a></li>
 </ul>
 </li>
 <li><a href="#identifiers">7. Identifiers</a></li>
@@ -645,7 +646,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#file_raw">15.39.8. <code>raw</code> target</a></li>
 <li><a href="#file_fmt">15.39.9. <code>fmt</code> target</a></li>
 <li><a href="#file_pbz">15.39.10. <code>pbz</code> target</a></li>
-<li><a href="#file_rlz">15.39.11. <code>rlz</code> target</a></li>
+<li><a href="#file_donut">15.39.11. <code>donut</code> target</a></li>
+<li><a href="#file_rlz">15.39.12. <code>rlz</code> target</a></li>
 </ul>
 </li>
 <li><a href="#kw_macro">15.40. <code>macro</code></a></li>
@@ -666,22 +668,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#modifiers">16. Modifiers</a>
 <ul class="sectlevel2">
-<li><a href="#mod_flags">16.1. Modifier Flags</a></li>
-<li><a href="#mod_nmi">16.2. <code>nmi</code></a></li>
-<li><a href="#mod_irq">16.3. <code>irq</code></a></li>
-<li><a href="#mod_stows">16.4. <code>stows</code></a>
+<li><a href="#mod_flags">16.1. Function Modifier Flags</a></li>
+<li><a href="#mod_flags_loop">16.2. Loop Modifier Flags</a></li>
+<li><a href="#mod_nmi">16.3. <code>nmi</code></a></li>
+<li><a href="#mod_irq">16.4. <code>irq</code></a></li>
+<li><a href="#mod_stows">16.5. <code>stows</code></a>
 <ul class="sectlevel3">
-<li><a href="#_stows_omni">16.4.1. <code>stows omni</code></a></li>
+<li><a href="#_stows_omni">16.5.1. <code>stows omni</code></a></li>
 </ul>
 </li>
-<li><a href="#mod_employs">16.5. <code>employs</code></a>
+<li><a href="#mod_employs">16.6. <code>employs</code></a>
 <ul class="sectlevel3">
-<li><a href="#_employs_vars_and_employs_data">16.5.1. <code>employs vars</code> and <code>employs data</code></a></li>
+<li><a href="#_employs_vars_and_employs_data">16.6.1. <code>employs vars</code> and <code>employs data</code></a></li>
 </ul>
 </li>
-<li><a href="#mod_preserves">16.6. <code>preserves</code></a></li>
-<li><a href="#mod_data">16.7. <code>data</code></a></li>
-<li><a href="#mod_vars">16.8. <code>vars</code></a></li>
+<li><a href="#mod_preserves">16.7. <code>preserves</code></a></li>
+<li><a href="#mod_data">16.8. <code>data</code></a></li>
+<li><a href="#mod_vars">16.9. <code>vars</code></a></li>
 </ul>
 </li>
 <li><a href="#_operators_2">17. Operators</a>
@@ -1345,6 +1348,10 @@ This option can only be specified once.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4-Way Mirroring</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1-Way Switchable</p></td>
 </tr>
 </tbody>
 </table>
@@ -2261,7 +2268,7 @@ Related mappers like AMROM can be had using configuration options.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapperubnrom">6.4. <code>unrom</code></h3>
+<h3 id="mapper_unrom">6.4. <code>unrom</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/UxROM"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2359,7 +2366,93 @@ Typically, BNROM is better for NESFab than UNROM, as it does not require the use
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_cnrom">6.5. <code>cnrom</code></h3>
+<h3 id="mapper_30">6.5. <code>30</code></h3>
+<div class="paragraph">
+<p><a href="https://www.nesdev.org/wiki/https://www.nesdev.org/wiki/UNROM_512"><strong>NESDev Wiki Page</strong></a></p>
+</div>
+<div class="paragraph">
+<p>Mapper 30 is a UNROM variant with CHRRAM banking.
+Like UNROM, mapper 30 requires manual ROM layout with the <a href="#mod_flags"><code>+static</code> modifier</a>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Memory Sizes:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Min</th>
+<th class="tableblock halign-left valign-top">Max</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB (RAM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB (RAM)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nametable VRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KiB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Other Details:</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_mirroring">Mirroring</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed H, V, 4, or 1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_bus_conflicts">Bus Conflicts</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_sram">SRAM</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">By default, no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#kw_state"><code>state</code> Register</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High 3 bits switch CHR and mirroring</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acceptible risk</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="mapper_cnrom">6.6. <code>cnrom</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/CNROM"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2444,7 +2537,7 @@ Typically, BNROM is better for NESFab than UNROM, as it does not require the use
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_gnrom">6.6. <code>gnrom</code></h3>
+<h3 id="mapper_gnrom">6.7. <code>gnrom</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/GxROM"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2541,7 +2634,7 @@ Related mappers like MHROM can be had using configuration options.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_colordreams">6.7. <code>colordreams</code></h3>
+<h3 id="mapper_colordreams">6.8. <code>colordreams</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/Color_Dreams"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2638,7 +2731,7 @@ PRG above 128 KiB may not be supported on physical cartridges.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_gtrom">6.8. <code>gtrom</code></h3>
+<h3 id="mapper_gtrom">6.9. <code>gtrom</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/GTROM"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2735,7 +2828,7 @@ See the standard library file <code>lib/mapper/gtrom.fab</code>.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_mmc1">6.9. <code>mmc1</code></h3>
+<h3 id="mapper_mmc1">6.10. <code>mmc1</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/MMC1"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2833,7 +2926,7 @@ See the standard library file <code>lib/mapper/mmc1.fab</code>.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_mmc3">6.10. <code>mmc3</code></h3>
+<h3 id="mapper_mmc3">6.11. <code>mmc3</code></h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/MMC3"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -2945,7 +3038,7 @@ See the standard library file <code>lib/mapper/mmc3.fab</code>.
 </table>
 </div>
 <div class="sect2">
-<h3 id="mapper_189">6.11. <code>189</code> (MMC3 Variant)</h3>
+<h3 id="mapper_189">6.12. <code>189</code> (MMC3 Variant)</h3>
 <div class="paragraph">
 <p><a href="https://www.nesdev.org/wiki/INES_Mapper_189"><strong>NESDev Wiki Page</strong></a></p>
 </div>
@@ -3050,7 +3143,7 @@ See the standard library file <code>lib/mapper/mmc3.fab</code>.
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_unsafe_bank_switch">Unsafe Bank Switches</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acceptible risk</p></td>
 </tr>
 </tbody>
 </table>
@@ -3846,6 +3939,19 @@ It behaves like <code>while</code> in most programming languages.</p>
 <p><code>condition</code> is an expression converted to <code>Bool</code>. While this expression evaluates to <code>true</code>, the loop body will execute.
 After the code in <code>code block</code> executes, control flow jumps back to the <code>condition</code> test.</p>
 </div>
+<div class="paragraph">
+<p><strong>Modifiers:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#mod_flags"><code>-unroll</code>, <code>+unroll</code></a></p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+unloop</code></a></p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="kw_for">15.4. <code>for</code></h3>
@@ -3895,6 +4001,19 @@ It behaves like <code>for</code> in most programming languages.</p>
     code block</pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong>Modifiers:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#mod_flags"><code>-unroll</code>, <code>+unroll</code></a></p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+unloop</code></a></p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="kw_do">15.5. <code>do</code></h3>
@@ -3913,6 +4032,19 @@ A loop with <code>do</code> skips the <code>condition</code> check of its first 
 do for initialization ; condition ; iteration
     code block</pre>
 </div>
+</div>
+<div class="paragraph">
+<p><strong>Modifiers:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#mod_flags"><code>-unroll</code>, <code>+unroll</code></a></p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+unloop</code></a></p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -5637,7 +5769,7 @@ Until the <code>nmi</code> statement returns, <a href="#kw_ready"><code>ready</c
 <h4 id="kw_nmi_function">15.30.3. <code>nmi</code> function</h4>
 <div class="paragraph">
 <p>The <code>nmi</code> keyword declares an <a href="https://www.nesdev.org/wiki/NMI">NMI</a> interrupt function at global scope.
-NMI interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return, and cannot be called.
+NMI interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return values, and cannot be called.
 Instead, they execute once per frame at the start of <a href="https://en.wikipedia.org/wiki/Vertical_blanking_interval">VBLANK</a>,
 so long as bit 7 of <a href="https://www.nesdev.org/wiki/PPU_registers#PPUCTRL">PPUCTRL</a> is set.</p>
 </div>
@@ -5757,7 +5889,7 @@ The <code>irq</code> statement corresponds to assembly instructions <code>SEI</c
 <h4 id="kw_irq_function">15.31.2. <code>irq</code> function</h4>
 <div class="paragraph">
 <p>The <code>irq</code> keyword declares an <a href="https://www.nesdev.org/wiki/IRQ">irq</a> interrupt function at global scope.
-IRQ interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return, and cannot be called.
+IRQ interrupts are similar to <a href="#kw_fn">regular functions</a>, but they have no parameters, cannot return values, and cannot be called.
 Instead, they are triggered by hardware such as the <a href="https://www.nesdev.org/wiki/APU_Frame_Counter">APU frame counter</a>,
 or <a href="https://www.nesdev.org/wiki/MMC3">MMC3</a> scanline counter.</p>
 </div>
@@ -6560,6 +6692,10 @@ The following targets are accepted:</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Compressed graphical data</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#file_donut"><code>donut</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compressed graphical data</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#file_rlz"><code>rlz</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Compressed data</p></td>
 </tr>
@@ -6771,7 +6907,39 @@ Starting from the highest bit and working to the lowest bit, the decompressed se
 </div>
 </div>
 <div class="sect3">
-<h4 id="file_rlz">15.39.11. <code>rlz</code> target</h4>
+<h4 id="file_donut">15.39.11. <code>donut</code> target</h4>
+<div class="paragraph">
+<p>The <code>donut</code> target compresses the data into the Donut encoding after first processing it using filetype conversions.
+It accepts no arguments.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[] compressed_data
+    file(donut, "sprites.png")</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Accessory Definitions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>chunks</code>: An <code>Int</code> equal to the decompressed size divided by 64.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Decompressing</strong></p>
+</div>
+<div class="paragraph">
+<p>The standard library file <code>donut.fab</code> can be used to decompress Donut-encoded data.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="file_rlz">15.39.12. <code>rlz</code> target</h4>
 <div class="paragraph">
 <p>The <code>rlz</code> target compresses the data into the RLZ encoding after first processing it using filetype conversions.</p>
 </div>
@@ -7167,6 +7335,34 @@ ct Int{} _foo_y = Int{}(13, 991, -30)
 ct U{} _foo_bar = U{}(U(0), U(5), U(2))</pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Objects are ordered based on their names.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For each named object, addition Ints are defined. Each Int holds the object&#8217;s index in its object array:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ct Int _CLASS_name_NAME = ID</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, if an object was named <code>foo</code> and belonged to object class <code>bar</code> with index 2, the following Int would be defined:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ct Int _bar_name_foo = 2</pre>
+</div>
+</div>
 <div class="paragraph">
 <p><strong>Output Target Conversions</strong></p>
 </div>
@@ -7487,13 +7683,13 @@ You will also need a <code>puf1_music</code> audio target.
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_flags">16.1. Modifier Flags</h3>
+<h3 id="mod_flags">16.1. Function Modifier Flags</h3>
 <div class="paragraph">
 <p>Modifier flags are specified prefixed with a <code>-</code> or <code>+</code> character.
 <code>-</code> is used to disable the modifier, while <code>+</code> is used to enable it.</p>
 </div>
 <div class="paragraph">
-<p>The following flags exist:</p>
+<p>The following flags exist for function definitions:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -7557,7 +7753,37 @@ You must validate this yourself.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_nmi">16.2. <code>nmi</code></h3>
+<h3 id="mod_flags_loop">16.2. Loop Modifier Flags</h3>
+<div class="paragraph">
+<p>Modifier flags are specified prefixed with a <code>-</code> or <code>+</code> character.
+<code>-</code> is used to disable the modifier, while <code>+</code> is used to enable it.</p>
+</div>
+<div class="paragraph">
+<p>The following flags exist for loop statements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>-unroll</code>, <code>+unroll</code>: Hint to prevent/enable loop unrolling.</p>
+</li>
+<li>
+<p><code>+unloop</code>: Hint to unroll a loop completely, replacing the loop.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>for U i = 0; i &lt; 10; i += 10
+: -unroll
+    {PPUDATA}(i)</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mod_nmi">16.3. <code>nmi</code></h3>
 <div class="paragraph">
 <p>The <code>nmi</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_mode"><code>mode</code></a> declaration to specify the mode&#8217;s NMI handler.</p>
 </div>
@@ -7594,7 +7820,7 @@ mode foo()
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_irq">16.3. <code>irq</code></h3>
+<h3 id="mod_irq">16.4. <code>irq</code></h3>
 <div class="paragraph">
 <p>The <code>irq</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_mode"><code>mode</code></a> declaration to specify the mode&#8217;s IRQ handler.</p>
 </div>
@@ -7631,7 +7857,7 @@ mode foo()
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_stows">16.4. <code>stows</code></h3>
+<h3 id="mod_stows">16.5. <code>stows</code></h3>
 <div class="paragraph">
 <p>The <code>stows</code> <a href="#modifiers">modifier</a> is used inside <a href="#kw_charmap"><code>charmap</code></a> definitions
 to enable string literals to use said <code>charmap</code>.</p>
@@ -7652,7 +7878,7 @@ to enable string literals to use said <code>charmap</code>.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_stows_omni">16.4.1. <code>stows omni</code></h4>
+<h4 id="_stows_omni">16.5.1. <code>stows omni</code></h4>
 <div class="paragraph">
 <p>The <code>stows omni</code> modifier behaves like <code>stows</code>, except it stores its data inside an <code>omni data</code> group.</p>
 </div>
@@ -7674,7 +7900,7 @@ to enable string literals to use said <code>charmap</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_employs">16.5. <code>employs</code></h3>
+<h3 id="mod_employs">16.6. <code>employs</code></h3>
 <div class="paragraph">
 <p>The <code>employs</code> <a href="#modifiers">modifier</a> instructs a function to be dependent on a group.
 From the time the function is called to the time the function returns,
@@ -7710,7 +7936,7 @@ The <code>employs</code> modifier is only required in these circumstances:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_employs_vars_and_employs_data">16.5.1. <code>employs vars</code> and <code>employs data</code></h4>
+<h4 id="_employs_vars_and_employs_data">16.6.1. <code>employs vars</code> and <code>employs data</code></h4>
 <div class="paragraph">
 <p>For additional control, <code>employs vars</code> and/or <code>employs data</code> modifiers can be used.
 These behave like <code>employs</code>, but only include the <code>vars</code> and/or <code>data</code> definitions of each groups.</p>
@@ -7734,7 +7960,7 @@ These behave like <code>employs</code>, but only include the <code>vars</code> a
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_preserves">16.6. <code>preserves</code></h3>
+<h3 id="mod_preserves">16.7. <code>preserves</code></h3>
 <div class="paragraph">
 <p>The <code>preserves</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_goto_mode_statement"><code>goto mode</code> statement</a>
 to specify which variables are kept, and which are reset to their initial value.</p>
@@ -7760,7 +7986,7 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_data">16.7. <code>data</code></h3>
+<h3 id="mod_data">16.8. <code>data</code></h3>
 <div class="paragraph">
 <p>The <code>data</code> <a href="#modifiers">modifier</a> is used to document which <code>data</code> <a href="#groups">groups</a> a function uses.</p>
 </div>
@@ -7784,7 +8010,7 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_vars">16.8. <code>vars</code></h3>
+<h3 id="mod_vars">16.9. <code>vars</code></h3>
 <div class="paragraph">
 <p>The <code>vars</code> <a href="#modifiers">modifier</a> is used to document which <code>vars</code> <a href="#groups">groups</a> a function uses.</p>
 </div>
@@ -10461,7 +10687,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-09-18 21:43:32 -0500
+Last updated 2023-10-22 09:19:21 -0500
 </div>
 </div>
 </body>
