@@ -440,7 +440,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>NESFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 1.5</span>
+<span id="revdate">Version 1.7</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -485,18 +485,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#opt_sector_size">6.13. <code>sector-size</code></a></li>
 <li><a href="#opt_bus_conflicts">6.14. <code>bus-conflicts</code></a></li>
 <li><a href="#opt_sram">6.15. <code>sram</code></a></li>
-<li><a href="#opt_system">6.16. <code>system</code> (<code>-S</code>)</a></li>
-<li><a href="#opt_controllers">6.17. <code>controllers</code> (<code>-C</code>)</a></li>
-<li><a href="#opt_unsafe_bank_switch">6.18. <code>unsafe-bank-switch</code></a></li>
-<li><a href="#opt_expansion_audio">6.19. <code>expansion-audio</code></a></li>
-<li><a href="#opt_multicart">6.20. <code>multicart</code></a></li>
-<li><a href="#opt_mlb">6.21. <code>mlb</code></a></li>
-<li><a href="#opt_ctags">6.22. <code>ctags</code></a></li>
-<li><a href="#_threads_j">6.23. <code>threads</code> (<code>-j</code>)</a></li>
-<li><a href="#_error_on_warning_w">6.24. <code>error-on-warning</code> (<code>-W</code>)</a></li>
-<li><a href="#_pause">6.25. <code>pause</code></a></li>
-<li><a href="#_sloppy">6.26. <code>sloppy</code></a></li>
-<li><a href="#_ram_init">6.27. <code>--*ram-init</code></a></li>
+<li><a href="#opt_sram_alloc">6.16. <code>sram-alloc</code></a></li>
+<li><a href="#opt_sram_size">6.17. <code>sram-size</code></a></li>
+<li><a href="#opt_system">6.18. <code>system</code> (<code>-S</code>)</a></li>
+<li><a href="#opt_controllers">6.19. <code>controllers</code> (<code>-C</code>)</a></li>
+<li><a href="#opt_unsafe_bank_switch">6.20. <code>unsafe-bank-switch</code></a></li>
+<li><a href="#opt_expansion_audio">6.21. <code>expansion-audio</code></a></li>
+<li><a href="#opt_multicart">6.22. <code>multicart</code></a></li>
+<li><a href="#opt_mlb">6.23. <code>mlb</code></a></li>
+<li><a href="#opt_ctags">6.24. <code>ctags</code></a></li>
+<li><a href="#_threads_j">6.25. <code>threads</code> (<code>-j</code>)</a></li>
+<li><a href="#_error_on_warning_w">6.26. <code>error-on-warning</code> (<code>-W</code>)</a></li>
+<li><a href="#_pause">6.27. <code>pause</code></a></li>
+<li><a href="#_sloppy">6.28. <code>sloppy</code></a></li>
+<li><a href="#_ram_init">6.29. <code>--*ram-init</code></a></li>
 </ul>
 </li>
 <li><a href="#mappers">7. Supported Mappers</a>
@@ -581,8 +583,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#kw_swap">16.14. <code>swap</code></a></li>
-<li><a href="#kw_push">16.15. <code>push</code></a></li>
-<li><a href="#kw_pop">16.16. <code>pop</code></a></li>
+<li><a href="#kw_push">16.15. <code>push</code></a>
+<ul class="sectlevel3">
+<li><a href="#kw_push_asm">16.15.1. <code>push</code> statement (byte block)</a></li>
+</ul>
+</li>
+<li><a href="#kw_pop">16.16. <code>pop</code></a>
+<ul class="sectlevel3">
+<li><a href="#kw_pop_asm">16.16.1. <code>pop</code> statement (byte block)</a></li>
+</ul>
+</li>
 <li><a href="#kw_fence">16.17. <code>fence</code></a></li>
 <li><a href="#kw_true">16.18. <code>true</code></a></li>
 <li><a href="#kw_false">16.19. <code>false</code></a></li>
@@ -685,11 +695,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#kw_controllers">16.45.1. <code>__controllers</code></a></li>
 <li><a href="#kw_sector_size">16.45.2. <code>__sector_size</code></a></li>
 <li><a href="#kw_expansion_audio">16.45.3. <code>__expansion_audio</code></a></li>
-<li><a href="#_numeric_constant_types">16.45.4. Numeric Constant Types</a></li>
-<li><a href="#kw_mapper">16.45.5. <code>__mapper</code></a></li>
-<li><a href="#kw_illegal">16.45.6. <code>__illegal</code></a></li>
-<li><a href="#kw_mapper_state">16.45.7. <code>__mapper_state</code></a></li>
-<li><a href="#kw_mapper_reset">16.45.8. <code>__mapper_reset</code></a></li>
+<li><a href="#kw_mapper">16.45.4. <code>__mapper</code></a></li>
+<li><a href="#kw_illegal">16.45.5. <code>__illegal</code></a></li>
+<li><a href="#kw_mapper_state">16.45.6. <code>__mapper_state</code></a></li>
+<li><a href="#kw_mapper_reset">16.45.7. <code>__mapper_reset</code></a></li>
+<li><a href="#kw_fixed">16.45.8. <code>__fixed</code></a></li>
+<li><a href="#kw_multiply">16.45.9. <code>__multiply</code></a></li>
 </ul>
 </li>
 </ul>
@@ -822,7 +833,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#type_integer">20.1.1. Integer Types</a></li>
 <li><a href="#_unit_fractional_types">20.1.2. Unit-Fractional Types</a></li>
 <li><a href="#type_fixed">20.1.3. Fixed-point Types</a></li>
-<li><a href="#_numeric_constant_types_2">20.1.4. Numeric Constant Types</a></li>
+<li><a href="#_numeric_constant_types">20.1.4. Numeric Constant Types</a></li>
 <li><a href="#type_bool">20.1.5. Bool</a></li>
 <li><a href="#_void">20.1.6. Void</a></li>
 </ul>
@@ -1627,7 +1638,100 @@ Only the default <code>sram</code> value is asserted to be commonly available.
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_system">6.16. <code>system</code> (<code>-S</code>)</h3>
+<h3 id="opt_sram_alloc">6.16. <code>sram-alloc</code></h3>
+<div class="paragraph">
+<p>Specifies how the compiler should utilize extra cartridge RAM.</p>
+</div>
+<div class="paragraph">
+<p>The following arguments are valid:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To disable allocation: <code>0</code>, <code>false,</code> or <code>off</code>.</p>
+</li>
+<li>
+<p>To enable allocation only when <a href="#mod_flags"><code>+sram</code></a> is used: <code>request</code>.</p>
+</li>
+<li>
+<p>To enable allocation in all situations: <code>1</code>, <code>true</code>, or <code>on</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By default, the value is <code>on</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --sram-alloc request</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sram-alloc = request</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This option only applies when <a href="#opt_sram"><code>sram</code></a> is enabled.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="opt_sram_size">6.17. <code>sram-size</code></h3>
+<div class="paragraph">
+<p>Specifies how much extra cartridge RAM the compiler should utilize.</p>
+</div>
+<div class="paragraph">
+<p>Arguments from 1 to 8192 are accepted.</p>
+</div>
+<div class="paragraph">
+<p>By default, the value is 8192.</p>
+</div>
+<div class="paragraph">
+<p><strong>Command-line usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>nesfab --sram-size 4096</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Configuration file usage:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>sram-size = 4096</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This option only applies when <a href="#opt_sram"><code>sram</code></a> is enabled.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="opt_system">6.18. <code>system</code> (<code>-S</code>)</h3>
 <div class="paragraph">
 <p>Specifies the target NES system, which will be accessible using the <a href="#kw_system"><code>system</code> keyword</a>.
 This option can only be specified once.</p>
@@ -1699,7 +1803,7 @@ This option can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_controllers">6.17. <code>controllers</code> (<code>-C</code>)</h3>
+<h3 id="opt_controllers">6.19. <code>controllers</code> (<code>-C</code>)</h3>
 <div class="paragraph">
 <p>Specifies the maximum number of controllers the game will use.
 This option determines the language&#8217;s <a href="#kw_controllers"><code>__controllers</code> value</a>.
@@ -1729,7 +1833,7 @@ It has no other purpose.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_unsafe_bank_switch">6.18. <code>unsafe-bank-switch</code></h3>
+<h3 id="opt_unsafe_bank_switch">6.20. <code>unsafe-bank-switch</code></h3>
 <div class="paragraph">
 <p>By default, the compiler generates <a href="#banks">bank</a> switching code which is resilient to hardware interrupts.
 For many games, this added safety is unnecessary and slows the code down.
@@ -1780,7 +1884,7 @@ Some mappers, such as BNROM, do not benefit from <code>unsafe-bank-switch</code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_expansion_audio">6.19. <code>expansion-audio</code></h3>
+<h3 id="opt_expansion_audio">6.21. <code>expansion-audio</code></h3>
 <div class="paragraph">
 <p>This option determines the language&#8217;s <a href="#kw_expansion_audio"><code>__expansion_audio</code> value</a>,
 which is used to enable expansion audio in music drivers.</p>
@@ -1803,7 +1907,7 @@ which is used to enable expansion audio in music drivers.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_multicart">6.20. <code>multicart</code></h3>
+<h3 id="opt_multicart">6.22. <code>multicart</code></h3>
 <div class="paragraph">
 <p>This option is used to make the generated ROM compatible with specific multicarts.
 Often, this entails reserving a specific region in the ROM for multicart-specific code.</p>
@@ -1859,7 +1963,7 @@ The <code>action53</code> setting should be used when entering the <a href="http
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_mlb">6.21. <code>mlb</code></h3>
+<h3 id="opt_mlb">6.23. <code>mlb</code></h3>
 <div class="paragraph">
 <p><code>mlb</code> specifies a <a href="https://www.mesen.ca/">Mesen</a> .mlb label file to output.
 This file will contain addresses used by the program, for the purpose of debugging.</p>
@@ -1882,7 +1986,7 @@ This file will contain addresses used by the program, for the purpose of debuggi
 </div>
 </div>
 <div class="sect2">
-<h3 id="opt_ctags">6.22. <code>ctags</code></h3>
+<h3 id="opt_ctags">6.24. <code>ctags</code></h3>
 <div class="paragraph">
 <p><code>ctags</code> specifies a <a href="https://en.wikipedia.org/wiki/Ctags">Ctags</a> file to output.
 This file will contain source locations of global definitions, allowing text editors to better navigate.</p>
@@ -1918,7 +2022,7 @@ To use CTags in VSCode, use the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_threads_j">6.23. <code>threads</code> (<code>-j</code>)</h3>
+<h3 id="_threads_j">6.25. <code>threads</code> (<code>-j</code>)</h3>
 <div class="paragraph">
 <p>Specifies how many threads the compiler can use, enabling parallel compilation.
 This option expects an integer argument, and can only be specified once.</p>
@@ -1961,7 +2065,7 @@ due to that platform having a buggy implementation of threads.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_error_on_warning_w">6.24. <code>error-on-warning</code> (<code>-W</code>)</h3>
+<h3 id="_error_on_warning_w">6.26. <code>error-on-warning</code> (<code>-W</code>)</h3>
 <div class="paragraph">
 <p>This option turns warnings into errors and halts compilation whenever a warning occurs.
 This option expects no arguments and can only be specified once.</p>
@@ -1984,7 +2088,7 @@ This option expects no arguments and can only be specified once.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_pause">6.25. <code>pause</code></h3>
+<h3 id="_pause">6.27. <code>pause</code></h3>
 <div class="paragraph">
 <p>This option pauses the compiler before exiting until input is received on stdin.
 It is intended to be used on Microsoft Windows to keep the Command Prompt window open until you&#8217;re ready to close it.
@@ -2012,7 +2116,7 @@ Then, in the shortcut&#8217;s properties, put <code>--pause</code> after the tar
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sloppy">6.26. <code>sloppy</code></h3>
+<h3 id="_sloppy">6.28. <code>sloppy</code></h3>
 <div class="paragraph">
 <p>This option improves compilation speed at the cost of program optimization.
 It can be disabled on a per-function basis with the modifier <a href="#mod_flags"><code>-sloppy</code></a>.</p>
@@ -2035,7 +2139,7 @@ It can be disabled on a per-function basis with the modifier <a href="#mod_flags
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ram_init">6.27. <code>--*ram-init</code></h3>
+<h3 id="_ram_init">6.29. <code>--*ram-init</code></h3>
 <div class="paragraph">
 <p><code>--ram-init</code>, <code>--sram-init</code>, and <code>--vram-init</code> cause their respective memory regions to be initialized to zero on reset.
 This initialization happens by writing a <code>0</code> byte to each address, ignoring any banking behavior the mapper may have.</p>
@@ -2939,13 +3043,13 @@ See the standard library file <code>lib/mapper/mmc1.fab</code>.
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
 </tr>
@@ -3045,13 +3149,13 @@ See the standard library file <code>lib/mapper/mmc3.fab</code>.
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2048 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">512 KiB</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">256 KiB</p></td>
 </tr>
@@ -3248,13 +3352,13 @@ See the standard library file <code>lib/mapper/mmc5.fab</code>.
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1024 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1024 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1024 KiB</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_chr">CHR (Tilesets)</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1024 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1024 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1024 KiB</p></td>
 </tr>
@@ -4057,6 +4161,12 @@ sre</pre>
 </li>
 <li>
 <p><a href="#kw_switch_asm"><code>switch</code></a></p>
+</li>
+<li>
+<p><a href="#kw_push_asm"><code>push</code></a></p>
+</li>
+<li>
+<p><a href="#kw_pop_asm"><code>pop</code></a></p>
 </li>
 </ul>
 </div>
@@ -4976,6 +5086,33 @@ The expression returns a copy of its second argument.</p>
     // Now vec = U{}(10, 20)</pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="kw_push_asm">16.15.1. <code>push</code> statement (byte block)</h4>
+<div class="paragraph">
+<p>In byte blocks, the <code>push</code> statement pushes the current bank onto the stack.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>push</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>push          // Save the current bank
+
+ldy &amp;my_bank1 // Load the bank in registers Y
+switch y      // Switch to the bank in that register
+
+pop           // Restore the previous bank</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="kw_pop">16.16. <code>pop</code></h3>
@@ -5007,6 +5144,33 @@ The expression returns a copy of its second argument.</p>
     U x = pop(vec)
     U y = pop(vec)
     // Now x = 20, y = 10</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="kw_pop_asm">16.16.1. <code>pop</code> statement (byte block)</h4>
+<div class="paragraph">
+<p>In byte blocks, the <code>pop</code> statement pops a bank from the stack and switches to it.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pop</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>push          // Save the current bank
+
+ldy &amp;my_bank1 // Load the bank in registers Y
+switch y      // Switch to the bank in that register
+
+pop           // Restore the previous bank</pre>
+</div>
 </div>
 </div>
 </div>
@@ -5846,6 +6010,9 @@ Unlike other programming languages, functions in NESFab cannot be nested or recu
 <p><a href="#mod_flags"><code>+static</code></a></p>
 </li>
 <li>
+<p><a href="#mod_flags"><code>+static_fixed</code></a></p>
+</li>
+<li>
 <p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
 </li>
 </ul>
@@ -6026,6 +6193,9 @@ While the mode function is executing, NMIs will be handled using the supplied <c
 <p><a href="#mod_flags"><code>+static</code></a></p>
 </li>
 <li>
+<p><a href="#mod_flags"><code>+static_fixed</code></a></p>
+</li>
+<li>
 <p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
 </li>
 </ul>
@@ -6150,6 +6320,9 @@ so long as bit 7 of <a href="https://www.nesdev.org/wiki/PPU_registers#PPUCTRL">
 <p><a href="#mod_flags"><code>+static</code></a></p>
 </li>
 <li>
+<p><a href="#mod_flags"><code>+static_fixed</code></a></p>
+</li>
+<li>
 <p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
 </li>
 </ul>
@@ -6268,6 +6441,9 @@ or <a href="https://www.nesdev.org/wiki/MMC3">MMC3</a> scanline counter.</p>
 </li>
 <li>
 <p><a href="#mod_flags"><code>+static</code></a></p>
+</li>
+<li>
+<p><a href="#mod_flags"><code>+static_fixed</code></a></p>
 </li>
 <li>
 <p><a href="#mod_flags"><code>+sloppy</code>, <code>-sloppy</code></a></p>
@@ -6559,6 +6735,9 @@ The group will be defined as the union of these declarations.</p>
 <p><a href="#mod_flags"><code>+static</code></a></p>
 </li>
 <li>
+<p><a href="#mod_flags"><code>+static_fixed</code></a></p>
+</li>
+<li>
 <p><a href="#mod_flags"><code>+unused</code></a></p>
 </li>
 </ul>
@@ -6846,12 +7025,15 @@ It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>chrrom offset
+<pre>chrrom name(offset)
     byte block</pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p><code>name</code> is an optional name which allows the `chrrom&#8217;s labels to be accessed in code.</p>
+</li>
 <li>
 <p><code>offset</code> is an optional offset which determines which address the data gets stored. If left out, <code>offset</code> is treated as 0.</p>
 </li>
@@ -6868,13 +7050,38 @@ chrrom
     file(chr, "bg.png")
 
 // Store at offset $2000:
-chrrom $2000
+chrrom ($2000)
+    file(chr, "more_sprites.png")
+    file(chr, "more_bg.png")
+
+// Store at offset $4000 under the name 'foo':
+chrrom foo($4000)
     file(chr, "more_sprites.png")
     file(chr, "more_bg.png")</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The compiler will issue a warning if the supplied data does not match what the mapper expects.</p>
+</div>
+<div class="paragraph">
+<p><code>chrrom</code> blocks can have labels. If the <code>chrrom</code> is named, these labels can be accessed, returning their position in CHR memory.
+These labels have a value of type <code>Int</code>.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>chrrom foo
+    label spr
+        file(chr, "sprites.png")
+    label bg
+        file(chr, "bg.png")
+
+// Access the CHR addresses:
+ct Int bar = foo.spr
+ct Int qux = foo.bg</pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -7413,10 +7620,10 @@ It is only usable at top-level scope.</p>
 <p><code>#`test`#</code> expands a macro argument, putting it inside <code>`</code> quotes and escaping its characters.</p>
 </li>
 <li>
-<p><code>\-"identifier"-</code> expands a macro argument, converting underscores to camel-case.</p>
+<p><code>#-identifier-#</code> expands a macro argument, converting underscores to camel-case.</p>
 </li>
 <li>
-<p><code>\="identifier"=</code> expands a macro argument, converting underscores to snake-case.</p>
+<p><code>#=identifier=#</code> expands a macro argument, converting underscores to snake-case.</p>
 </li>
 </ul>
 </div>
@@ -8079,33 +8286,58 @@ and the <a href="#opt_mapper"><code>--mapper</code> option</a>.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_numeric_constant_types">16.45.4. Numeric Constant Types</h4>
-
-</div>
-<div class="sect3">
-<h4 id="kw_mapper">16.45.5. <code>__mapper</code></h4>
+<h4 id="kw_mapper">16.45.4. <code>__mapper</code></h4>
 <div class="paragraph">
 <p><code>__mapper</code> is a value of type <code>Int</code> which returns the INES mapper number set by the <a href="#opt_mapper"><code>--mapper</code> option</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_illegal">16.45.6. <code>__illegal</code></h4>
+<h4 id="kw_illegal">16.45.5. <code>__illegal</code></h4>
 <div class="paragraph">
 <p><code>__illegal</code> is a value of type <code>Bool</code> which returns true when the compiler supports the generation of <a href="#illegal_ops">illegal instructions</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_mapper_state">16.45.7. <code>__mapper_state</code></h4>
+<h4 id="kw_mapper_state">16.45.6. <code>__mapper_state</code></h4>
 <div class="paragraph">
 <p><code>__mapper_detail</code> is a value used by specific mappers (such as MMC1) to workaround interrupts that occur during bank switches.
 It is not recommended to use this keyword.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_mapper_reset">16.45.8. <code>__mapper_reset</code></h4>
+<h4 id="kw_mapper_reset">16.45.7. <code>__mapper_reset</code></h4>
 <div class="paragraph">
 <p><code>__mapper_reset</code> is a function used by specific mappers (such as MMC1) to reset their state.
 It is not recommended to use this keyword.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="kw_fixed">16.45.8. <code>__fixed</code></h4>
+<div class="paragraph">
+<p><code>__fixed</code> is a value of type <code>Bool</code> which returns if the mapper uses a fixed bank.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="kw_multiply">16.45.9. <code>__multiply</code></h4>
+<div class="paragraph">
+<p><code>__multiply</code> is a value of type <code>Void</code> representing NESFab&#8217;s multiply subroutine.
+Referencing the value using <a href="#unary_ops">unary operator</a> <code>&amp;</code> returns an address of type <code>AA</code>,
+pointing to the subroutine.</p>
+</div>
+<div class="paragraph">
+<p>This subroutine expects two 8-bit multiplicands in registers A and Y.
+It returns the result of the multiplication with the low byte in A and the high byte in Y.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    lda #3
+    ldy #10
+    jsr &amp;__multiply
+    // Result in A and Y</pre>
+</div>
 </div>
 </div>
 </div>
@@ -8170,6 +8402,9 @@ It is not recommended to use this keyword.</p>
 <p><code>+static</code>: Allocate the function or data in every bank (or force them into the fixed bank, for mappers with one).
 This modifier is incompatible with <a href="#kw_asm"><code>asm</code></a> functions that return in a different bank than they started in.
 You must validate this yourself.</p>
+</li>
+<li>
+<p><code>+static_fixed</code>: The same as <code>+static</code>, but only applies to mappers that have a fixed bank, like UNROM.</p>
 </li>
 <li>
 <p><code>+palette_3</code>: Converts 4-byte palettes into 3-byte palettes.</p>
@@ -9595,8 +9830,11 @@ The operands may be of different types. No types conversions occur besides <code
 <div class="sect3">
 <h4 id="equal_to">18.2.34. Equal To <code>==</code></h4>
 <div class="paragraph">
-<p>Compares the <a href="#type_arithmetic">arithmetic type</a> operands, returning <code>true</code> if the left operand is equal to the right and <code>false</code> otherwise.
-The operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
+<p>Compares the operands, returning <code>true</code> if the left operand is equal to the right and <code>false</code> otherwise.
+When comparing values of <a href="#type_arithmetic">arithmetic types</a>, the operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
+</div>
+<div class="paragraph">
+<p>This operator works on most types, including <a href="#type_struct">struct types</a> and <a href="#type_tea">TEAs</a>.</p>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -9611,8 +9849,11 @@ The operands may be of different types. No types conversions occur besides <code
 <div class="sect3">
 <h4 id="not_equal_to">18.2.35. Not Equal To <code>!=</code></h4>
 <div class="paragraph">
-<p>Compares the <a href="#type_arithmetic">arithmetic type</a> operands, returning <code>true</code> if the left operand is equal to the right and <code>false</code> otherwise.
-The operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
+<p>Compares the operands, returning <code>true</code> if the left operand is equal to the right and <code>false</code> otherwise.
+When comparing values of &lt;&lt;type_arithmetic, the operands may be of different types. No types conversions occur besides <code>Int</code> and <code>Real</code> conversions.</p>
+</div>
+<div class="paragraph">
+<p>This operator works on most types, including <a href="#type_struct">struct types</a> and <a href="#type_tea">TEAs</a>.</p>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -10586,7 +10827,7 @@ The syntax is the integer type, followed by the unit-fractional type, without no
 </table>
 </div>
 <div class="sect3">
-<h4 id="_numeric_constant_types_2">20.1.4. Numeric Constant Types</h4>
+<h4 id="_numeric_constant_types">20.1.4. Numeric Constant Types</h4>
 <div class="paragraph">
 <p><code>Int</code> and <code>Real</code> are used for compile-time constants.</p>
 </div>
@@ -11139,7 +11380,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-07-28 04:34:38 -0500
+Last updated 2025-08-12 20:34:38 -0500
 </div>
 </div>
 </body>
