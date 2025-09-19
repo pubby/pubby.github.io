@@ -440,7 +440,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>NESFab</h1>
 <div class="details">
 <span id="author" class="author">Copyright (c) 2023, Pubby</span><br>
-<span id="revdate">Version 1.7</span>
+<span id="revdate">Version 1.8</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -579,7 +579,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#kw_return">16.13. <code>return</code></a>
 <ul class="sectlevel3">
 <li><a href="#kw_return_statement">16.13.1. <code>return</code> statement</a></li>
-<li><a href="#kw_return_expression">16.13.2. <code>return</code> expression</a></li>
+<li><a href="#kw_label_expr">16.13.2. <code>label</code> expression (byte block)</a></li>
+<li><a href="#kw_return_expression">16.13.3. <code>return</code> expression</a></li>
 </ul>
 </li>
 <li><a href="#kw_swap">16.14. <code>swap</code></a></li>
@@ -707,23 +708,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#modifiers">17. Modifiers</a>
 <ul class="sectlevel2">
-<li><a href="#mod_flags">17.1. Function Modifier Flags</a></li>
-<li><a href="#mod_flags_loop">17.2. Loop Modifier Flags</a></li>
-<li><a href="#mod_nmi">17.3. <code>nmi</code></a></li>
-<li><a href="#mod_irq">17.4. <code>irq</code></a></li>
-<li><a href="#mod_stows">17.5. <code>stows</code></a>
+<li><a href="#mod_flags">17.1. Modifier Flags</a></li>
+<li><a href="#mod_flags_fields">17.2. Field Modifier Flags</a></li>
+<li><a href="#mod_flags_loop">17.3. Loop Modifier Flags</a></li>
+<li><a href="#mod_nmi">17.4. <code>nmi</code></a></li>
+<li><a href="#mod_irq">17.5. <code>irq</code></a></li>
+<li><a href="#mod_stows">17.6. <code>stows</code></a>
 <ul class="sectlevel3">
-<li><a href="#_stows_omni">17.5.1. <code>stows omni</code></a></li>
+<li><a href="#_stows_omni">17.6.1. <code>stows omni</code></a></li>
 </ul>
 </li>
-<li><a href="#mod_employs">17.6. <code>employs</code></a>
+<li><a href="#mod_employs">17.7. <code>employs</code></a>
 <ul class="sectlevel3">
-<li><a href="#_employs_vars_and_employs_data">17.6.1. <code>employs vars</code> and <code>employs data</code></a></li>
+<li><a href="#_employs_vars_and_employs_data">17.7.1. <code>employs vars</code> and <code>employs data</code></a></li>
 </ul>
 </li>
-<li><a href="#mod_preserves">17.7. <code>preserves</code></a></li>
-<li><a href="#mod_data">17.8. <code>data</code></a></li>
-<li><a href="#mod_vars">17.9. <code>vars</code></a></li>
+<li><a href="#mod_preserves">17.8. <code>preserves</code></a></li>
+<li><a href="#mod_data">17.9. <code>data</code></a></li>
+<li><a href="#mod_vars">17.10. <code>vars</code></a></li>
 </ul>
 </li>
 <li><a href="#_operators_2">18. Operators</a>
@@ -800,16 +802,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#len_type">18.7.1. <code>len</code> Type</a></li>
 <li><a href="#len_expr">18.7.2. <code>len</code>(expression)</a></li>
-<li><a href="#abs_expr">18.7.3. <code>abs</code>(expression)</a></li>
-<li><a href="#min_expr">18.7.4. <code>min</code>(expression)</a></li>
-<li><a href="#max_expr">18.7.5. <code>max</code>(expression)</a></li>
 </ul>
 </li>
-<li><a href="#casts">18.8. Explicit Type Casts</a>
+<li><a href="#abs_expr">18.8. <code>abs</code>(expression)</a></li>
+<li><a href="#min_expr">18.9. <code>min</code>(expression)</a></li>
+<li><a href="#max_expr">18.10. <code>max</code>(expression)</a></li>
+<li><a href="#casts">18.11. Explicit Type Casts</a>
 <ul class="sectlevel3">
-<li><a href="#_zero_initializations">18.8.1. Zero Initializations</a></li>
-<li><a href="#_banked_pointer_initializations">18.8.2. Banked Pointer Initializations</a></li>
-<li><a href="#_array_fills">18.8.3. Array Fills</a></li>
+<li><a href="#_zero_initializations">18.11.1. Zero Initializations</a></li>
+<li><a href="#_banked_pointer_initializations">18.11.2. Banked Pointer Initializations</a></li>
+<li><a href="#_array_fills">18.11.3. Array Fills</a></li>
 </ul>
 </li>
 </ul>
@@ -836,6 +838,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_numeric_constant_types">20.1.4. Numeric Constant Types</a></li>
 <li><a href="#type_bool">20.1.5. Bool</a></li>
 <li><a href="#_void">20.1.6. Void</a></li>
+<li><a href="#type_index">20.1.7. Index Types</a></li>
 </ul>
 </li>
 <li><a href="#type_arithmetic">20.2. Arithmetic Types</a></li>
@@ -865,7 +868,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p>This documentation is for <a href="http://pubby.games/nesfab.html">NESFab</a>.
-It is currently a work in progress, so comments and contributions are welcome.</p>
+It is a work in progress, so comments and contributions are welcome.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2231,7 +2234,7 @@ It is easy to use and offers good performance, but is lacking in features and me
 <div class="title">Note</div>
 </td>
 <td class="content">
-16 KiB and 8 KiB variants of NROM are not currently supported.
+8 KiB variants of NROM are not currently supported.
 </td>
 </tr>
 </table>
@@ -2257,7 +2260,7 @@ It is easy to use and offers good performance, but is lacking in features and me
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#opt_prg">PRG (Code)</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">32 KiB</p></td>
 </tr>
@@ -4310,7 +4313,8 @@ tax</pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-In the current implementation, labels cannot exist inside conditional blocks.
+In the current implementation, named labels cannot exist inside conditional blocks.
+Anonymous labels can, with caveats.
 </td>
 </tr>
 </table>
@@ -4740,6 +4744,40 @@ It behaves like <code>goto</code> in most programming languages.</p>
         goto loop</pre>
 </div>
 </div>
+<div class="paragraph">
+<p><code>goto</code> can also jump to anonymous labels.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>goto label+number
+goto label-number</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>number</code> refers relatively to an anonymous label. Positive refers to labels occuring later in the code, while negative labels occur prior.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>fn example()
+    U i
+    label
+    i = 5
+    label
+    i += 1
+    if i &lt; 10
+        goto label-1 // Jump backwards to the previous label
+    goto label-2 // Jump backwards two labels</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that named labels do not affect the anonymous label numbering scheme.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="kw_goto_mode_statement">16.11.2. <code>goto mode</code> statement</h4>
@@ -4904,12 +4942,15 @@ It behaves like labels in most programming languages, albeit with a slightly dif
 <div class="ulist">
 <ul>
 <li>
-<p><code>identifier</code> is the unique name of the label.</p>
+<p><code>identifier</code> is an optional unique name of the label.</p>
 </li>
 <li>
 <p><code>code_block</code> is an optional indented code block.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Labels without identifires are called anonymous labels and can be referenced using a special <a href="#kw_goto"><code>goto</code></a> syntax.</p>
 </div>
 <div class="paragraph">
 <p>The <code>code_block</code> of <code>label</code> exists only to provide a scope.
@@ -4939,12 +4980,15 @@ They behave similarly to <a href="#kw_ct"><code>ct</code></a> definitions, defin
 <div class="ulist">
 <ul>
 <li>
-<p><code>identifier</code> is the unique name of the label.</p>
+<p><code>identifier</code> is an optional unique name for the label.</p>
 </li>
 <li>
 <p><code>byte_block</code> is an optional indented byte block to be inserted into the containing byte block.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Labels without identifires are called anonymous labels and can be referenced using the <a href="#kw_label_expr"><code>label</code> expression (byte block)</a> syntax.</p>
 </div>
 <div class="paragraph">
 <p>The <code>byte_block</code> of <code>label</code> exists only to provide a scope.
@@ -4965,6 +5009,22 @@ byte_block</pre>
     [] some_data
         label foo
             jmp foo</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the current byte block implementation, when an anonymous label is placed inside an <a href="#kw_if_asm"><code>if</code> statement (byte block)</a> block, it is scoped to that <code>if</code> block.
+See the example code below for insight.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>data /some_group
+    [] some_data
+        jmp label+ // Ignores the label inside the 'if' block:
+        if true
+            jmp label+ // Jumps to the next label inside the 'if' block.
+            label
+            jmp label+ // Jumps to the next label outside the 'if' block.
+        label</pre>
 </div>
 </div>
 </div>
@@ -4996,7 +5056,40 @@ It behaves like <code>return</code> in most programming languages.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="kw_return_expression">16.13.2. <code>return</code> expression</h4>
+<h4 id="kw_label_expr">16.13.2. <code>label</code> expression (byte block)</h4>
+<div class="paragraph">
+<p>In byte block contexts, <code>label</code> can be used as an expression.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>label+number
+label-number</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>number</code> refers relatively to an anonymous label. Positive refers to labels occuring later in the code, while negative labels occur prior.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>asm fn example()
+: employs
+    default
+        label
+        jmp label-1 // Jump to the previous anonymous label.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that named labels do not affect the anonymous label numbering scheme.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="kw_return_expression">16.13.3. <code>return</code> expression</h4>
 <div class="paragraph">
 <p>A <code>return</code> expression <strong>does not cause functions to return</strong>.
 Instead, it provides a handle to the current function&#8217;s return value.
@@ -5053,7 +5146,7 @@ by storing into the address.</p>
 <div class="sect2">
 <h3 id="kw_push">16.15. <code>push</code></h3>
 <div class="paragraph">
-<p>The <code>push</code> expression appends a value onto a <a href="#type_vec">VEC value</a>.
+<p>The <code>push</code> expression inserts values onto a <a href="#type_vec">VEC value</a>.
 The expression returns a copy of its second argument.</p>
 </div>
 <div class="paragraph">
@@ -5061,7 +5154,7 @@ The expression returns a copy of its second argument.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>push(vec, elem)</pre>
+<pre>push(vec, elem, index)</pre>
 </div>
 </div>
 <div class="ulist">
@@ -5070,9 +5163,16 @@ The expression returns a copy of its second argument.</p>
 <p><code>vec</code> is an lvalue expression with a <a href="#type_vec">VEC type</a>.</p>
 </li>
 <li>
-<p><code>elem</code> is an expression value to be pushed onto <code>vec</code>.</p>
+<p><code>elem</code> is a value to be inserted into <code>vec</code>.</p>
+</li>
+<li>
+<p><code>index</code> is an optional value of type <code>Int</code>.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>When <code>index</code> is not included, <code>elem</code> is appended onto the end of <code>vec</code>.
+Otherwise, <code>elem</code> is inserted before the value at <code>index</code>.</p>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -5083,7 +5183,8 @@ The expression returns a copy of its second argument.</p>
     U{} vec = U{}()
     push(vec, 10)
     push(vec, 20)
-    // Now vec = U{}(10, 20)</pre>
+    push(vec, 30, 0)
+    // Now vec = U{}(30, 10, 20)</pre>
 </div>
 </div>
 <div class="sect3">
@@ -5117,14 +5218,14 @@ pop           // Restore the previous bank</pre>
 <div class="sect2">
 <h3 id="kw_pop">16.16. <code>pop</code></h3>
 <div class="paragraph">
-<p>The <code>pop</code> expression removes the last value from a <a href="#type_vec">VEC value</a>, returning the removed valued.</p>
+<p>The <code>pop</code> expression removes a value from a <a href="#type_vec">VEC value</a>, returning the removed valued.</p>
 </div>
 <div class="paragraph">
 <p>Syntax:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>pop(vec)</pre>
+<pre>pop(vec, index)</pre>
 </div>
 </div>
 <div class="ulist">
@@ -5132,7 +5233,14 @@ pop           // Restore the previous bank</pre>
 <li>
 <p><code>vec</code> is an lvalue expression with a <a href="#type_vec">VEC type</a>.</p>
 </li>
+<li>
+<p><code>index</code> is an optional value of type <code>Int</code>.</p>
+</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>When <code>index</code> is not included, <code>elem</code> is removed from the end of <code>vec</code>.
+Otherwise, <code>elem</code> is removed at position <code>index</code>.</p>
 </div>
 <div class="paragraph">
 <p>Example:</p>
@@ -5140,10 +5248,11 @@ pop           // Restore the previous bank</pre>
 <div class="listingblock">
 <div class="content">
 <pre>ct fn foo()
-    U{} vec = U{}(10, 20)
-    U x = pop(vec)
+    U{} vec = U{}(30, 10, 20)
+    U x = pop(vec, 0)
     U y = pop(vec)
-    // Now x = 20, y = 10</pre>
+    U z = pop(vec)
+    // Now x = 30, y = 20, z = 10</pre>
 </div>
 </div>
 <div class="sect3">
@@ -6619,6 +6728,16 @@ so long as multi-dimensional arrays are not created.</p>
 <div class="paragraph">
 <p>Like all values in <code>NESFab</code>, <code>struct</code> types are passed by value.</p>
 </div>
+<div class="paragraph">
+<p><strong>Field Modifiers:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#mod_flags_fields"><code>+inherit</code></a></p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="kw_vars">16.34. <code>vars</code></h3>
@@ -7046,18 +7165,18 @@ It specifies the data of the CHR ROM using a <a href="#byte_blocks">byte block</
 <div class="content">
 <pre>// Store at offset $0000:
 chrrom
-    file(chr, "sprites.png")
-    file(chr, "bg.png")
+    file(fmt, "sprites.png")
+    file(fmt, "bg.png")
 
 // Store at offset $2000:
 chrrom ($2000)
-    file(chr, "more_sprites.png")
-    file(chr, "more_bg.png")
+    file(fmt, "more_sprites.png")
+    file(fmt, "more_bg.png")
 
 // Store at offset $4000 under the name 'foo':
 chrrom foo($4000)
-    file(chr, "more_sprites.png")
-    file(chr, "more_bg.png")</pre>
+    file(fmt, "more_sprites.png")
+    file(fmt, "more_bg.png")</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7074,9 +7193,9 @@ These labels have a value of type <code>Int</code>.</p>
 <div class="content">
 <pre>chrrom foo
     label spr
-        file(chr, "sprites.png")
+        file(fmt, "sprites.png")
     label bg
-        file(chr, "bg.png")
+        file(fmt, "bg.png")
 
 // Access the CHR addresses:
 ct Int bar = foo.spr
@@ -7138,7 +7257,7 @@ To use modifiers with them, write the modifiers on the same line.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>ct U{} my_data = file(chr, "sprites.png") : +spr_8x16</pre>
+<pre>ct U{} my_data = file(fmt, "sprites.png") : +spr_8x16</pre>
 </div>
 </div>
 </div>
@@ -7154,10 +7273,10 @@ Unlike <code>file</code> expressions, these statements can can introduce <a href
 <div class="listingblock">
 <div class="content">
 <pre>chrrom
-    file(chr, "sprites.png")
+    file(fmt, "sprites.png")
     : +spr_8x16
 
-    file(chr, "bg.png")</pre>
+    file(fmt, "bg.png")</pre>
 </div>
 </div>
 </div>
@@ -8361,13 +8480,13 @@ It returns the result of the multiplication with the low byte in A and the high 
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_flags">17.1. Function Modifier Flags</h3>
+<h3 id="mod_flags">17.1. Modifier Flags</h3>
 <div class="paragraph">
 <p>Modifier flags are specified prefixed with a <code>-</code> or <code>+</code> character.
 <code>-</code> is used to disable the modifier, while <code>+</code> is used to enable it.</p>
 </div>
 <div class="paragraph">
-<p>The following flags exist for function definitions:</p>
+<p>The following flags exist for definitions:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -8440,7 +8559,24 @@ You must validate this yourself.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_flags_loop">17.2. Loop Modifier Flags</h3>
+<h3 id="mod_flags_fields">17.2. Field Modifier Flags</h3>
+<div class="paragraph">
+<p>Modifier flags are specified prefixed with a <code>-</code> or <code>+</code> character.
+<code>-</code> is used to disable the modifier, while <code>+</code> is used to enable it.</p>
+</div>
+<div class="paragraph">
+<p>The following flags exist for struct fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>+inherit</code>: The struct will implicitly cast to the field&#8217;s type. The field of the field can be accessed directly.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mod_flags_loop">17.3. Loop Modifier Flags</h3>
 <div class="paragraph">
 <p>Modifier flags are specified prefixed with a <code>-</code> or <code>+</code> character.
 <code>-</code> is used to disable the modifier, while <code>+</code> is used to enable it.</p>
@@ -8470,7 +8606,7 @@ You must validate this yourself.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_nmi">17.3. <code>nmi</code></h3>
+<h3 id="mod_nmi">17.4. <code>nmi</code></h3>
 <div class="paragraph">
 <p>The <code>nmi</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_mode"><code>mode</code></a> declaration to specify the mode&#8217;s NMI handler.</p>
 </div>
@@ -8507,7 +8643,7 @@ mode foo()
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_irq">17.4. <code>irq</code></h3>
+<h3 id="mod_irq">17.5. <code>irq</code></h3>
 <div class="paragraph">
 <p>The <code>irq</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_mode"><code>mode</code></a> declaration to specify the mode&#8217;s IRQ handler.</p>
 </div>
@@ -8544,7 +8680,7 @@ mode foo()
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_stows">17.5. <code>stows</code></h3>
+<h3 id="mod_stows">17.6. <code>stows</code></h3>
 <div class="paragraph">
 <p>The <code>stows</code> <a href="#modifiers">modifier</a> is used inside <a href="#kw_charmap"><code>charmap</code></a> definitions
 to enable string literals to use said <code>charmap</code>.</p>
@@ -8565,7 +8701,7 @@ to enable string literals to use said <code>charmap</code>.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_stows_omni">17.5.1. <code>stows omni</code></h4>
+<h4 id="_stows_omni">17.6.1. <code>stows omni</code></h4>
 <div class="paragraph">
 <p>The <code>stows omni</code> modifier behaves like <code>stows</code>, except it stores its data inside an <code>omni data</code> group.</p>
 </div>
@@ -8587,7 +8723,7 @@ to enable string literals to use said <code>charmap</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_employs">17.6. <code>employs</code></h3>
+<h3 id="mod_employs">17.7. <code>employs</code></h3>
 <div class="paragraph">
 <p>The <code>employs</code> <a href="#modifiers">modifier</a> instructs a function to be dependent on a group.
 From the time the function is called to the time the function returns,
@@ -8623,7 +8759,7 @@ The <code>employs</code> modifier is only required in these circumstances:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_employs_vars_and_employs_data">17.6.1. <code>employs vars</code> and <code>employs data</code></h4>
+<h4 id="_employs_vars_and_employs_data">17.7.1. <code>employs vars</code> and <code>employs data</code></h4>
 <div class="paragraph">
 <p>For additional control, <code>employs vars</code> and/or <code>employs data</code> modifiers can be used.
 These behave like <code>employs</code>, but only include the <code>vars</code> and/or <code>data</code> definitions of each groups.</p>
@@ -8647,7 +8783,7 @@ These behave like <code>employs</code>, but only include the <code>vars</code> a
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_preserves">17.7. <code>preserves</code></h3>
+<h3 id="mod_preserves">17.8. <code>preserves</code></h3>
 <div class="paragraph">
 <p>The <code>preserves</code> <a href="#modifiers">modifier</a> is used inside a <a href="#kw_goto_mode_statement"><code>goto mode</code> statement</a>
 to specify which variables are kept, and which are reset to their initial value.</p>
@@ -8673,7 +8809,7 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_data">17.8. <code>data</code></h3>
+<h3 id="mod_data">17.9. <code>data</code></h3>
 <div class="paragraph">
 <p>The <code>data</code> <a href="#modifiers">modifier</a> is used to document which <code>data</code> <a href="#groups">groups</a> a function uses.</p>
 </div>
@@ -8697,7 +8833,7 @@ If no initial value was specified, the value will enter an undefined (garbage) s
 </div>
 </div>
 <div class="sect2">
-<h3 id="mod_vars">17.9. <code>vars</code></h3>
+<h3 id="mod_vars">17.10. <code>vars</code></h3>
 <div class="paragraph">
 <p>The <code>vars</code> <a href="#modifiers">modifier</a> is used to document which <code>vars</code> <a href="#groups">groups</a> a function uses.</p>
 </div>
@@ -9903,7 +10039,7 @@ foo = 10 // 'foo' is now equal to 10</pre>
 <p><code>value</code> is an expression with a <a href="#type_tea">TEA type</a>, <a href="#type_vec">VEC type</a>, or a pointer to a <a href="#type_paa">PAA type</a>.</p>
 </li>
 <li>
-<p><code>offset</code> is an expression of type <code>U</code>, used as the offset.</p>
+<p><code>offset</code> is an optional expression of type <code>U</code>, used as the offset. If absent, <code>0</code> is used.</p>
 </li>
 </ul>
 </div>
@@ -9916,6 +10052,18 @@ foo = 10 // 'foo' is now equal to 10</pre>
 x = @paa[10]      // Read a PAA element</pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+For <a href="#type_index">index types</a>, <code>value</code> is added to <code>offset</code> to index into the type&#8217;s array.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="array_access_uu">18.3.2. <code>{}</code> UU-indexed access</h4>
@@ -9927,7 +10075,7 @@ x = @paa[10]      // Read a PAA element</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>value[offset]</pre>
+<pre>value{offset}</pre>
 </div>
 </div>
 <div class="ulist">
@@ -9936,7 +10084,7 @@ x = @paa[10]      // Read a PAA element</pre>
 <p><code>value</code> is an expression with a <a href="#type_tea">TEA type</a>, <a href="#type_vec">VEC type</a>, or a pointer to a <a href="#type_paa">PAA type</a>.</p>
 </li>
 <li>
-<p><code>offset</code> is an expression of type <code>UU</code>, used as the offset.</p>
+<p><code>offset</code> is an expression of type <code>UU</code>, used as the offset. If absent, <code>0</code> is used.</p>
 </li>
 </ul>
 </div>
@@ -9957,6 +10105,18 @@ x = @paa{1000}      // Read a PAA element</pre>
 </td>
 <td class="content">
 <code>{}</code> often has significantly worse performance than <code>[]</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+For <a href="#type_index">index types</a>, <code>value</code> is added to <code>offset</code> to index into the type&#8217;s array.
 </td>
 </tr>
 </table>
@@ -10292,8 +10452,9 @@ It behaves similarly to function calls in other languages.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="abs_expr">18.7.3. <code>abs</code>(expression)</h4>
+</div>
+<div class="sect2">
+<h3 id="abs_expr">18.8. <code>abs</code>(expression)</h3>
 <div class="paragraph">
 <p><code>abs</code> first converts the argument to a signed representation,
 then it returns the absolute value of it.
@@ -10324,8 +10485,8 @@ The return type is the argument type converted to unsigned.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="min_expr">18.7.4. <code>min</code>(expression)</h4>
+<div class="sect2">
+<h3 id="min_expr">18.9. <code>min</code>(expression)</h3>
 <div class="paragraph">
 <p>Returns the minimum value of multiple <a href="#type_quantity">quantity types</a>.
 The return type is equivalent to the argument types, which must be the the same,
@@ -10355,8 +10516,8 @@ although <code>Int</code> and <code>Real</code> will convert.</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="max_expr">18.7.5. <code>max</code>(expression)</h4>
+<div class="sect2">
+<h3 id="max_expr">18.10. <code>max</code>(expression)</h3>
 <div class="paragraph">
 <p>Returns the maximum value of multiple <a href="#type_quantity">quantity types</a>.
 The return type is equivalent to the argument types, which must be the the same,
@@ -10386,9 +10547,8 @@ although <code>Int</code> and <code>Real</code> will convert.</p>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="casts">18.8. Explicit Type Casts</h3>
+<h3 id="casts">18.11. Explicit Type Casts</h3>
 <div class="paragraph">
 <p>Type casts convert values into different types.</p>
 </div>
@@ -10423,7 +10583,7 @@ This means that casting <code>UUU</code> to <code>U</code> discards the two most
 For example, <code>S(-1)</code> will cast to <code>U(255)</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="_zero_initializations">18.8.1. Zero Initializations</h4>
+<h4 id="_zero_initializations">18.11.1. Zero Initializations</h4>
 <div class="paragraph">
 <p>A type cast with no arguments is called a zero initialization.
 The value, its struct members, and its array elements are initialized to zero.</p>
@@ -10438,7 +10598,7 @@ SomeStruct() // equivalent to SomeStruct(0, 0)</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_banked_pointer_initializations">18.8.2. Banked Pointer Initializations</h4>
+<h4 id="_banked_pointer_initializations">18.11.2. Banked Pointer Initializations</h4>
 <div class="paragraph">
 <p>Banked pointers can be created with a two-argument cast:</p>
 </div>
@@ -10452,7 +10612,7 @@ SomeStruct() // equivalent to SomeStruct(0, 0)</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_array_fills">18.8.3. Array Fills</h4>
+<h4 id="_array_fills">18.11.3. Array Fills</h4>
 <div class="paragraph">
 <p>Array fills are used to create arrays where every element holds identical values.
 They are specified as an array cast, where the cast&#8217;s singular argument can be converted to the element type.</p>
@@ -10976,18 +11136,103 @@ as leaving the return type off of a function implies <code>Void</code>.</p>
 </tbody>
 </table>
 </div>
+<div class="sect3">
+<h4 id="type_index">20.1.7. Index Types</h4>
+<div class="paragraph">
+<p>Index types are a special variant of unsigned integers.
+Their values represent indexes into a single global array.</p>
+</div>
+<div class="paragraph">
+<p>Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>I.array
+II.array</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>array</code> is the name of the global array.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Index types behave similarly to pointers, but their values are indexes, not addresses.
+Like pointers, the <a href="#array_access_u"><code>[]</code> operator</a> can be used to access the pointed-to value.</p>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>I.foo my_index = 10 // Create an index into array foo at position 10.
+my_index[0] = 20    // Sets my_index[10+0] to 20.
+my_index += 1       // Increment the index to position 11.
+my_index[0] = 30    // Sets my_index[11+0] to 30.
+my_index[2] = 40    // Sets my_index[11+2] to 40.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Index types are not required to access arrays; <code>U</code> and <code>UU</code> can be used instead.
+However, index types offer a few advantages:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>They reduce typing. Instead of typing <code>foo[x]</code>, you can type <code>x[]</code>.</p>
+</li>
+<li>
+<p>They better decribe the purpose of variables.</p>
+</li>
+<li>
+<p>They provide better type safety.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The 2 index types are listed below.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Size (bytes)</th>
+<th class="tableblock halign-left valign-top">Value range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>I.array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[0, 255]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>II.array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[0, 65535]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="type_arithmetic">20.2. Arithmetic Types</h3>
 <div class="paragraph">
-<p>Arithmetic types are defined as all <a href="#type_integer">integer types</a>, <a href="#type_fixed">fixed-point types</a>, and <a href="#type_bool"><code>Bool</code></a>.</p>
+<p>Arithmetic types are defined as all <a href="#type_integer">integer types</a>, <a href="#type_fixed">fixed-point types</a>, <a href="#type_index">index types</a> and <a href="#type_bool"><code>Bool</code></a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="type_quantity">20.3. Quantity Types</h3>
 <div class="paragraph">
 <p>Quantity types are types which can represent quantities.
-They are defined as all <a href="#type_integer">integer types</a>, <a href="#type_fixed">fixed-point types</a>.</p>
+They are defined as all <a href="#type_integer">integer types</a> and <a href="#type_fixed">fixed-point types</a>.</p>
 </div>
 <div class="sect3">
 <h4 id="type_ptr">20.3.1. Pointer Types</h4>
@@ -11380,7 +11625,7 @@ which allows one to aggregate multiple types into a single one.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-12 20:34:38 -0500
+Last updated 2025-09-18 23:15:53 -0500
 </div>
 </div>
 </body>
